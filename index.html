@@ -97,10 +97,95 @@
         <h2 class="fs-h2">❄️ Winter-Videos</h2>
         <p class="fs-sub">Klare Luft, Schneeflocken, ruhige Linien.</p>
       </header>
+	  
+	  
+	  
+	  
+	  
+<!-- WINTER DOWNLOAD MIT FORMULAR -->
+<div style="text-align:center;">
+  <!-- Der sichtbare Button -->
+  <a id="showFormBtn" class="download-btn winter-btn" href="#" onclick="event.preventDefault();toggleForm();">
+    ⬇️ Winter Download
+  </a>
 
-      <div style="text-align:center;">
-        <a class="download-btn winter-btn" href="https://soellerhaus1.quickconnect.to/d/s/15S7Ajs9i8Es7qgT2paiQbKlt5IwVw6y/li5hKzhObCtfe13KXSTz2F0UKjcrrcp2-sLXgY2gVrAw" target="_blank">⬇️ Winter Download</a>
-        <p class="license">📜 <strong>Regel</strong> Videos dürfen kostenlos verwendet werden.<br>Urheber ist walserfly.com – Namensnennung <strong>@walserfly</strong> erforderlich!</p>
+  <!-- Das Formular (zuerst versteckt) -->
+  <form id="winterForm"
+        action="https://formspree.io/f/mvgwndgg"
+        method="POST"
+        style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
+               background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
+
+    <label style="color:#ccc;display:block;margin-bottom:10px;">
+      Name:<br>
+      <input type="text" name="name" required
+             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+    </label>
+
+    <label style="color:#ccc;display:block;margin-bottom:10px;">
+      E-Mail-Adresse:<br>
+      <input type="email" name="email" required
+             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+    </label>
+
+    <input type="hidden" name="season" value="Winter">
+
+    <button type="submit"
+            style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
+                   background:linear-gradient(90deg,#1e90ff,#63b3ed);color:#fff;font-weight:600;font-size:15px;
+                   cursor:pointer;transition:opacity .3s ease;">
+      Absenden
+    </button>
+
+    <p id="winterMsg"
+       style="display:none;text-align:center;color:#8fd694;margin-top:12px;">
+       Danke! Dein Download-Link ist jetzt freigeschaltet 👇
+    </p>
+  </form>
+
+  <!-- Der eigentliche Download-Link (versteckt bis Formular gesendet wurde) -->
+  <div id="winterLink" style="display:none;text-align:center;margin-top:20px;">
+    <a class="download-btn winter-btn"
+       href="https://soellerhaus1.quickconnect.to/d/s/15S7Ajs9i8Es7qgT2paiQbKlt5IwVw6y/li5hKzhObCtfe13KXSTz2F0UKjcrrcp2-sLXgY2gVrAw"
+       target="_blank">
+       👉 Jetzt Winter-Download starten
+    </a>
+  </div>
+</div>
+
+<script>
+function toggleForm(){
+  const f = document.getElementById('winterForm');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  const form = document.getElementById("winterForm");
+  const msg = document.getElementById("winterMsg");
+  const link = document.getElementById("winterLink");
+
+  form.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const data = new FormData(form);
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      form.querySelector("button").disabled = true;
+      form.querySelector("button").style.opacity = ".6";
+      msg.style.display = "block";
+      link.style.display = "block";
+    } else {
+      alert("Fehler beim Absenden. Bitte versuch es erneut.");
+    }
+  });
+});
+</script>
+       
+	   <p class="license">📜 <strong>Regel</strong> Videos dürfen kostenlos verwendet werden.<br>Urheber ist walserfly.com – Namensnennung <strong>@walserfly</strong> erforderlich!</p>
       </div>
 
       <div class="grid" style="margin-top:20px;">
@@ -186,8 +271,88 @@
         <p class="fs-sub">Morgentau, frisches Grün, sanfte Linien.</p>
       </header>
 
-      <div style="text-align:center;">
-        <a class="download-btn fruehling-btn" href="https://soellerhaus1.quickconnect.to/d/s/15S7BWQPkYUdz6I2Puk4832Js2FGnlyx/qhBpkLz5VlznNJ2326bC6mRIg0FWbn-f-ErWgezMVrAw" target="_blank">⬇️ Frühling Download</a>
+<!-- 🌱 FRÜHLING DOWNLOAD MIT FORMULAR -->
+<div style="text-align:center;">
+  <!-- Sichtbarer Button -->
+  <a id="showFormSpring" class="download-btn fruehling-btn" href="#" onclick="event.preventDefault();toggleFormSpring();">
+    ⬇️ Frühling Download
+  </a>
+
+  <!-- Formular (zuerst versteckt) -->
+  <form id="springForm"
+        action="https://formspree.io/f/mvgwndgg"
+        method="POST"
+        style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
+               background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
+
+    <label style="color:#ccc;display:block;margin-bottom:10px;">
+      Name:<br>
+      <input type="text" name="name" required
+             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+    </label>
+
+    <label style="color:#ccc;display:block;margin-bottom:10px;">
+      E-Mail-Adresse:<br>
+      <input type="email" name="email" required
+             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+    </label>
+
+    <input type="hidden" name="season" value="Frühling">
+
+    <button type="submit"
+            style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
+                   background:linear-gradient(90deg,#28a745,#8fd694);color:#fff;font-weight:600;font-size:15px;
+                   cursor:pointer;transition:opacity .3s ease;">
+      Absenden
+    </button>
+
+    <p id="springMsg"
+       style="display:none;text-align:center;color:#8fd694;margin-top:12px;">
+       Danke! Dein Download-Link ist jetzt freigeschaltet 👇
+    </p>
+  </form>
+
+  <!-- Versteckter Download-Link -->
+  <div id="springLink" style="display:none;text-align:center;margin-top:20px;">
+    <a class="download-btn fruehling-btn"
+       href="https://soellerhaus1.quickconnect.to/d/s/15S7BWQPkYUdz6I2Puk4832Js2FGnlyx/qhBpkLz5VlznNJ2326bC6mRIg0FWbn-f-ErWgezMVrAw"
+       target="_blank">
+       👉 Jetzt Frühling-Download starten
+    </a>
+  </div>
+</div>
+
+<script>
+function toggleFormSpring(){
+  const f = document.getElementById('springForm');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  const form = document.getElementById("springForm");
+  const msg = document.getElementById("springMsg");
+  const link = document.getElementById("springLink");
+
+  form.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const data = new FormData(form);
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      form.querySelector("button").disabled = true;
+      form.querySelector("button").style.opacity = ".6";
+      msg.style.display = "block";
+      link.style.display = "block";
+    } else {
+      alert("Fehler beim Absenden. Bitte versuch es erneut.");
+    }
+  });
+});
+</script>
         <p class="license">📜 <strong>Regel</strong> Videos dürfen kostenlos verwendet werden.<br>Urheber ist walserfly.com – Namensnennung <strong>@walserfly</strong> erforderlich!</p>
       </div>
 
@@ -232,9 +397,91 @@
       <p class="fs-sub">Lange Tage, klare Farben, warme Luft.</p>
     </header>
 
-    <div style="text-align:center;">
-      <a class="download-btn sommer-btn" href="https://soellerhaus1.quickconnect.to/d/s/15S7Br6rSE0tRSfAIVgfqbx4Eupag4qN/GMURyBL-U4VSaMimPuARB67isCKtUfiq-9LWg53kVrAw" target="_blank">⬇️ Sommer Download</a>
-        <p class="license">📜 <strong>Regel</strong> Videos dürfen kostenlos verwendet werden.<br>Urheber ist walserfly.com – Namensnennung <strong>@walserfly</strong> erforderlich!</p>
+<!-- ☀️ SOMMER DOWNLOAD MIT FORMULAR -->
+<div style="text-align:center;">
+  <!-- Sichtbarer Button -->
+  <a id="showFormSummer" class="download-btn sommer-btn" href="#" onclick="event.preventDefault();toggleFormSummer();">
+    ⬇️ Sommer Download
+  </a>
+
+  <!-- Formular (zuerst versteckt) -->
+  <form id="summerForm"
+        action="https://formspree.io/f/mvgwndgg"
+        method="POST"
+        style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
+               background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
+
+    <label style="color:#ccc;display:block;margin-bottom:10px;">
+      Name:<br>
+      <input type="text" name="name" required
+             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+    </label>
+
+    <label style="color:#ccc;display:block;margin-bottom:10px;">
+      E-Mail-Adresse:<br>
+      <input type="email" name="email" required
+             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+    </label>
+
+    <input type="hidden" name="season" value="Sommer">
+
+    <button type="submit"
+            style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
+                   background:linear-gradient(90deg,#f6b800,#fce181);color:#000;font-weight:600;font-size:15px;
+                   cursor:pointer;transition:opacity .3s ease;">
+      Absenden
+    </button>
+
+    <p id="summerMsg"
+       style="display:none;text-align:center;color:#fce181;margin-top:12px;">
+       Danke! Dein Download-Link ist jetzt freigeschaltet 👇
+    </p>
+  </form>
+
+  <!-- Versteckter Download-Link -->
+  <div id="summerLink" style="display:none;text-align:center;margin-top:20px;">
+    <a class="download-btn sommer-btn"
+       href="https://soellerhaus1.quickconnect.to/d/s/15S7Br6rSE0tRSfAIVgfqbx4Eupag4qN/GMURyBL-U4VSaMimPuARB67isCKtUfiq-9LWg53kVrAw"
+       target="_blank">
+       👉 Jetzt Sommer-Download starten
+    </a>
+  </div>
+</div>
+
+<script>
+function toggleFormSummer(){
+  const f = document.getElementById('summerForm');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  const form = document.getElementById("summerForm");
+  const msg = document.getElementById("summerMsg");
+  const link = document.getElementById("summerLink");
+
+  form.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const data = new FormData(form);
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      form.querySelector("button").disabled = true;
+      form.querySelector("button").style.opacity = ".6";
+      msg.style.display = "block";
+      link.style.display = "block";
+    } else {
+      alert("Fehler beim Absenden. Bitte versuch es erneut.");
+    }
+  });
+});
+</script>
+       
+
+	   <p class="license">📜 <strong>Regel</strong> Videos dürfen kostenlos verwendet werden.<br>Urheber ist walserfly.com – Namensnennung <strong>@walserfly</strong> erforderlich!</p>
     </div>
 
     <div class="grid" style="margin-top:20px;">
@@ -283,8 +530,88 @@
       <p class="fs-sub">Warme Farben, tiefe Sonne, ruhige Flüge.</p>
     </header>
 
-    <div style="text-align:center;">
-      <a class="download-btn herbst-btn" href="https://soellerhaus1.quickconnect.to/d/s/15S7B9Ub01INFo0jxWLAm84w6i4i3z2w/FX-e9hYOcFeWOeImoGGk2donpi8k3uUF-NrZgvYgVrAw" target="_blank">⬇️ Herbst Download</a>
+<!-- 🍁 HERBST DOWNLOAD MIT FORMULAR -->
+<div style="text-align:center;">
+  <!-- Sichtbarer Button -->
+  <a id="showFormAutumn" class="download-btn herbst-btn" href="#" onclick="event.preventDefault();toggleFormAutumn();">
+    ⬇️ Herbst Download
+  </a>
+
+  <!-- Formular (zuerst versteckt) -->
+  <form id="autumnForm"
+        action="https://formspree.io/f/mvgwndgg"
+        method="POST"
+        style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
+               background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
+
+    <label style="color:#ccc;display:block;margin-bottom:10px;">
+      Name:<br>
+      <input type="text" name="name" required
+             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+    </label>
+
+    <label style="color:#ccc;display:block;margin-bottom:10px;">
+      E-Mail-Adresse:<br>
+      <input type="email" name="email" required
+             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+    </label>
+
+    <input type="hidden" name="season" value="Herbst">
+
+    <button type="submit"
+            style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
+                   background:linear-gradient(90deg,#e67300,#ffaf66);color:#fff;font-weight:600;font-size:15px;
+                   cursor:pointer;transition:opacity .3s ease;">
+      Absenden
+    </button>
+
+    <p id="autumnMsg"
+       style="display:none;text-align:center;color:#ffaf66;margin-top:12px;">
+       Danke! Dein Download-Link ist jetzt freigeschaltet 👇
+    </p>
+  </form>
+
+  <!-- Versteckter Download-Link -->
+  <div id="autumnLink" style="display:none;text-align:center;margin-top:20px;">
+    <a class="download-btn herbst-btn"
+       href="https://soellerhaus1.quickconnect.to/d/s/15S7B9Ub01INFo0jxWLAm84w6i4i3z2w/FX-e9hYOcFeWOeImoGGk2donpi8k3uUF-NrZgvYgVrAw"
+       target="_blank">
+       👉 Jetzt Herbst-Download starten
+    </a>
+  </div>
+</div>
+
+<script>
+function toggleFormAutumn(){
+  const f = document.getElementById('autumnForm');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  const form = document.getElementById("autumnForm");
+  const msg = document.getElementById("autumnMsg");
+  const link = document.getElementById("autumnLink");
+
+  form.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const data = new FormData(form);
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      form.querySelector("button").disabled = true;
+      form.querySelector("button").style.opacity = ".6";
+      msg.style.display = "block";
+      link.style.display = "block";
+    } else {
+      alert("Fehler beim Absenden. Bitte versuch es erneut.");
+    }
+  });
+});
+</script>
 	          <p class="license">📜 <strong>Regel</strong> Videos dürfen kostenlos verwendet werden.<br>Urheber ist walserfly.com – Namensnennung <strong>@walserfly</strong> erforderlich!</p>
     </div>
 
