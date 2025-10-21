@@ -665,7 +665,20 @@ document.addEventListener("DOMContentLoaded", ()=>{
   <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
   💶  Für jeden Kaffee flieg ich ’ne Extra-Runde ☕😉<br>
   <a href="https://paypal.me/walserfly" target="_blank">paypal.me/walserfly</a>
+  <!-- Nur Instagram-Logo (weiß, zentriert) -->
+<div style="text-align: center; margin-top: 20px;">
+  <a href="https://www.instagram.com/walserfly/"
+     target="_blank"
+     rel="noopener"
+     aria-label="Walserfly auf Instagram öffnen"
+     style="color: #fff; text-decoration: none; transition: transform 0.2s ease, color 0.2s ease; display: inline-block;">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="vertical-align: middle;">
+      <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/>
+    </svg>
+  </a>
+</div>
 </p>		</div>
+
   </div>
 </div>
 </section>
@@ -676,6 +689,50 @@ document.addEventListener("DOMContentLoaded", ()=>{
   <a href="impressum.html" style="color:inherit; text-decoration:underline;">Impressum</a> ·
   <a href="datenschutz.html" style="color:inherit; text-decoration:underline;">Datenschutz</a>
 </p>
+<!-- Weißes Instagram-Symbol fix unten mittig -->
+<a
+  href="https://www.instagram.com/walserfly/"
+  class="insta-btn-fixed"
+  target="_blank"
+  rel="noopener"
+  aria-label="Walserfly auf Instagram öffnen"
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true" class="insta-icon-fixed">
+    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/>
+  </svg>
+</a>
+
+<style>
+  .insta-btn-fixed {
+    position: fixed;
+    bottom: 20px; /* Abstand vom unteren Rand */
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: #fff;
+    background: transparent;
+    transition: transform 0.2s ease, color 0.2s ease;
+    text-decoration: none;
+    z-index: 1000;
+  }
+
+  .insta-btn-fixed:hover {
+    color: #E4405F;
+    transform: translateX(-50%) scale(1.15);
+  }
+
+  .insta-icon-fixed {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+</style>
+
 
 <!-- Vimeo API (optional, schadlos wenn drin) -->
 <script src="https://player.vimeo.com/api/player.js"></script>
