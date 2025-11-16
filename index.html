@@ -1,4 +1,3 @@
-<!-- ==== FPV Seasons Tabs (mit Lazy-Loading) ==== -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -10,77 +9,252 @@
   <script src="https://cdn.counter.dev/script.js" 
           data-id="0d0e6b83-027c-4029-b963-019c7ddcc9b7" 
           data-utcoffset="2"></script>
-<section id="fpv-seasons-tabs" style="max-width:1400px;margin:40px auto;padding:16px;">
+
   <style>
-    body{background:#000;color:#ccc;font-family:'Segoe UI',sans-serif}
+    body{
+      background:#000;
+      color:#ccc;
+      font-family:'Segoe UI',sans-serif;
+      margin:0;
+      padding:0;
+    }
 
-    #fpv-seasons-tabs .tabbar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
-    #fpv-seasons-tabs .tab{cursor:pointer;border:none;padding:12px 20px;border-radius:999px;font-weight:600;background:#111;color:#fff;letter-spacing:.3px;transition:all .3s ease}
-    #fpv-seasons-tabs .tab:hover{background:#222;transform:translateY(-2px)}
-    #fpv-seasons-tabs .tab.active{background:linear-gradient(90deg,#444,#666);color:#fff;box-shadow:0 0 10px rgba(255,255,255,.2)}
+    #fpv-seasons-tabs{
+      max-width:1400px;
+      margin:40px auto;
+      padding:16px;
+    }
 
-    #fpv-seasons-tabs .panel{display:none;opacity:0;transition:opacity .4s ease}
-    #fpv-seasons-tabs .panel.active{display:block;opacity:1}
+    /* Tabs */
+    #fpv-seasons-tabs .tabbar{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-bottom:24px
+    }
+    #fpv-seasons-tabs .tab{
+      cursor:pointer;
+      border:none;
+      padding:12px 20px;
+      border-radius:999px;
+      font-weight:600;
+      background:#111;
+      color:#fff;
+      letter-spacing:.3px;
+      transition:all .3s ease
+    }
+    #fpv-seasons-tabs .tab:hover{
+      background:#222;
+      transform:translateY(-2px)
+    }
+    #fpv-seasons-tabs .tab.active{
+      background:linear-gradient(90deg,#444,#666);
+      color:#fff;
+      box-shadow:0 0 10px rgba(255,255,255,.2)
+    }
 
-    .fs-wrap{margin:8px 0 28px;padding:28px;border-radius:22px;background:#0b0b0b;box-shadow:0 0 40px rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.05)}
-    .fs-head{text-align:center;margin:6px 0 24px}
-    .fs-h2{margin:0;color:#fff;font-size:30px;text-shadow:0 0 12px rgba(255,255,255,.25);letter-spacing:1px}
-    .fs-sub{margin:10px 0 0;color:#aaa;font-size:15px}
+    #fpv-seasons-tabs .panel{
+      display:none;
+      opacity:0;
+      transition:opacity .4s ease
+    }
+    #fpv-seasons-tabs .panel.active{
+      display:block;
+      opacity:1
+    }
 
-    .license{color:#999;font-size:13px;margin:12px auto 18px;line-height:1.6;max-width:800px;text-align:center}
+    .fs-wrap{
+      margin:8px 0 28px;
+      padding:28px;
+      border-radius:22px;
+      background:#0b0b0b;
+      box-shadow:0 0 40px rgba(0,0,0,.7);
+      border:1px solid rgba(255,255,255,.05)
+    }
+    .fs-head{
+      text-align:center;
+      margin:6px 0 24px
+    }
+    .fs-h2{
+      margin:0;
+      color:#fff;
+      font-size:30px;
+      text-shadow:0 0 12px rgba(255,255,255,.25);
+      letter-spacing:1px
+    }
+    .fs-sub{
+      margin:10px 0 0;
+      color:#aaa;
+      font-size:15px
+    }
 
-    .download-btn{display:inline-block;margin:0 auto 14px auto;text-align:center;color:#fff;text-decoration:none;font-weight:600;padding:12px 28px;border-radius:999px;transition:all .3s ease;letter-spacing:.3px}
-    .download-btn:hover{transform:translateY(-3px);box-shadow:0 0 14px currentColor}
+    .license{
+      color:#999;
+      font-size:13px;
+      margin:12px auto 18px;
+      line-height:1.6;
+      max-width:800px;
+      text-align:center
+    }
 
-    .grid{display:grid;grid-template-columns:1fr;gap:18px}
-    @media (min-width:820px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media (min-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    .download-btn{
+      display:inline-block;
+      margin:0 auto 14px auto;
+      text-align:center;
+      color:#fff;
+      text-decoration:none;
+      font-weight:600;
+      padding:12px 28px;
+      border-radius:999px;
+      transition:all .3s ease;
+      letter-spacing:.3px
+    }
+    .download-btn:hover{
+      transform:translateY(-3px);
+      box-shadow:0 0 14px currentColor
+    }
 
-    .card{background:#111;border-radius:18px;padding:12px;border:1px solid rgba(255,255,255,.08);box-shadow:0 4px 20px rgba(0,0,0,.35);transition:transform .3s ease,box-shadow .3s ease}
-    .card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(255,255,255,.08)}
+    .grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:18px
+    }
+    @media (min-width:820px){
+      .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media (min-width:1200px){
+      .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    }
 
-    .ratio-916{position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border-radius:12px;background:rgba(255,255,255,.02)}
-    .ratio-916>iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#111}
+    .card{
+      background:#111;
+      border-radius:18px;
+      padding:12px;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 4px 20px rgba(0,0,0,.35);
+      transition:transform .3s ease,box-shadow .3s ease
+    }
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 8px 24px rgba(255,255,255,.08)
+    }
 
-    .title{margin:10px 4px 0;color:#eaf6ff;font-size:16px}
-    .meta{margin:4px;color:#8fa7d8;font-size:13px}
+    .ratio-916{
+      position:relative;
+      padding-bottom:177.78%;
+      height:0;
+      overflow:hidden;
+      border-radius:12px;
+      background:rgba(255,255,255,.02)
+    }
+    .ratio-916>iframe{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:0;
+      background:#111
+    }
+
+    .title{
+      margin:10px 4px 0;
+      color:#eaf6ff;
+      font-size:16px
+    }
+    .meta{
+      margin:4px;
+      color:#8fa7d8;
+      font-size:13px
+    }
 
     /* Button-Farben je Saison */
-    .winter-btn{background:linear-gradient(90deg,#0077ff,#66ccff);color:#fff}
-    .fruehling-btn{background:linear-gradient(90deg,#b8326c,#e9408e);color:#fff;border:none;transition:all .3s ease}
-    .fruehling-btn:hover{transform:translateY(-2px);box-shadow:0 0 10px rgba(233,64,142,.5)}
-    .sommer-btn{background:linear-gradient(90deg,#ffd000,#ff8c00);color:#000}
-    .herbst-btn{background:linear-gradient(90deg,#d35400,#ff9966);color:#fff}
-	
-	/* Zurück nach oben Button */
-#backToTop {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 99;
-  background: linear-gradient(90deg,#444,#666);
-  color: #fff;
-  border: none;
-  outline: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  font-size: 22px;
-  cursor: pointer;
-  opacity: 0;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 8px rgba(255,255,255,0.2);
-}
-#backToTop:hover {
-  background: linear-gradient(90deg,#666,#888);
-  box-shadow: 0 0 12px rgba(255,255,255,0.4);
-}
-#backToTop.show {
-  opacity: 1;
-}
+    .winter-btn{
+      background:linear-gradient(90deg,#0077ff,#66ccff);
+      color:#fff
+    }
+    .fruehling-btn{
+      background:linear-gradient(90deg,#b8326c,#e9408e);
+      color:#fff;
+      border:none;
+      transition:all .3s ease
+    }
+    .fruehling-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 0 10px rgba(233,64,142,.5)
+    }
+    .sommer-btn{
+      background:linear-gradient(90deg,#ffd000,#ff8c00);
+      color:#000
+    }
+    .herbst-btn{
+      background:linear-gradient(90deg,#d35400,#ff9966);
+      color:#fff
+    }
+    .ki-btn{
+      background:linear-gradient(90deg,#6a11cb,#2575fc);
+      color:#fff;
+    }
 
-	
+    /* Zurück nach oben Button */
+    #backToTop{
+      position:fixed;
+      bottom:28px;
+      right:28px;
+      z-index:99;
+      background:linear-gradient(90deg,#444,#666);
+      color:#fff;
+      border:none;
+      outline:none;
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      font-size:22px;
+      cursor:pointer;
+      opacity:0;
+      transition:all 0.3s ease;
+      box-shadow:0 0 8px rgba(255,255,255,0.2);
+    }
+    #backToTop:hover{
+      background:linear-gradient(90deg,#666,#888);
+      box-shadow:0 0 12px rgba(255,255,255,0.4);
+    }
+    #backToTop.show{
+      opacity:1;
+    }
+
+    /* Fixes Instagram-Icon unten mittig */
+    .insta-btn-fixed{
+      position:fixed;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      color:#fff;
+      background:transparent;
+      transition:transform 0.2s ease,color 0.2s ease;
+      text-decoration:none;
+      z-index:1000;
+    }
+    .insta-btn-fixed:hover{
+      color:#E4405F;
+      transform:translateX(-50%) scale(1.15);
+    }
+    .insta-icon-fixed{
+      width:20px;
+      height:20px;
+      fill:currentColor;
+    }
   </style>
+</head>
+<body>
+
+<section id="fpv-seasons-tabs">
 
   <!-- Tabs -->
   <nav class="tabbar" aria-label="Jahreszeiten">
@@ -88,6 +262,7 @@
     <button class="tab" data-target="fruehling">🌱 Frühling</button>
     <button class="tab" data-target="sommer">☀️ Sommer</button>
     <button class="tab" data-target="herbst">🍁 Herbst</button>
+    <button class="tab" data-target="ki">🤖 KI</button>
   </nav>
 
   <!-- WINTER -->
@@ -97,98 +272,66 @@
         <h2 class="fs-h2">❄️ Winter-Videos</h2>
         <p class="fs-sub">Klare Luft, Schneeflocken, ruhige Linien.</p>
       </header>
-	  
-	  
-	  
-	  
-	  
-<!-- WINTER DOWNLOAD MIT FORMULAR -->
-<div style="text-align:center;">
-  <!-- Der sichtbare Button -->
-  <a id="showFormBtn" class="download-btn winter-btn" href="#" onclick="event.preventDefault();toggleForm();">
-    ⬇️ Winter Download
-  </a>
 
-  <!-- Das Formular (zuerst versteckt) -->
-  <form id="winterForm"
-        action="https://formspree.io/f/mvgwndgg"
-        method="POST"
-        style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
-               background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
+      <!-- WINTER DOWNLOAD MIT FORMULAR -->
+      <div style="text-align:center;">
+        <!-- Sichtbarer Button -->
+        <a id="showFormBtn" class="download-btn winter-btn" href="#" onclick="event.preventDefault();toggleForm();">
+          ⬇️ Winter Download
+        </a>
 
-    <label style="color:#ccc;display:block;margin-bottom:10px;">
-      Name:<br>
-      <input type="text" name="name" required
-             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
-    </label>
+        <!-- Formular (zuerst versteckt) -->
+        <form id="winterForm"
+              action="https://formspree.io/f/mvgwndgg"
+              method="POST"
+              style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
+                     background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
 
-    <label style="color:#ccc;display:block;margin-bottom:10px;">
-      E-Mail-Adresse:<br>
-      <input type="email" name="email" required
-             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
-    </label>
+          <label style="color:#ccc;display:block;margin-bottom:10px;">
+            Name:<br>
+            <input type="text" name="name" required
+                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+          </label>
 
-    <input type="hidden" name="season" value="Winter">
+          <label style="color:#ccc;display:block;margin-bottom:10px;">
+            E-Mail-Adresse:<br>
+            <input type="email" name="email" required
+                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+          </label>
 
-    <button type="submit"
-            style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
-                   background:linear-gradient(90deg,#1e90ff,#63b3ed);color:#fff;font-weight:600;font-size:15px;
-                   cursor:pointer;transition:opacity .3s ease;">
-      Absenden
-    </button>
+          <input type="hidden" name="season" value="Winter">
 
-    <p id="winterMsg"
-       style="display:none;text-align:center;color:#8fd694;margin-top:12px;">
-       Danke! Dein Download-Link ist jetzt freigeschaltet 👇
-    </p>
-  </form>
+          <button type="submit"
+                  style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
+                         background:linear-gradient(90deg,#1e90ff,#63b3ed);color:#fff;font-weight:600;font-size:15px;
+                         cursor:pointer;transition:opacity .3s ease;">
+            Absenden
+          </button>
 
-  <!-- Der eigentliche Download-Link (versteckt bis Formular gesendet wurde) -->
-  <div id="winterLink" style="display:none;text-align:center;margin-top:20px;">
-    <a class="download-btn winter-btn"
-       href="https://soellerhaus1.quickconnect.to/d/s/15S7Ajs9i8Es7qgT2paiQbKlt5IwVw6y/li5hKzhObCtfe13KXSTz2F0UKjcrrcp2-sLXgY2gVrAw"
-       target="_blank">
-       👉 Jetzt Winter-Download starten
-    </a>
-  </div>
-</div>
+          <p id="winterMsg"
+             style="display:none;text-align:center;color:#8fd694;margin-top:12px;">
+             Danke! Dein Download-Link ist jetzt freigeschaltet 👇
+          </p>
+        </form>
 
-<script>
-function toggleForm(){
-  const f = document.getElementById('winterForm');
-  f.style.display = f.style.display === 'none' ? 'block' : 'none';
-}
-
-document.addEventListener("DOMContentLoaded", ()=>{
-  const form = document.getElementById("winterForm");
-  const msg = document.getElementById("winterMsg");
-  const link = document.getElementById("winterLink");
-
-  form.addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    const data = new FormData(form);
-    const response = await fetch(form.action, {
-      method: form.method,
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    });
-
-    if (response.ok) {
-      form.querySelector("button").disabled = true;
-      form.querySelector("button").style.opacity = ".6";
-      msg.style.display = "block";
-      link.style.display = "block";
-    } else {
-      alert("Fehler beim Absenden. Bitte versuch es erneut.");
-    }
-  });
-});
-</script>
-       
-	   <p class="license">📜 <strong>Regel</strong> Videos dürfen kostenlos verwendet werden.<br>Urheber ist walserfly.com – Namensnennung <strong>@walserfly</strong> erforderlich!</p>
+        <!-- Versteckter Download-Link -->
+        <div id="winterLink" style="display:none;text-align:center;margin-top:20px;">
+          <a class="download-btn winter-btn"
+             href="https://soellerhaus1.quickconnect.to/d/s/15S7Ajs9i8Es7qgT2paiQbKlt5IwVw6y/li5hKzhObCtfe13KXSTz2F0UKjcrrcp2-sLXgY2gVrAw"
+             target="_blank">
+             👉 Jetzt Winter-Download starten
+          </a>
+        </div>
       </div>
 
-      <div class="grid" style="margin-top:20px;">
+      <p class="license">
+        📜 <strong>Regel</strong> Videos dürfen kostenlos verwendet werden.<br>
+        Urheber ist walserfly.com – Namensnennung <strong>@walserfly</strong> erforderlich!
+      </p>
+    </div>
+
+    <div class="grid" style="margin-top:20px;">
+      <!-- Alle Winter-Videokarten wie gehabt -->
         <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127958002?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern am Morgen" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Riezlern am Morgen</h3><p class="meta">Winter · Kleinwalsertal</p></article>
         <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127905939?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Advent" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Advent</h3><p class="meta">Winter · Kleinwalsertal</p></article>
         <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128885169?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Gipfelkreuz Ifen Winter FPV" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Gipfelkreuz Ifen Winter FPV</h3><p class="meta">Winter · Kleinwalsertal</p></article>
@@ -247,19 +390,17 @@ document.addEventListener("DOMContentLoaded", ()=>{
         <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127827272?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Weihnachten (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Weihnachten</h3><p class="meta">Winter · Kleinwalsertal</p></article>
         <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127820407?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Sonne Ifen (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Sonne Ifen</h3><p class="meta">Winter · Kleinwalsertal</p></article>
         <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127528220?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Zwölfer runter (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Zwölfer runter</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-      </div>
+    </div>
 
-      <div style="text-align:center;margin-top:32px;">
-        <a class="download-btn winter-btn" href="https://soellerhaus1.quickconnect.to/d/s/15S7Ajs9i8Es7qgT2paiQbKlt5IwVw6y/li5hKzhObCtfe13KXSTz2F0UKjcrrcp2-sLXgY2gVrAw" target="_blank">⬇️ Winter Download</a>
-		<p class="license">
-  📜 <strong>Regel:</strong> Videos dürfen kostenlos verwendet werden.<br>
-  Urheber ist <strong>walserfly.com</strong> – Namensnennung <strong>@walserfly</strong> erforderlich!<br><br>
-  ✉️ Für Anfragen oder spezielle Aufträge erreichst du mich unter:<br>
-  <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
-  💶 Wenn dir meine Aufnahmen gefallen, füll mir doch den Tank… mit Kaffee oder Bier ☕🍺😉:<br>
-  <a href="https://paypal.me/walserfly" target="_blank">paypal.me/walserfly</a>
-</p>		</div>
-      </div>
+    <div style="text-align:center;margin-top:32px;">
+      <p class="license">
+        📜 <strong>Regel:</strong> Videos dürfen kostenlos verwendet werden.<br>
+        Urheber ist <strong>walserfly.com</strong> – Namensnennung <strong>@walserfly</strong> erforderlich!<br><br>
+        ✉️ Für Anfragen oder spezielle Aufträge erreichst du mich unter:<br>
+        <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
+        💶 Wenn dir meine Aufnahmen gefallen, füll mir doch den Tank… mit Kaffee oder Bier ☕🍺😉:<br>
+        <a href="https://paypal.me/walserfly" target="_blank">paypal.me/walserfly</a>
+      </p>
     </div>
   </div>
 
@@ -271,92 +412,65 @@ document.addEventListener("DOMContentLoaded", ()=>{
         <p class="fs-sub">Morgentau, frisches Grün, sanfte Linien.</p>
       </header>
 
-<!-- 🌱 FRÜHLING DOWNLOAD MIT FORMULAR -->
-<div style="text-align:center;">
-  <!-- Sichtbarer Button -->
-  <a id="showFormSpring" class="download-btn fruehling-btn" href="#" onclick="event.preventDefault();toggleFormSpring();">
-    ⬇️ Frühling Download
-  </a>
+      <!-- 🌱 FRÜHLING DOWNLOAD MIT FORMULAR -->
+      <div style="text-align:center;">
+        <!-- Sichtbarer Button -->
+        <a id="showFormSpring" class="download-btn fruehling-btn" href="#" onclick="event.preventDefault();toggleFormSpring();">
+          ⬇️ Frühling Download
+        </a>
 
-  <!-- Formular (zuerst versteckt) -->
-  <form id="springForm"
-        action="https://formspree.io/f/mvgwndgg"
-        method="POST"
-        style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
-               background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
+        <!-- Formular (zuerst versteckt) -->
+        <form id="springForm"
+              action="https://formspree.io/f/mvgwndgg"
+              method="POST"
+              style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
+                     background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
 
-    <label style="color:#ccc;display:block;margin-bottom:10px;">
-      Name:<br>
-      <input type="text" name="name" required
-             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
-    </label>
+          <label style="color:#ccc;display:block;margin-bottom:10px;">
+            Name:<br>
+            <input type="text" name="name" required
+                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+          </label>
 
-    <label style="color:#ccc;display:block;margin-bottom:10px;">
-      E-Mail-Adresse:<br>
-      <input type="email" name="email" required
-             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
-    </label>
+          <label style="color:#ccc;display:block;margin-bottom:10px;">
+            E-Mail-Adresse:<br>
+            <input type="email" name="email" required
+                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+          </label>
 
-    <input type="hidden" name="season" value="Frühling">
+          <input type="hidden" name="season" value="Frühling">
 
-    <button type="submit"
-            style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
-                   background:linear-gradient(90deg,#28a745,#8fd694);color:#fff;font-weight:600;font-size:15px;
-                   cursor:pointer;transition:opacity .3s ease;">
-      Absenden
-    </button>
+          <button type="submit"
+                  style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
+                         background:linear-gradient(90deg,#28a745,#8fd694);color:#fff;font-weight:600;font-size:15px;
+                         cursor:pointer;transition:opacity .3s ease;">
+            Absenden
+          </button>
 
-    <p id="springMsg"
-       style="display:none;text-align:center;color:#8fd694;margin-top:12px;">
-       Danke! Dein Download-Link ist jetzt freigeschaltet 👇
-    </p>
-  </form>
+          <p id="springMsg"
+             style="display:none;text-align:center;color:#8fd694;margin-top:12px;">
+             Danke! Dein Download-Link ist jetzt freigeschaltet 👇
+          </p>
+        </form>
 
-  <!-- Versteckter Download-Link -->
-  <div id="springLink" style="display:none;text-align:center;margin-top:20px;">
-    <a class="download-btn fruehling-btn"
-       href="https://soellerhaus1.quickconnect.to/d/s/15S7BWQPkYUdz6I2Puk4832Js2FGnlyx/qhBpkLz5VlznNJ2326bC6mRIg0FWbn-f-ErWgezMVrAw"
-       target="_blank">
-       👉 Jetzt Frühling-Download starten
-    </a>
-  </div>
-</div>
-
-<script>
-function toggleFormSpring(){
-  const f = document.getElementById('springForm');
-  f.style.display = f.style.display === 'none' ? 'block' : 'none';
-}
-
-document.addEventListener("DOMContentLoaded", ()=>{
-  const form = document.getElementById("springForm");
-  const msg = document.getElementById("springMsg");
-  const link = document.getElementById("springLink");
-
-  form.addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    const data = new FormData(form);
-    const response = await fetch(form.action, {
-      method: form.method,
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    });
-
-    if (response.ok) {
-      form.querySelector("button").disabled = true;
-      form.querySelector("button").style.opacity = ".6";
-      msg.style.display = "block";
-      link.style.display = "block";
-    } else {
-      alert("Fehler beim Absenden. Bitte versuch es erneut.");
-    }
-  });
-});
-</script>
-        <p class="license">📜 <strong>Regel</strong> Videos dürfen kostenlos verwendet werden.<br>Urheber ist walserfly.com – Namensnennung <strong>@walserfly</strong> erforderlich!</p>
+        <!-- Versteckter Download-Link -->
+        <div id="springLink" style="display:none;text-align:center;margin-top:20px;">
+          <a class="download-btn fruehling-btn"
+             href="https://soellerhaus1.quickconnect.to/d/s/15S7BWQPkYUdz6I2Puk4832Js2FGnlyx/qhBpkLz5VlznNJ2326bC6mRIg0FWbn-f-ErWgezMVrAw"
+             target="_blank">
+             👉 Jetzt Frühling-Download starten
+          </a>
+        </div>
       </div>
 
-      <div class="grid" style="margin-top:20px;">
+      <p class="license">
+        📜 <strong>Regel</strong> Videos dürfen kostenlos verwendet werden.<br>
+        Urheber ist walserfly.com – Namensnennung <strong>@walserfly</strong> erforderlich!
+      </p>
+    </div>
+
+    <div class="grid" style="margin-top:20px;">
+      <!-- Alle Frühling-Videokarten wie gehabt -->
         <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128871485?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Walmendinger Horn (Frühling)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Walmendingerhorn dive</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
         <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128939314?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Köpflegrat" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Köpflegrat</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
         <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128885650?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ochsenhofer Scharte bis Herzsee long" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Ochsenhofer Scharte bis Herzsee long</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
@@ -372,119 +486,87 @@ document.addEventListener("DOMContentLoaded", ()=>{
 		<article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128939651?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Melköde 1" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Melköde 1</h3><p class="meta" style="color:#ffccb8">Frühling · Kleinwalsertal</p></article>
 		<article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128938364?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Melköde 2" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Melköde 2</h3><p class="meta" style="color:#ffccb8">Frühling · Kleinwalsertal</p></article>
 		<article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128937997?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Melköde 3" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Melköde 3</h3><p class="meta" style="color:#ffccb8">Frühling · Kleinwalsertal</p></article>	  
+    </div>
 
-      </div>
-
-      <div style="text-align:center;margin-top:32px;">
-        <a class="download-btn fruehling-btn" href="https://soellerhaus1.quickconnect.to/d/s/15S7BWQPkYUdz6I2Puk4832Js2FGnlyx/qhBpkLz5VlznNJ2326bC6mRIg0FWbn-f-ErWgezMVrAw" target="_blank">⬇️ Frühling Download</a>
-		<p class="license">
-  📜 <strong>Regel:</strong> Videos dürfen kostenlos verwendet werden.<br>
-  Urheber ist <strong>walserfly.com</strong> – Namensnennung <strong>@walserfly</strong> erforderlich!<br><br>
-  ✉️ Für Anfragen oder spezielle Aufträge erreichst du mich unter:<br>
-  <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
-  💶 Wenn dir meine Flüge gefallen, spendier mir ’nen Kaffee… oder gleich ein Bier ☕🍺😉:<br>
-  <a href="https://paypal.me/walserfly" target="_blank">paypal.me/walserfly</a>
-</p>		</div>
-      </div>
+    <div style="text-align:center;margin-top:32px;">
+      <p class="license">
+        📜 <strong>Regel:</strong> Videos dürfen kostenlos verwendet werden.<br>
+        Urheber ist <strong>walserfly.com</strong> – Namensnennung <strong>@walserfly</strong> erforderlich!<br><br>
+        ✉️ Für Anfragen oder spezielle Aufträge erreichst du mich unter:<br>
+        <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
+        💶 Wenn dir meine Flüge gefallen, spendier mir ’nen Kaffee… oder gleich ein Bier ☕🍺😉:<br>
+        <a href="https://paypal.me/walserfly" target="_blank">paypal.me/walserfly</a>
+      </p>
     </div>
   </div>
 
   <!-- SOMMER -->
-<div id="sommer" class="panel">
-  <div class="fs-wrap">
-    <header class="fs-head">
-      <h2 class="fs-h2">☀️ Sommer-Videos</h2>
-      <p class="fs-sub">Lange Tage, klare Farben, warme Luft.</p>
-    </header>
+  <div id="sommer" class="panel">
+    <div class="fs-wrap">
+      <header class="fs-head">
+        <h2 class="fs-h2">☀️ Sommer-Videos</h2>
+        <p class="fs-sub">Lange Tage, klare Farben, warme Luft.</p>
+      </header>
 
-<!-- ☀️ SOMMER DOWNLOAD MIT FORMULAR -->
-<div style="text-align:center;">
-  <!-- Sichtbarer Button -->
-  <a id="showFormSummer" class="download-btn sommer-btn" href="#" onclick="event.preventDefault();toggleFormSummer();">
-    ⬇️ Sommer Download
-  </a>
+      <!-- ☀️ SOMMER DOWNLOAD MIT FORMULAR -->
+      <div style="text-align:center;">
+        <!-- Sichtbarer Button -->
+        <a id="showFormSummer" class="download-btn sommer-btn" href="#" onclick="event.preventDefault();toggleFormSummer();">
+          ⬇️ Sommer Download
+        </a>
 
-  <!-- Formular (zuerst versteckt) -->
-  <form id="summerForm"
-        action="https://formspree.io/f/mvgwndgg"
-        method="POST"
-        style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
-               background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
+        <!-- Formular (zuerst versteckt) -->
+        <form id="summerForm"
+              action="https://formspree.io/f/mvgwndgg"
+              method="POST"
+              style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
+                     background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
 
-    <label style="color:#ccc;display:block;margin-bottom:10px;">
-      Name:<br>
-      <input type="text" name="name" required
-             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
-    </label>
+          <label style="color:#ccc;display:block;margin-bottom:10px;">
+            Name:<br>
+            <input type="text" name="name" required
+                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+          </label>
 
-    <label style="color:#ccc;display:block;margin-bottom:10px;">
-      E-Mail-Adresse:<br>
-      <input type="email" name="email" required
-             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
-    </label>
+          <label style="color:#ccc;display:block;margin-bottom:10px;">
+            E-Mail-Adresse:<br>
+            <input type="email" name="email" required
+                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+          </label>
 
-    <input type="hidden" name="season" value="Sommer">
+          <input type="hidden" name="season" value="Sommer">
 
-    <button type="submit"
-            style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
-                   background:linear-gradient(90deg,#f6b800,#fce181);color:#000;font-weight:600;font-size:15px;
-                   cursor:pointer;transition:opacity .3s ease;">
-      Absenden
-    </button>
+          <button type="submit"
+                  style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
+                         background:linear-gradient(90deg,#f6b800,#fce181);color:#000;font-weight:600;font-size:15px;
+                         cursor:pointer;transition:opacity .3s ease;">
+            Absenden
+          </button>
 
-    <p id="summerMsg"
-       style="display:none;text-align:center;color:#fce181;margin-top:12px;">
-       Danke! Dein Download-Link ist jetzt freigeschaltet 👇
-    </p>
-  </form>
+          <p id="summerMsg"
+             style="display:none;text-align:center;color:#fce181;margin-top:12px;">
+             Danke! Dein Download-Link ist jetzt freigeschaltet 👇
+          </p>
+        </form>
 
-  <!-- Versteckter Download-Link -->
-  <div id="summerLink" style="display:none;text-align:center;margin-top:20px;">
-    <a class="download-btn sommer-btn"
-       href="https://soellerhaus1.quickconnect.to/d/s/15S7Br6rSE0tRSfAIVgfqbx4Eupag4qN/GMURyBL-U4VSaMimPuARB67isCKtUfiq-9LWg53kVrAw"
-       target="_blank">
-       👉 Jetzt Sommer-Download starten
-    </a>
-  </div>
-</div>
+        <!-- Versteckter Download-Link -->
+        <div id="summerLink" style="display:none;text-align:center;margin-top:20px;">
+          <a class="download-btn sommer-btn"
+             href="https://soellerhaus1.quickconnect.to/d/s/15S7Br6rSE0tRSfAIVgfqbx4Eupag4qN/GMURyBL-U4VSaMimPuARB67isCKtUfiq-9LWg53kVrAw"
+             target="_blank">
+             👉 Jetzt Sommer-Download starten
+          </a>
+        </div>
+      </div>
 
-<script>
-function toggleFormSummer(){
-  const f = document.getElementById('summerForm');
-  f.style.display = f.style.display === 'none' ? 'block' : 'none';
-}
-
-document.addEventListener("DOMContentLoaded", ()=>{
-  const form = document.getElementById("summerForm");
-  const msg = document.getElementById("summerMsg");
-  const link = document.getElementById("summerLink");
-
-  form.addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    const data = new FormData(form);
-    const response = await fetch(form.action, {
-      method: form.method,
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    });
-
-    if (response.ok) {
-      form.querySelector("button").disabled = true;
-      form.querySelector("button").style.opacity = ".6";
-      msg.style.display = "block";
-      link.style.display = "block";
-    } else {
-      alert("Fehler beim Absenden. Bitte versuch es erneut.");
-    }
-  });
-});
-</script>
-       
-
-	   <p class="license">📜 <strong>Regel</strong> Videos dürfen kostenlos verwendet werden.<br>Urheber ist walserfly.com – Namensnennung <strong>@walserfly</strong> erforderlich!</p>
+      <p class="license">
+        📜 <strong>Regel</strong> Videos dürfen kostenlos verwendet werden.<br>
+        Urheber ist walserfly.com – Namensnennung <strong>@walserfly</strong> erforderlich!
+      </p>
     </div>
 
     <div class="grid" style="margin-top:20px;">
+      <!-- Alle Sommer-Videokarten wie gehabt -->
       <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127926929?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen Gipfelkreuz (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Ifen Gipfelkreuz</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
       <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127961450?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Talblick (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Talblick</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
       <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127590107?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Herzsee 2" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Herzsee 2</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
@@ -509,113 +591,84 @@ document.addEventListener("DOMContentLoaded", ()=>{
     </div>
 
     <div style="text-align:center;margin-top:32px;">
-      <a class="download-btn sommer-btn" href="https://soellerhaus1.quickconnect.to/d/s/15S7Br6rSE0tRSfAIVgfqbx4Eupag4qN/GMURyBL-U4VSaMimPuARB67isCKtUfiq-9LWg53kVrAw" target="_blank">⬇️ Sommer Download</a>
-<p class="license">
-  📜 <strong>Regel:</strong> Videos dürfen kostenlos verwendet werden.<br>
-  Urheber ist <strong>walserfly.com</strong> – Namensnennung <strong>@walserfly</strong> erforderlich!<br><br>
-  ✉️ Für Anfragen oder spezielle Aufträge erreichst du mich unter:<br>
-  <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
-  💶 Unterstütz meine Flugleidenschaft – mit Koffein oder Hopfen ☕🍺😉:<br>
-  <a href="https://paypal.me/walserfly" target="_blank">paypal.me/walserfly</a>
-</p>		</div>
+      <p class="license">
+        📜 <strong>Regel:</strong> Videos dürfen kostenlos verwendet werden.<br>
+        Urheber ist <strong>walserfly.com</strong> – Namensnennung <strong>@walserfly</strong> erforderlich!<br><br>
+        ✉️ Für Anfragen oder spezielle Aufträge erreichst du mich unter:<br>
+        <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
+        💶 Unterstütz meine Flugleidenschaft – mit Koffein oder Hopfen ☕🍺😉:<br>
+        <a href="https://paypal.me/walserfly" target="_blank">paypal.me/walserfly</a>
+      </p>
+    </div>
   </div>
-</div>
 
+  <!-- HERBST -->
+  <div id="herbst" class="panel">
+    <div class="fs-wrap">
+      <header class="fs-head">
+        <h2 class="fs-h2">🍁 Herbst-Videos</h2>
+        <p class="fs-sub">Warme Farben, tiefe Sonne, ruhige Flüge.</p>
+      </header>
 
-<!-- HERBST -->
-<div id="herbst" class="panel">
-  <div class="fs-wrap">
-    <header class="fs-head">
-      <h2 class="fs-h2">🍁 Herbst-Videos</h2>
-      <p class="fs-sub">Warme Farben, tiefe Sonne, ruhige Flüge.</p>
-    </header>
+      <!-- 🍁 HERBST DOWNLOAD MIT FORMULAR -->
+      <div style="text-align:center;">
+        <!-- Sichtbarer Button -->
+        <a id="showFormAutumn" class="download-btn herbst-btn" href="#" onclick="event.preventDefault();toggleFormAutumn();">
+          ⬇️ Herbst Download
+        </a>
 
-<!-- 🍁 HERBST DOWNLOAD MIT FORMULAR -->
-<div style="text-align:center;">
-  <!-- Sichtbarer Button -->
-  <a id="showFormAutumn" class="download-btn herbst-btn" href="#" onclick="event.preventDefault();toggleFormAutumn();">
-    ⬇️ Herbst Download
-  </a>
+        <!-- Formular (zuerst versteckt) -->
+        <form id="autumnForm"
+              action="https://formspree.io/f/mvgwndgg"
+              method="POST"
+              style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
+                     background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
 
-  <!-- Formular (zuerst versteckt) -->
-  <form id="autumnForm"
-        action="https://formspree.io/f/mvgwndgg"
-        method="POST"
-        style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
-               background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
+          <label style="color:#ccc;display:block;margin-bottom:10px;">
+            Name:<br>
+            <input type="text" name="name" required
+                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+          </label>
 
-    <label style="color:#ccc;display:block;margin-bottom:10px;">
-      Name:<br>
-      <input type="text" name="name" required
-             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
-    </label>
+          <label style="color:#ccc;display:block;margin-bottom:10px;">
+            E-Mail-Adresse:<br>
+            <input type="email" name="email" required
+                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+          </label>
 
-    <label style="color:#ccc;display:block;margin-bottom:10px;">
-      E-Mail-Adresse:<br>
-      <input type="email" name="email" required
-             style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
-    </label>
+          <input type="hidden" name="season" value="Herbst">
 
-    <input type="hidden" name="season" value="Herbst">
+          <button type="submit"
+                  style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
+                         background:linear-gradient(90deg,#e67300,#ffaf66);color:#fff;font-weight:600;font-size:15px;
+                         cursor:pointer;transition:opacity .3s ease;">
+            Absenden
+          </button>
 
-    <button type="submit"
-            style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
-                   background:linear-gradient(90deg,#e67300,#ffaf66);color:#fff;font-weight:600;font-size:15px;
-                   cursor:pointer;transition:opacity .3s ease;">
-      Absenden
-    </button>
+          <p id="autumnMsg"
+             style="display:none;text-align:center;color:#ffaf66;margin-top:12px;">
+             Danke! Dein Download-Link ist jetzt freigeschaltet 👇
+          </p>
+        </form>
 
-    <p id="autumnMsg"
-       style="display:none;text-align:center;color:#ffaf66;margin-top:12px;">
-       Danke! Dein Download-Link ist jetzt freigeschaltet 👇
-    </p>
-  </form>
+        <!-- Versteckter Download-Link -->
+        <div id="autumnLink" style="display:none;text-align:center;margin-top:20px;">
+          <a class="download-btn herbst-btn"
+             href="https://soellerhaus1.quickconnect.to/d/s/15S7B9Ub01INFo0jxWLAm84w6i4i3z2w/FX-e9hYOcFeWOeImoGGk2donpi8k3uUF-NrZgvYgVrAw"
+             target="_blank">
+             👉 Jetzt Herbst-Download starten
+          </a>
+        </div>
+      </div>
 
-  <!-- Versteckter Download-Link -->
-  <div id="autumnLink" style="display:none;text-align:center;margin-top:20px;">
-    <a class="download-btn herbst-btn"
-       href="https://soellerhaus1.quickconnect.to/d/s/15S7B9Ub01INFo0jxWLAm84w6i4i3z2w/FX-e9hYOcFeWOeImoGGk2donpi8k3uUF-NrZgvYgVrAw"
-       target="_blank">
-       👉 Jetzt Herbst-Download starten
-    </a>
-  </div>
-</div>
-
-<script>
-function toggleFormAutumn(){
-  const f = document.getElementById('autumnForm');
-  f.style.display = f.style.display === 'none' ? 'block' : 'none';
-}
-
-document.addEventListener("DOMContentLoaded", ()=>{
-  const form = document.getElementById("autumnForm");
-  const msg = document.getElementById("autumnMsg");
-  const link = document.getElementById("autumnLink");
-
-  form.addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    const data = new FormData(form);
-    const response = await fetch(form.action, {
-      method: form.method,
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    });
-
-    if (response.ok) {
-      form.querySelector("button").disabled = true;
-      form.querySelector("button").style.opacity = ".6";
-      msg.style.display = "block";
-      link.style.display = "block";
-    } else {
-      alert("Fehler beim Absenden. Bitte versuch es erneut.");
-    }
-  });
-});
-</script>
-	          <p class="license">📜 <strong>Regel</strong> Videos dürfen kostenlos verwendet werden.<br>Urheber ist walserfly.com – Namensnennung <strong>@walserfly</strong> erforderlich!</p>
+      <p class="license">
+        📜 <strong>Regel</strong> Videos dürfen kostenlos verwendet werden.<br>
+        Urheber ist walserfly.com – Namensnennung <strong>@walserfly</strong> erforderlich!
+      </p>
     </div>
 
     <div class="grid" style="margin-top:20px;">
+      <!-- Alle Herbst-Videokarten wie gehabt -->
       <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1132165347?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Hirschegg unten grün oben weiss" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Hirschegg unten grün oben weiss</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
       <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1132164892?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern unten grün oben weiss" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Riezlern unten grün oben weiss</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
       <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128935565?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Hirschegg hoch" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Hirschegg hoch</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
@@ -659,38 +712,111 @@ document.addEventListener("DOMContentLoaded", ()=>{
     </div>
 
     <div style="text-align:center;margin-top:32px;">
-      <a class="download-btn herbst-btn" href="https://soellerhaus1.quickconnect.to/d/s/15S7B9Ub01INFo0jxWLAm84w6i4i3z2w/FX-e9hYOcFeWOeImoGGk2donpi8k3uUF-NrZgvYgVrAw" target="_blank">⬇️ Herbst Download</a>
-<p class="license">
-  📜 <strong>Regel:</strong> Videos dürfen kostenlos verwendet werden.<br>
-  Urheber ist <strong>walserfly.com</strong> – Namensnennung <strong>@walserfly</strong> erforderlich!<br><br>
-  ✉️ Für Anfragen oder spezielle Aufträge erreichst du mich unter:<br>
-  <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
-  💶  Für jeden Kaffee flieg ich ’ne Extra-Runde ☕😉<br>
-  <a href="https://paypal.me/walserfly" target="_blank">paypal.me/walserfly</a>
-  <!-- Nur Instagram-Logo (weiß, zentriert) -->
-<div style="text-align: center; margin-top: 20px;">
-  <a href="https://www.instagram.com/walserfly/"
-     target="_blank"
-     rel="noopener"
-     aria-label="Walserfly auf Instagram öffnen"
-     style="color: #fff; text-decoration: none; transition: transform 0.2s ease, color 0.2s ease; display: inline-block;">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="vertical-align: middle;">
-      <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/>
-    </svg>
-  </a>
-</div>
-</p>		</div>
-
+      <p class="license">
+        📜 <strong>Regel:</strong> Videos dürfen kostenlos verwendet werden.<br>
+        Urheber ist <strong>walserfly.com</strong> – Namensnennung <strong>@walserfly</strong> erforderlich!<br><br>
+        ✉️ Für Anfragen oder spezielle Aufträge erreichst du mich unter:<br>
+        <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
+        💶  Für jeden Kaffee flieg ich ’ne Extra-Runde ☕😉<br>
+        <a href="https://paypal.me/walserfly" target="_blank">paypal.me/walserfly</a>
+      </p>
+    </div>
   </div>
-</div>
+
+  <!-- KI -->
+  <div id="ki" class="panel">
+    <div class="fs-wrap">
+      <header class="fs-head">
+        <h2 class="fs-h2">🤖 KI-Videos & Assets</h2>
+        <p class="fs-sub">Speziell aufbereitete Clips & Material für deine KI-Projekte.</p>
+      </header>
+
+      <!-- 🤖 KI DOWNLOAD MIT FORMULAR -->
+      <div style="text-align:center;">
+        <!-- Sichtbarer Button -->
+        <a id="showFormKI"
+           class="download-btn ki-btn"
+           href="#"
+           onclick="event.preventDefault();toggleFormKI();">
+          ⬇️ KI Download
+        </a>
+
+        <!-- Formular (zuerst versteckt) -->
+        <form id="kiForm"
+              action="https://formspree.io/f/mvgwndgg"
+              method="POST"
+              style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
+                     background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
+
+          <label style="color:#ccc;display:block;margin-bottom:10px;">
+            Name:<br>
+            <input type="text" name="name" required
+                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+          </label>
+
+          <label style="color:#ccc;display:block;margin-bottom:10px;">
+            E-Mail-Adresse:<br>
+            <input type="email" name="email" required
+                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+          </label>
+
+          <!-- Saison ist jetzt KI -->
+          <input type="hidden" name="season" value="KI">
+
+          <button type="submit"
+                  style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
+                         background:linear-gradient(90deg,#1e90ff,#63b3ed);color:#fff;font-weight:600;font-size:15px;
+                         cursor:pointer;transition:opacity .3s ease;">
+            Absenden
+          </button>
+
+          <p id="kiMsg"
+             style="display:none;text-align:center;color:#8fd694;margin-top:12px;">
+             Danke! Dein Download-Link ist jetzt freigeschaltet 👇
+          </p>
+        </form>
+
+        <!-- Versteckter Download-Link -->
+        <div id="kiLink" style="display:none;text-align:center;margin-top:20px;">
+          <a class="download-btn ki-btn"
+             href="DEIN_KI_DOWNLOAD_LINK_HIER"
+             target="_blank">
+             👉 Jetzt KI-Download starten
+          </a>
+        </div>
+      </div>
+
+      <p class="license">
+        📜 <strong>Regel:</strong> Videos dürfen kostenlos verwendet werden.<br>
+        Urheber ist <strong>walserfly.com</strong> – Namensnennung <strong>@walserfly</strong> erforderlich!
+      </p>
+    </div>
+
+    <div class="grid" style="margin-top:20px;">
+      <!-- Alle KI-Videokarten wie gehabt -->
+      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137215926?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern Kirche Herbst (KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Riezlern Kirche Herbst</h3><p class="meta" style="color:#ffccb8">KI</p></article>
+      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137215970?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern Kirche Herbst 2(KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Riezlern Kirche Herbst 2</h3><p class="meta" style="color:#ffccb8">KI</p></article>
+      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137216084?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Kirche 4 Jahreszeiten Zeitraffer(KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Kirche 4 Jahreszeiten Zeitraffer</h3><p class="meta" style="color:#ffccb8">KI</p></article>	  
+      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137216049?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern 4 Jahreszeiten Kirche Zeitraffer(KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Riezlern 4 Jahreszeiten Kirche Zeitraffer</h3><p class="meta" style="color:#ffccb8">KI</p></article>
+      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137216570?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Kirche Mittelberg Zeitraffer Jahreszeiten(KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Kirche Mittelberg Zeitraffer Jahreszeiten</h3><p class="meta" style="color:#ffccb8">KI</p></article>
+      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137216612?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Mittelberg Zeitraffer Kirche Sommer (KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Mittelberg Zeitraffer Kirche Sommer</h3><p class="meta" style="color:#ffccb8">KI</p></article>
+      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137216117?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern Zeitraffer 1 Jahr (KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Riezlern Zeitraffer 1 Jahr</h3><p class="meta" style="color:#ffccb8">KI</p></article>	  
+      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137216012?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern 4 Jahreszeiten Zeitraffer(KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Riezlern 4 Jahreszeiten Zeitraffer</h3><p class="meta" style="color:#ffccb8">KI</p></article>
+	  
+    </div>
+  </div>
+
 </section>
+
 <!-- Zurück nach oben Button -->
 <button id="backToTop" title="Nach oben">↑</button>
+
 <p style="margin:10px 0 0; font-size:.8rem; color:#8e8e8e; text-align:center;">
   © 2025 walserfly.com · 
   <a href="impressum.html" style="color:inherit; text-decoration:underline;">Impressum</a> ·
   <a href="datenschutz.html" style="color:inherit; text-decoration:underline;">Datenschutz</a>
 </p>
+
 <!-- Weißes Instagram-Symbol fix unten mittig -->
 <a
   href="https://www.instagram.com/walserfly/"
@@ -704,55 +830,50 @@ document.addEventListener("DOMContentLoaded", ()=>{
   </svg>
 </a>
 
-<style>
-  .insta-btn-fixed {
-    position: fixed;
-    bottom: 20px; /* Abstand vom unteren Rand */
-    left: 50%;
-    transform: translateX(-50%);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    color: #fff;
-    background: transparent;
-    transition: transform 0.2s ease, color 0.2s ease;
-    text-decoration: none;
-    z-index: 1000;
-  }
-
-  .insta-btn-fixed:hover {
-    color: #E4405F;
-    transform: translateX(-50%) scale(1.15);
-  }
-
-  .insta-icon-fixed {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
-  }
-</style>
-
-
-<!-- Vimeo API (optional, schadlos wenn drin) -->
+<!-- Vimeo API -->
 <script src="https://player.vimeo.com/api/player.js"></script>
 
-<!-- Tabs & Lazy-Loader -->
 <script>
+/* Form-Toggler für die Buttons */
+function toggleForm(){
+  const f = document.getElementById('winterForm');
+  if (!f) return;
+  f.style.display = (f.style.display === 'none' || !f.style.display) ? 'block' : 'none';
+}
+function toggleFormSpring(){
+  const f = document.getElementById('springForm');
+  if (!f) return;
+  f.style.display = (f.style.display === 'none' || !f.style.display) ? 'block' : 'none';
+}
+function toggleFormSummer(){
+  const f = document.getElementById('summerForm');
+  if (!f) return;
+  f.style.display = (f.style.display === 'none' || !f.style.display) ? 'block' : 'none';
+}
+function toggleFormAutumn(){
+  const f = document.getElementById('autumnForm');
+  if (!f) return;
+  f.style.display = (f.style.display === 'none' || !f.style.display) ? 'block' : 'none';
+}
+function toggleFormKI(){
+  const f = document.getElementById('kiForm');
+  if (!f) return;
+  f.style.display = (f.style.display === 'none' || !f.style.display) ? 'block' : 'none';
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   // Tabs
   const root = document.getElementById('fpv-seasons-tabs');
-  if (!root) return;
-  const tabs = root.querySelectorAll('.tab');
-  const panels = root.querySelectorAll('.panel');
-  tabs.forEach(btn => btn.addEventListener('click', e => {
-    e.preventDefault();
-    const target = btn.dataset.target;
-    tabs.forEach(t => t.classList.toggle('active', t === btn));
-    panels.forEach(p => p.classList.toggle('active', p.id === target));
-  }));
+  if (root) {
+    const tabs = root.querySelectorAll('.tab');
+    const panels = root.querySelectorAll('.panel');
+    tabs.forEach(btn => btn.addEventListener('click', e => {
+      e.preventDefault();
+      const target = btn.dataset.target;
+      tabs.forEach(t => t.classList.toggle('active', t === btn));
+      panels.forEach(p => p.classList.toggle('active', p.id === target));
+    }));
+  }
 
   // Lazy-Loading der iframes
   const iframes = Array.from(document.querySelectorAll('iframe[data-src]'));
@@ -779,20 +900,60 @@ document.addEventListener("DOMContentLoaded", function() {
   } else {
     setTimeout(() => iframes.forEach(el => loadIframe(el)), 800);
   }
+
+  // Formspree-Submit-Handler für alle vier Jahreszeiten + KI
+  function initForm(formId, msgId, linkId){
+    const form = document.getElementById(formId);
+    if (!form) return;
+    const msg  = document.getElementById(msgId);
+    const link = document.getElementById(linkId);
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        const btn = form.querySelector("button");
+        if (btn) {
+          btn.disabled = true;
+          btn.style.opacity = ".6";
+        }
+        if (msg)  msg.style.display  = "block";
+        if (link) link.style.display = "block";
+      } else {
+        alert("Fehler beim Absenden. Bitte versuch es erneut.");
+      }
+    });
+  }
+
+  initForm("winterForm","winterMsg","winterLink");
+  initForm("springForm","springMsg","springLink");
+  initForm("summerForm","summerMsg","summerLink");
+  initForm("autumnForm","autumnMsg","autumnLink");
+  initForm("kiForm","kiMsg","kiLink");
+
+  // Back-to-top
+  const backToTop = document.getElementById("backToTop");
+  if (backToTop) {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 400) {
+        backToTop.classList.add("show");
+      } else {
+        backToTop.classList.remove("show");
+      }
+    });
+
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
 });
- const backToTop = document.getElementById("backToTop");
-
-  // Wenn gescrollt wird, Button einblenden
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 400) {
-      backToTop.classList.add("show");
-    } else {
-      backToTop.classList.remove("show");
-    }
-  });
-
-  // Beim Klick smooth nach oben scrollen
-  backToTop.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
 </script>
+
+</body>
+</html>
