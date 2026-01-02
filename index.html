@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="de" itemscope itemtype="https://schema.org/WebPage">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta -->
+  <title>FPV & Drohnenaufnahmen Kleinwalsertal | Kostenlos & Lizenzfrei</title>
+  <meta name="description" content="Über 150 kostenlose FPV & Drohnenaufnahmen aus dem Kleinwalsertal. Winter, Frühling, Sommer, Herbst & KI. 4K-Qualität, lizenzfrei für kommerzielle Nutzung.">
+  <meta name="keywords" content="FPV Drohne Kleinwalsertal, Drohnenvideos Österreich, Drohnenaufnahmen Allgäu, kostenlose Drohnenvideos, lizenzfreie FPV Videos">
+  <meta name="author" content="walserfly">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  
+  <!-- Canonical & Language -->
+  <link rel="canonical" href="https://walserfly.com/">
+  <meta name="language" content="de-AT">
+  <meta name="geo.region" content="AT-8">
+  <meta name="geo.placename" content="Kleinwalsertal">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="FPV & Drohnenaufnahmen Kleinwalsertal | Kostenlos & Lizenzfrei">
+  <meta property="og:description" content="Über 150 kostenlose FPV & Drohnenaufnahmen aus dem Kleinwalsertal. 4K-Qualität, lizenzfrei.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://walserfly.com/">
+  <meta property="og:image" content="https://walserfly.com/images/og-image.jpg">
+  <meta property="og:site_name" content="Walserfly">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FPV & Drohnenaufnahmen Kleinwalsertal">
+  <meta name="twitter:image" content="https://walserfly.com/images/og-image.jpg">
+  <meta name="twitter:creator" content="@walserfly">
+  
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://player.vimeo.com">
+  <link rel="preconnect" href="https://cdn.counter.dev">
+  
+  <!-- Counter -->
+  <script src="https://cdn.counter.dev/script.js" 
+          data-id="0d0e6b83-027c-4029-b963-019c7ddcc9b7" 
+          data-utcoffset="2" defer></script>
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Walserfly",
+    "url": "https://walserfly.com",
+    "description": "Kostenlose FPV & Drohnenaufnahmen aus dem Kleinwalsertal",
+    "author": {
+      "@type": "Person",
+      "name": "walserfly",
+      "sameAs": ["https://www.instagram.com/walserfly/"]
+    }
+  }
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      color: #ccc;
+      font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ===== HERO SECTION (VERBESSERT) ===== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px 60px;
+      background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(0,119,255,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(233,64,142,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 24px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      letter-spacing: -1px;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: #aaa;
+      margin-bottom: 48px;
+      line-height: 1.6;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #66ccff;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 40px;
+      background: linear-gradient(90deg, #0077ff, #66ccff);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0,119,255,0.3);
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0,119,255,0.5);
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav.main-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #ccc;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #66ccff;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 60px;
+        right: -100%;
+        width: 250px;
+        background: rgba(0,0,0,0.98);
+        flex-direction: column;
+        padding: 20px;
+        transition: right 0.3s ease;
+        border-left: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .mobile-menu-toggle {
+        display: block;
+      }
+    }
+
+    /* ===== SEASONS SECTION (VERBESSERT) ===== */
+    .seasons-section {
+      padding: 60px 20px 80px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .section-header p {
+      color: #888;
+      font-size: 1.1rem;
+    }
+
+    /* Season Cards Grid */
+    .seasons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      margin-bottom: 40px;
+    }
+
+    .season-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+
+    .season-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+    }
+
+    .season-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
+      z-index: 1;
+    }
+
+    .season-image {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+    }
+
+    .season-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 28px;
+      z-index: 2;
+    }
+
+    .season-icon {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .season-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .season-description {
+      color: #ccc;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+    }
+
+    .season-count {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 16px;
+    }
+
+    .season-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: gap 0.3s ease;
+    }
+
+    .season-card:hover .season-link {
+      gap: 12px;
+    }
+
+    /* Color Accents */
+    .season-card.winter { border-top: 4px solid #0077ff; }
+    .season-card.winter .season-link { color: #66ccff; }
+
+    .season-card.spring { border-top: 4px solid #e9408e; }
+    .season-card.spring .season-link { color: #ff99cc; }
+
+    .season-card.summer { border-top: 4px solid #ffd000; }
+    .season-card.summer .season-link { color: #ffeb99; }
+
+    .season-card.autumn { border-top: 4px solid #ff6633; }
+    .season-card.autumn .season-link { color: #ff9966; }
+
+    .season-card.ai { border-top: 4px solid #6a11cb; }
+    .season-card.ai .season-link { color: #b19cd9; }
+
+    /* ===== SEO ACCORDION (VERBESSERT) ===== */
+    .seo-accordion {
+      max-width: 800px;
+      margin: 80px auto 60px;
+      padding: 0 20px;
+    }
+
+    .seo-toggle {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .seo-toggle-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #888;
+      padding: 14px 36px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .seo-toggle-btn:hover {
+      background: rgba(255,255,255,0.08);
+      color: #ccc;
+    }
+
+    .seo-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+      background: rgba(255,255,255,0.02);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .seo-content.expanded {
+      max-height: 2000px;
+      padding: 40px;
+    }
+
+    .seo-content h3 {
+      color: #66ccff;
+      margin: 24px 0 12px;
+      font-size: 1.4rem;
+    }
+
+    .seo-content p {
+      color: #aaa;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .seo-content ul {
+      color: #aaa;
+      line-height: 1.8;
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #000;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 60px 20px 40px;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-section h4 {
+      color: #fff;
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+    }
+
+    .footer-section a {
+      display: block;
+      color: #888;
+      text-decoration: none;
+      margin-bottom: 12px;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: #66ccff;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      color: #666;
+    }
+
+    /* ===== BACK TO TOP ===== */
+    #backToTop {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 99;
+      background: linear-gradient(90deg, #444, #666);
+      color: #fff;
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    #backToTop:hover {
+      background: linear-gradient(90deg, #666, #888);
+      transform: translateY(-4px);
+    }
+
+    #backToTop.show {
+      opacity: 1;
+    }
+
+    /* ===== INSTAGRAM BUTTON ===== */
+    .insta-btn-fixed {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .insta-btn-fixed:hover {
+      background: #E4405F;
+      transform: translateX(-50%) scale(1.1);
+    }
+
+    .insta-icon-fixed {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .insta-btn-fixed {
+        bottom: 80px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero-stats {
+        gap: 24px;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+      }
+
+      .seasons-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .season-image {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="main-nav">
+  <div class="nav-container">
+    <a href="/" class="logo">walserfly</a>
+    
+    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Menü öffnen">
+      ☰
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="winter.html">❄️ Winter</a></li>
+      <li><a href="fruehling.html">🌱 Frühling</a></li>
+      <li><a href="sommer.html">☀️ Sommer</a></li>
+      <li><a href="herbst.html">🍁 Herbst</a></li>
+      <li><a href="ki.html">🤖 KI</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>FPV & Drohnenaufnahmen<br>Kleinwalsertal</h1>
+    <p class="hero-subtitle">
+      Kostenlose 4K-Aufnahmen aus den Alpen. Lizenzfrei für kommerzielle Nutzung.
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-number">150+</span>
+        <span class="stat-label">Videos</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">4K</span>
+        <span class="stat-label">Qualität</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Kostenlos</span>
+      </div>
+    </div>
+
+    <a href="#seasons" class="hero-cta">
+      <span>Videos entdecken</span>
+      <span>↓</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===== SEASONS SECTION ===== -->
+<section id="seasons" class="seasons-section">
+  <div class="section-header">
+    <h2>Videos nach Jahreszeiten</h2>
+    <p>Entdecke das Kleinwalsertal in allen vier Jahreszeiten</p>
+  </div>
+
+  <div class="seasons-grid">
+    
+    <!-- Winter -->
+    <a href="winter.html" class="season-card winter">
+      <img src="https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?w=800" alt="Winter FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy">
+      <div class="season-content">
+        <span class="season-icon">❄️</span>
+        <h3 class="season-title">Winter</h3>
+        <p class="season-description">Verschneite Gipfel, Schneeflocken, winterliche Stille</p>
+        <p class="season-count">55+ Videos</p>
+        <span class="season-link">Videos ansehen →</span>
+      </div>
+    </a>
+
+    <!-- Frühling -->
+    <a href="fruehling.html" class="season-card spring">
+      <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800" alt="Frühling FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy">
+      <div class="season-content">
+        <span class="season-icon">🌱</span>
+        <h3 class="season-title">Frühling</h3>
+        <p class="season-description">Erwachende Natur, schmelzender Schnee, erste Blüten</p>
+        <p class="season-count">15+ Videos</p>
+        <span class="season-link">Videos ansehen →</span>
+      </div>
+    </a>
+
+    <!-- Sommer -->
+    <a href="sommer.html" class="season-card summer">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" alt="Sommer FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy">
+      <div class="season-content">
+        <span class="season-icon">☀️</span>
+        <h3 class="season-title">Sommer</h3>
+        <p class="season-description">Grüne Almen, kristallklare Bergseen, endlose Sommertage</p>
+        <p class="season-count">20+ Videos</p>
+        <span class="season-link">Videos ansehen →</span>
+      </div>
+    </a>
+
+    <!-- Herbst -->
+    <a href="herbst.html" class="season-card autumn">
+      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" alt="Herbst FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy">
+      <div class="season-content">
+        <span class="season-icon">🍁</span>
+        <h3 class="season-title">Herbst</h3>
+        <p class="season-description">Goldene Wälder, mystischer Nebel, warme Farben</p>
+        <p class="season-count">40+ Videos</p>
+        <span class="season-link">Videos ansehen →</span>
+      </div>
+    </a>
+
+    <!-- KI -->
+    <a href="ki.html" class="season-card ai">
+      <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800" alt="KI-optimierte FPV Drohnenvideos" class="season-image" loading="lazy">
+      <div class="season-content">
+        <span class="season-icon">🤖</span>
+        <h3 class="season-title">KI</h3>
+        <p class="season-description">KI-optimiert & AI-enhanced Aufnahmen</p>
+        <p class="season-count">20+ Videos</p>
+        <span class="season-link">Videos ansehen →</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ===== SEO CONTENT ===== -->
+<section class="seo-accordion">
+  <div class="seo-toggle">
+    <button class="seo-toggle-btn" onclick="toggleSeoContent()">
+      Mehr über FPV & Drohnenaufnahmen erfahren ↓
+    </button>
+  </div>
+  
+  <div class="seo-content" id="seoContent">
+    <h3>Über walserfly – FPV & Drohnenaufnahmen aus dem Kleinwalsertal</h3>
+    <p>
+      Das <strong>Kleinwalsertal in Vorarlberg, Österreich</strong> gehört zu den spektakulärsten Alpentälern Europas. 
+      Mit seinen markanten Gipfeln wie dem Ifen (2.230m), Walmendinger Horn (1.990m) und der Kanzelwand bietet das Tal 
+      perfekte Bedingungen für atemberaubende <strong>FPV-Drohnenaufnahmen und professionelle Drohnenvideos</strong>.
+    </p>
+
+    <h3>Was sind FPV-Drohnen?</h3>
+    <p>
+      <strong>FPV steht für "First Person View"</strong> – der Pilot steuert die Drohne über eine Live-Videoübertragung 
+      in einer FPV-Brille. Im Gegensatz zu klassischen Kameradrohnen ermöglichen FPV-Drohnen dynamische, filmische 
+      Flugmanöver durch enge Passagen, schnelle Richtungswechsel und dramatische Perspektiven. Neben FPV-Racing-Drohnen 
+      nutze ich auch klassische Drohnen für stabilere, weitwinklige Aufnahmen.
+    </p>
+
+    <h3>Kostenlose Nutzung & Lizenz</h3>
+    <p>
+      Alle <strong>150+ Videos sind kostenlos und lizenzfrei</strong> für private und kommerzielle Projekte nutzbar. 
+      Einzige Bedingung: Namensnennung <strong>@walserfly</strong> oder Link zu walserfly.com. 
+      Perfekt für Social Media, YouTube, Websites, Werbung, Dokumentationen und kreative Projekte.
+    </p>
+
+    <h3>Locations im Kleinwalsertal</h3>
+    <ul>
+      <li><strong>Ifen (2.230m):</strong> Dramatische Gottesackerwände, oft mit Wolkenmeer</li>
+      <li><strong>Walmendinger Horn (1.990m):</strong> Sanfte Gipfel, perfekt für Sonnenaufgänge</li>
+      <li><strong>Kanzelwand:</strong> Grenzgipfel zwischen Deutschland und Österreich</li>
+      <li><strong>Schwarzwassertal:</strong> Ruhige Waldflüge, mystische Stimmung</li>
+      <li><strong>Heuberggrat:</strong> Schmaler Kamm mit spektakulären Tiefblicken</li>
+    </ul>
+
+    <h3>Technische Details</h3>
+    <p>
+      Aufgenommen mit professionellen FPV-Racing-Drohnen und Kameradrohnen, ausgestattet mit 4K-Kameras (GoPro Hero 11/12, DJI). 
+      Videolängen: 30 Sekunden bis 3 Minuten. Formate: 9:16 (Vertical) und 16:9 (Horizontal).
+    </p>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-content">
+    
+    <div class="footer-section">
+      <h4>Jahreszeiten</h4>
+      <a href="winter.html">❄️ Winter-Videos</a>
+      <a href="fruehling.html">🌱 Frühling-Videos</a>
+      <a href="sommer.html">☀️ Sommer-Videos</a>
+      <a href="herbst.html">🍁 Herbst-Videos</a>
+      <a href="ki.html">🤖 KI-Videos</a>
+    </div>
+
+    <div class="footer-section">
+      <h4>Informationen</h4>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+
+    <div class="footer-section">
+      <h4>Kontakt</h4>
+      <a href="mailto:walserfly@gmail.com">📧 E-Mail</a>
+      <a href="https://instagram.com/walserfly" target="_blank" rel="noopener">📱 Instagram</a>
+      <a href="https://paypal.me/walserfly" target="_blank" rel="noopener">💶 Spende</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 walserfly.com – FPV & Drohnenaufnahmen aus dem Kleinwalsertal</p>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button id="backToTop" onclick="scrollToTop()" aria-label="Zurück nach oben">↑</button>
+
+<!-- Instagram Button -->
+<a href="https://www.instagram.com/walserfly/" class="insta-btn-fixed" target="_blank" rel="noopener" aria-label="Instagram">
+  <svg viewBox="0 0 24 24" class="insta-icon-fixed">
+    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/>
+  </svg>
+</a>
+
+<script>
+// Mobile Menu Toggle
+function toggleMobileMenu() {
+  document.getElementById('navLinks').classList.toggle('active');
+}
+
+// SEO Content Toggle
+function toggleSeoContent() {
+  const content = document.getElementById('seoContent');
+  content.classList.toggle('expanded');
+}
+
+// Back to Top
+const backToTop = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) {
+    backToTop.classList.add('show');
+  } else {
+    backToTop.classList.remove('show');
+  }
+});
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Smooth Scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
