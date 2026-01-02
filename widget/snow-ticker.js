@@ -129,6 +129,17 @@
       .snowflake{position:absolute;top:-10px;color:rgba(255,255,255,.4);font-size:14px;animation:fall linear infinite;pointer-events:none;user-select:none}
       @keyframes fall{to{transform:translateY(80px);opacity:0}}
       .ticker-error{display:flex;align-items:center;justify-content:center;height:100%;width:100%;color:rgba(255,255,255,.7);font-size:14px;font-weight:600;gap:8px}
+      .ticker-item.ad-item{cursor:pointer}
+      .ad-info{display:flex;flex-direction:column;gap:2px;max-width:200px}
+      .ad-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:.3px;line-height:1}
+      .ad-text{font-size:9px;font-weight:500;color:rgba(255,255,255,.5);line-height:1.2;white-space:normal}
+      .ad-price{display:flex;flex-direction:column;align-items:center;gap:2px}
+      .ad-price-value{font-size:22px;font-weight:900;color:#fff;letter-spacing:-1px;line-height:1;text-shadow:0 2px 10px rgba(0,0,0,.5);background:linear-gradient(180deg,#fff 0%,#d1d5db 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+      .ad-price-label{font-size:9px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px;line-height:1}
+      .ad-cta{display:flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,rgba(239,68,68,.3) 0%,rgba(220,38,38,.3) 100%);border-radius:20px;border:1px solid rgba(239,68,68,.4);flex-shrink:0;cursor:pointer;text-decoration:none;transition:all .2s ease}
+      .ad-cta:hover{background:linear-gradient(135deg,rgba(239,68,68,.5) 0%,rgba(220,38,38,.5) 100%);border-color:rgba(239,68,68,.6);transform:scale(1.05)}
+      .ad-cta-text{font-size:12px;font-weight:700;color:#f87171;line-height:1;letter-spacing:.3px}
+      .ad-cta-icon{width:14px;height:14px;color:#f87171}
     `;
   };
 
@@ -248,6 +259,52 @@
     return item;
   };
 
+  // ============================================
+  // AD TILE
+  // ============================================
+  
+  const handleBuyClick = () => {
+    // TODO: Implement purchase flow or redirect
+    // Options: 
+    // - window.location.href = '/kaufen';
+    // - Open modal
+    // - Track analytics event
+    window.open('https://www.walserfly.com/kaufen', '_blank');
+  };
+
+  const createAdItem = () => {
+    const item = document.createElement('div');
+    item.className = 'ticker-item ad-item';
+    item.innerHTML = `
+      <div class="location-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="ad-info">
+        <div class="ad-title">Schnee-Ticker sichern</div>
+        <div class="ad-text">Live-Schnee & Updates für deine Gäste – direkt auf deiner Website.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="ad-price">
+        <div class="ad-price-value">49 €</div>
+        <div class="ad-price-label">Pro Jahr</div>
+      </div>
+      <a class="ad-cta" href="https://www.walserfly.com/kaufen" target="_blank" rel="noopener">
+        <span class="ad-cta-text">Jetzt kaufen</span>
+        <svg class="ad-cta-icon" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    `;
+    
+    // Click handler for entire tile (except the link which handles itself)
+    item.addEventListener('click', (e) => {
+      if (e.target.closest('.ad-cta')) return; // Let link handle itself
+      handleBuyClick();
+    });
+    
+    return item;
+  };
+
   const addSnowflakes = (container) => {
     for (let i = 0; i < 8; i++) {
       const flake = document.createElement('div');
@@ -298,10 +355,34 @@
       
       track.innerHTML = '';
       const fragment = document.createDocumentFragment();
-      results.forEach(({ loc, data }) => fragment.appendChild(createTickerItem(loc, data)));
       
-      // Clone for seamless loop
+      // Insert items with ad at position 3 (index 2)
+      const adPosition = 2; // 0-indexed, so position 3 = index 2
+      
+      results.forEach(({ loc, data }, index) => {
+        // Insert ad before the 3rd location item (if we have at least 2 items before it)
+        if (index === adPosition && results.length >= 2) {
+          fragment.appendChild(createAdItem());
+        }
+        fragment.appendChild(createTickerItem(loc, data));
+      });
+      
+      // Edge case: if less than 2 items, append ad at the end
+      if (results.length < 2) {
+        fragment.appendChild(createAdItem());
+      }
+      
+      // Clone for seamless loop (need to clone ad too)
       const clone = fragment.cloneNode(true);
+      
+      // Re-attach click handlers for cloned ad items
+      clone.querySelectorAll('.ad-item').forEach(adItem => {
+        adItem.addEventListener('click', (e) => {
+          if (e.target.closest('.ad-cta')) return;
+          handleBuyClick();
+        });
+      });
+      
       track.appendChild(fragment);
       track.appendChild(clone);
       
