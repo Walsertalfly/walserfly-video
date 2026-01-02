@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>FPV Sommer-Videos Kleinwalsertal | 20+ Drohnenaufnahmen 4K</title>
+  <meta name="description" content="Über 20 kostenlose FPV Sommer-Drohnenvideos aus dem Kleinwalsertal. Grüne Almen, Bergseen. 4K-Qualität, lizenzfrei.">
+  <meta name="keywords" content="FPV Sommer Kleinwalsertal, Drohne Sommer, Sommer Drohnenvideos Österreich">
+  
+  <link rel="canonical" href="https://walserfly.com/sommer/">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="FPV Sommer-Videos Kleinwalsertal">
+  <meta property="og:description" content="20+ kostenlose FPV-Drohnenvideos aus dem sommerlichen Kleinwalsertal">
+  <meta property="og:image" content="https://walserfly.com/images/sommer-og.jpg">
+  <meta property="og:url" content="https://walserfly.com/sommer/">
+  
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "FPV Sommer-Videos Kleinwalsertal",
+    "description": "Sammlung von über 20 FPV-Drohnenvideos aus dem Kleinwalsertal im Sommer",
+    "url": "https://walserfly.com/sommer/"
+  }
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      color: #ccc;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .nav-container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .breadcrumb {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .breadcrumb a {
+      color: #888;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .breadcrumb a:hover {
+      color: #ffeb99;
+    }
+
+    .breadcrumb span {
+      color: #444;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 60vh;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #4d3900 0%, #996600 100%);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '☀️';
+      position: absolute;
+      font-size: 20rem;
+      opacity: 0.05;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      color: #fff;
+      margin-bottom: 20px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .hero-subtitle {
+      font-size: 1.3rem;
+      color: #fff5cc;
+      margin-bottom: 32px;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 40px;
+      background: linear-gradient(90deg, #ffd000, #ffeb99);
+      color: #000;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 24px rgba(255,208,0,0.4);
+    }
+
+    .download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(255,208,0,0.6);
+    }
+
+    /* Video Grid */
+    .videos-section {
+      max-width: 1600px;
+      margin: 60px auto;
+      padding: 0 20px 80px;
+    }
+
+    .section-intro {
+      max-width: 800px;
+      margin: 0 auto 60px;
+      padding: 32px;
+      background: rgba(255,208,0,0.05);
+      border-radius: 16px;
+      border: 1px solid rgba(255,208,0,0.2);
+    }
+
+    .section-intro h2 {
+      color: #ffeb99;
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+    }
+
+    .section-intro p {
+      color: #aaa;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .video-card {
+      background: #0a0a0a;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,208,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 32px rgba(255,208,0,0.3);
+      border-color: rgba(255,235,153,0.5);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 177.78%;
+      background: #000;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-info {
+      padding: 16px;
+    }
+
+    .video-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fffaee;
+      margin-bottom: 6px;
+    }
+
+    .video-meta {
+      font-size: 0.9rem;
+      color: #ffeb99;
+    }
+
+    /* Footer */
+    footer {
+      background: #0a0a0a;
+      border-top: 1px solid rgba(255,208,0,0.2);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    footer a {
+      color: #ffeb99;
+      text-decoration: none;
+      margin: 0 16px;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Back to Top */
+    #backToTop {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(90deg, #ffd000, #ffeb99);
+      color: #000;
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(255,208,0,0.4);
+      z-index: 99;
+    }
+
+    #backToTop.show {
+      opacity: 1;
+    }
+
+    #backToTop:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-container">
+    <a href="/" class="logo">walserfly</a>
+    <div class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <strong style="color: #ffeb99;">☀️ Sommer</strong>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>☀️ FPV Sommer-Videos</h1>
+    <p class="hero-subtitle">20+ kostenlose Drohnenvideos – Grüne Almen & Bergseen</p>
+    <a href="#download" class="download-btn">
+      <span>📦</span>
+      <span>Alle Sommer-Videos herunterladen</span>
+    </a>
+  </div>
+</section>
+
+<!-- Videos Section -->
+<section class="videos-section">
+  
+  <div class="section-intro">
+    <h2>Sommerflüge durch das Kleinwalsertal</h2>
+    <p>
+      Der Sommer verwandelt das Kleinwalsertal in ein grünes Paradies. Saftige Almwiesen, kristallklare Bergseen 
+      und endlose Wanderwege prägen das Bild. Diese Sammlung zeigt die volle Pracht der Alpen in den warmen 
+      Sommermonaten – von dramatischen Gipfelflügen bis zu friedlichen Gleitflügen über Blumenwiesen.
+    </p>
+    <p style="margin-bottom: 0;">
+      <strong>Locations:</strong> Ifen, Hammerspitze, Herzsee, Walmendinger Alpe<br>
+      <strong>Qualität:</strong> 4K | <strong>Format:</strong> 9:16 (Vertical)<br>
+      <strong>Lizenz:</strong> Kostenlos mit Namensnennung @walserfly
+    </p>
+  </div>
+
+  <!-- Video Grid (dynamisch gefüllt) -->
+  <div class="video-grid" id="sommerVideos"></div>
+
+</section>
+
+<!-- Footer -->
+<footer>
+  <p style="margin-bottom: 20px; color: #aaa;">
+    📜 <strong>Lizenz:</strong> Kostenlos für kommerzielle Nutzung | Namensnennung <strong>@walserfly</strong> erforderlich
+  </p>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="winter.html">❄️ Winter</a>
+    <a href="fruehling.html">🌱 Frühling</a>
+    <a href="herbst.html">🍁 Herbst</a>
+  </nav>
+  <p style="margin-top: 20px; color: #666;">
+    © 2025 walserfly.com
+  </p>
+</footer>
+
+<!-- Back to Top -->
+<button id="backToTop" onclick="scrollToTop()">↑</button>
+
+<!-- Vimeo Player API -->
+<script src="https://player.vimeo.com/api/player.js" defer></script>
+
+<!-- Videos Config -->
+<script src="videos-config.js"></script>
+
+<script>
+// Videos rendern aus config
+function renderSommerVideos() {
+  const grid = document.getElementById('sommerVideos');
+  const sommerVideos = window.VIDEOS.sommer || [];
+
+  sommerVideos.forEach(video => {
+    const card = document.createElement('article');
+    card.className = 'video-card';
+    
+    card.innerHTML = `
+      <div class="video-wrapper">
+        <iframe 
+          data-src="https://player.vimeo.com/video/${video.id}?title=0&byline=0&portrait=0&muted=1" 
+          title="FPV Video: ${video.title} - Sommer im Kleinwalsertal"
+          loading="lazy"
+          allow="autoplay; fullscreen; picture-in-picture">
+        </iframe>
+      </div>
+      <div class="video-info">
+        <h3 class="video-title">${video.title}</h3>
+        <p class="video-meta">${video.season} · ${video.location || 'Kleinwalsertal'}</p>
+      </div>
+    `;
+    
+    grid.appendChild(card);
+  });
+
+  // Lazy Loading setup
+  setupLazyLoading();
+}
+
+// Lazy Loading für iframes
+function setupLazyLoading() {
+  const iframes = document.querySelectorAll('iframe[data-src]');
+  
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const iframe = entry.target;
+          iframe.src = iframe.getAttribute('data-src');
+          iframe.removeAttribute('data-src');
+          observer.unobserve(iframe);
+        }
+      });
+    }, { rootMargin: '200px' });
+
+    iframes.forEach(iframe => observer.observe(iframe));
+  } else {
+    iframes.forEach(iframe => {
+      iframe.src = iframe.getAttribute('data-src');
+    });
+  }
+}
+
+// Back to Top
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('backToTop');
+  if (window.scrollY > 400) {
+    btn.classList.add('show');
+  } else {
+    btn.classList.remove('show');
+  }
+});
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', renderSommerVideos);
+</script>
+
+</body>
+</html>
