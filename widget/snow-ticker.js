@@ -100,13 +100,13 @@
     return `
       :host{display:block;${positionMap[pos] || positionMap.bottom}font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
       *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-      .snow-ticker-banner{position:relative;width:100%;height:70px;background:linear-gradient(135deg,rgba(30,58,138,.95) 0%,rgba(30,64,175,.95) 50%,rgba(37,99,235,.95) 100%);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);overflow:hidden;box-shadow:${pos==='top'?'0 4px 30px rgba(0,0,0,.15)':'0 -4px 30px rgba(0,0,0,.15)'};border-${pos==='top'?'bottom':'top'}:1px solid rgba(255,255,255,.1)}
+      .snow-ticker-banner{position:relative;width:100%;height:70px;background:linear-gradient(135deg,rgba(15,15,15,.97) 0%,rgba(30,30,30,.97) 50%,rgba(45,45,45,.97) 100%);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);overflow:hidden;box-shadow:${pos==='top'?'0 4px 30px rgba(0,0,0,.3)':'0 -4px 30px rgba(0,0,0,.3)'};border-${pos==='top'?'bottom':'top'}:1px solid rgba(255,255,255,.08)}
       .banner-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-image:radial-gradient(circle at 20% 50%,rgba(255,255,255,.03) 0%,transparent 50%),radial-gradient(circle at 80% 50%,rgba(255,255,255,.03) 0%,transparent 50%);background-size:200% 100%;animation:shimmer 8s ease-in-out infinite;pointer-events:none}
       @keyframes shimmer{0%,100%{background-position:0% 0%}50%{background-position:100% 0%}}
-      .ticker-track{position:relative;display:flex;align-items:center;height:100%;animation:scroll-left 90s linear infinite;will-change:transform}
+      .ticker-track{position:relative;display:flex;align-items:center;height:100%;animation:scroll-left 30s linear infinite;will-change:transform}
       .snow-ticker-banner:hover .ticker-track{animation-play-state:paused}
-      .ticker-item{display:flex;align-items:center;gap:16px;padding:0 28px;margin:0 8px;height:54px;background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border-radius:27px;border:1px solid rgba(255,255,255,.12);white-space:nowrap;flex-shrink:0;transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:0 4px 15px rgba(0,0,0,.1);cursor:default}
-      .ticker-item:hover{background:rgba(255,255,255,.15);transform:translateY(-2px) scale(1.02);box-shadow:0 8px 25px rgba(0,0,0,.2);border-color:rgba(255,255,255,.25)}
+      .ticker-item{display:flex;align-items:center;gap:16px;padding:0 28px;margin:0 8px;height:54px;background:rgba(255,255,255,.06);backdrop-filter:blur(10px);border-radius:27px;border:1px solid rgba(255,255,255,.1);white-space:nowrap;flex-shrink:0;transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:0 4px 15px rgba(0,0,0,.2);cursor:default}
+      .ticker-item:hover{background:rgba(255,255,255,.12);transform:translateY(-2px) scale(1.02);box-shadow:0 8px 25px rgba(0,0,0,.4);border-color:rgba(255,255,255,.2)}
       .location-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.15);border-radius:50%;flex-shrink:0}
       .location-icon svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
       .location-info{display:flex;flex-direction:column;gap:2px}
@@ -114,7 +114,7 @@
       .location-type{font-size:10px;font-weight:600;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px;line-height:1}
       .divider{width:1px;height:30px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.2),transparent);flex-shrink:0}
       .current-snow{display:flex;flex-direction:column;align-items:center;gap:2px}
-      .snow-value{font-size:26px;font-weight:900;color:#fff;letter-spacing:-1px;line-height:1;text-shadow:0 2px 10px rgba(0,0,0,.3);background:linear-gradient(180deg,#fff 0%,#e0e7ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+      .snow-value{font-size:26px;font-weight:900;color:#fff;letter-spacing:-1px;line-height:1;text-shadow:0 2px 10px rgba(0,0,0,.5);background:linear-gradient(180deg,#fff 0%,#d1d5db 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
       .snow-label{font-size:9px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.8px;line-height:1}
       .forecast-badge{display:flex;align-items:center;gap:6px;padding:8px 12px;background:linear-gradient(135deg,rgba(16,185,129,.25) 0%,rgba(5,150,105,.25) 100%);border-radius:20px;border:1px solid rgba(16,185,129,.3);flex-shrink:0}
       .forecast-icon{width:16px;height:16px;color:#10b981}
