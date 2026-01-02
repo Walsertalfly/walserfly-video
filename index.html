@@ -3,8 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Walsertalfly – FPV Videos</title>
-
+  <title>Walsertalfly – FPV Videos aus dem Kleinwalsertal</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Kostenlose FPV-Drohnenvideos aus dem Kleinwalsertal für alle Jahreszeiten. Lizenzfrei verwendbar mit Namensnennung @walserfly">
+  <meta name="keywords" content="FPV, Drohne, Kleinwalsertal, Videos, Drone, Österreich, Allgäu">
+  <meta name="author" content="walserfly">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Walsertalfly – FPV Videos">
+  <meta property="og:description" content="Kostenlose FPV-Drohnenvideos aus dem Kleinwalsertal">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://walserfly.com">
+  
   <!-- Counter.dev Besucherzähler -->
   <script src="https://cdn.counter.dev/script.js" 
           data-id="0d0e6b83-027c-4029-b963-019c7ddcc9b7" 
@@ -223,7 +234,7 @@
       opacity:1;
     }
 
-    /* Fixes Instagram-Icon unten mittig */
+    /* Instagram-Icon unten mittig */
     .insta-btn-fixed{
       position:fixed;
       bottom:20px;
@@ -250,6 +261,83 @@
       height:20px;
       fill:currentColor;
     }
+
+    /* Mobile Optimierung */
+    @media (max-width: 768px) {
+      .insta-btn-fixed {
+        bottom: 80px; /* Platz für Back-to-Top Button */
+      }
+      #backToTop {
+        bottom: 20px;
+      }
+    }
+
+    /* Formular Styles */
+    .download-form {
+      display:none;
+      margin-top:18px;
+      text-align:left;
+      max-width:400px;
+      margin-left:auto;
+      margin-right:auto;
+      background:#0b0b0b;
+      border:1px solid rgba(255,255,255,.1);
+      padding:20px;
+      border-radius:12px;
+    }
+
+    .download-form label {
+      color:#ccc;
+      display:block;
+      margin-bottom:10px;
+    }
+
+    .download-form input[type="text"],
+    .download-form input[type="email"] {
+      width:100%;
+      padding:10px;
+      border-radius:8px;
+      border:1px solid #333;
+      background:#111;
+      color:#eee;
+    }
+
+    .download-form button {
+      display:block;
+      width:100%;
+      margin-top:12px;
+      padding:12px 0;
+      border:0;
+      border-radius:999px;
+      color:#fff;
+      font-weight:600;
+      font-size:15px;
+      cursor:pointer;
+      transition:opacity .3s ease;
+    }
+
+    .download-form .success-msg {
+      display:none;
+      text-align:center;
+      color:#8fd694;
+      margin-top:12px;
+    }
+
+    .download-link {
+      display:none;
+      text-align:center;
+      margin-top:20px;
+    }
+
+    .error-msg {
+      display:none;
+      text-align:center;
+      color:#ff6b6b;
+      margin-top:12px;
+      padding:10px;
+      background:rgba(255,107,107,0.1);
+      border-radius:8px;
+    }
   </style>
 </head>
 <body>
@@ -273,53 +361,29 @@
         <p class="fs-sub">Klare Luft, Schneeflocken, ruhige Linien.</p>
       </header>
 
-      <!-- WINTER DOWNLOAD MIT FORMULAR -->
       <div style="text-align:center;">
-        <!-- Sichtbarer Button -->
-        <a id="showFormBtn" class="download-btn winter-btn" href="#" onclick="event.preventDefault();toggleForm();">
+        <a class="download-btn winter-btn" href="#" onclick="event.preventDefault();toggleForm('winterForm');">
           ⬇️ Winter Download
         </a>
 
-        <!-- Formular (zuerst versteckt) -->
-        <form id="winterForm"
-              action="https://formspree.io/f/mvgwndgg"
-              method="POST"
-              style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
-                     background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
-
-          <label style="color:#ccc;display:block;margin-bottom:10px;">
+        <form id="winterForm" class="download-form" action="https://formspree.io/f/mvgwndgg" method="POST">
+          <label>
             Name:<br>
-            <input type="text" name="name" required
-                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+            <input type="text" name="name" required>
           </label>
-
-          <label style="color:#ccc;display:block;margin-bottom:10px;">
+          <label>
             E-Mail-Adresse:<br>
-            <input type="email" name="email" required
-                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+            <input type="email" name="email" required>
           </label>
-
           <input type="hidden" name="season" value="Winter">
-
-          <button type="submit"
-                  style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
-                         background:linear-gradient(90deg,#1e90ff,#63b3ed);color:#fff;font-weight:600;font-size:15px;
-                         cursor:pointer;transition:opacity .3s ease;">
-            Absenden
-          </button>
-
-          <p id="winterMsg"
-             style="display:none;text-align:center;color:#8fd694;margin-top:12px;">
-             Danke! Dein Download-Link ist jetzt freigeschaltet 👇
-          </p>
+          <button type="submit" style="background:linear-gradient(90deg,#1e90ff,#63b3ed);">Absenden</button>
+          <p class="success-msg" id="winterMsg">Danke! Dein Download-Link ist jetzt freigeschaltet 👇</p>
+          <p class="error-msg" id="winterError">Fehler beim Absenden. Bitte versuch es erneut.</p>
         </form>
 
-        <!-- Versteckter Download-Link -->
-        <div id="winterLink" style="display:none;text-align:center;margin-top:20px;">
-          <a class="download-btn winter-btn"
-             href="https://soellerhaus1.quickconnect.to/d/s/15S7Ajs9i8Es7qgT2paiQbKlt5IwVw6y/li5hKzhObCtfe13KXSTz2F0UKjcrrcp2-sLXgY2gVrAw"
-             target="_blank">
-             👉 Jetzt Winter-Download starten
+        <div id="winterLink" class="download-link">
+          <a class="download-btn winter-btn" href="https://soellerhaus1.quickconnect.to/d/s/15S7Ajs9i8Es7qgT2paiQbKlt5IwVw6y/li5hKzhObCtfe13KXSTz2F0UKjcrrcp2-sLXgY2gVrAw" target="_blank">
+            👉 Jetzt Winter-Download starten
           </a>
         </div>
       </div>
@@ -330,76 +394,16 @@
       </p>
     </div>
 
-    <div class="grid" style="margin-top:20px;">
-      <!-- Alle Winter-Videokarten wie gehabt -->
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127958002?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern am Morgen" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Riezlern am Morgen</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127905939?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Advent" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Advent</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128885169?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Gipfelkreuz Ifen Winter FPV" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Gipfelkreuz Ifen Winter FPV</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128886036?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Kanzelwand Bergstation" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Kanzelwand Bergstation</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128881909?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Felswand Ifen" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Felswand Ifen</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127603749?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Heuberggrat" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Heuberggrat</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127602462?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Walmendinger Horn" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Walmendinger Horn</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127599570?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Walser Bus" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Walser Bus</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127597959?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Strasse & Wald" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Strasse &amp; Wald</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127596541?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Wald" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Wald</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127595677?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen Zeitraffer" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Ifen Zeitraffer</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127768826?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Skifahrer Heuberg" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Skifahrer Heuberg</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127769330?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Wald Labyrinth" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Wald Labyrinth</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127770086?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Wald Schneefall" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Wald Schneefall</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127786096?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Wald Schnee Sonne" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Wald Schnee Sonne</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127787502?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Durch den Wald" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Durch den Wald</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127789191?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Durch den Wald mit Schneekuss" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Durch den Wald mit Schneekuss</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127790210?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Durch den Wald Richtung Ifen" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Durch den Wald Richtung Ifen</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127791435?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Flocken im Wald" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Flocken im Wald</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127794773?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Schöntalift hoch (erster Schneefall)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Schöntalift hoch (erster Schneefall)</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127956064?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Wald von Oben (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Wald von Oben</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127796108?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Schöntal Ifen" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Schöntal Ifen</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127796524?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Schöntal Ifen 2" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Schöntal Ifen 2</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127797572?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Heuberg Richtung Widderstein" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Heuberg Richtung Widderstein</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127798315?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Rohrweg (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Rohrweg</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127810200?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Wald erster Schneefall" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Wald erster Schneefall</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127811945?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Wald Schneefall" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Wald Schneefall</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127812898?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Wald Schneefall 2" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Wald Schneefall 2</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127813756?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Hirschegg Mittelberg (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Hirschegg Mittelberg</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127814880?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Ifen</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127817743?title=0&byline=0&portrait=0&muted=1&autopause=1" title="365 Grad" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">365 Grad</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127921910?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen Sonnenuntergang" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Ifen Sonnenuntergang</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127921268?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Egg (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Egg</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127902781?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Abendstimmung Dorf" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Abendstimmung Dorf</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127908864?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Von Oben (Winter) 2" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Von Oben</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127911132?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Von Oben 2 (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Von Oben 2</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127956064?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Wald von Oben (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Wald von Oben</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127956446?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Wald von Oben 2 (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Wald von Oben 2</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127957179?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Schafsköpfe (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Schafsköpfe</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127956757?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Heuberggrat (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Heuberggrat (Winter)</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127954392?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Guten Morgen (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Guten Morgen</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127915012?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Köpfle (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Köpfle</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127954682?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Hallers (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Hallers</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128898316?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Kanzelwand runter" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Kanzelwand runter</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127959722?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Zeitraffer Ifen (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Zeitraffer Ifen</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127955072?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen am Morgen(Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Ifen am Morgen</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127958851?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Schafalpköpfe (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Schafalpköpfe</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127925607?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Zeitraffer Ifen 3(Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Zeitraffer Ifen 3</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127924518?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Sonnenuntergang Heuberg (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Sonnenuntergang Heuberg</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127914135?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Walmendingerhorn Abendstimmung (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Walmendingerhorn Abendstimmung</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127904596?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Dorf Abendstimmung (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Dorf Abendstimmung</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127923393?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen Sonnenuntergang 2" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Ifen Sonnenuntergang 2</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127905939?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Advent (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Advent</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127847622?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen Bäume (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Ifen Bäume</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127852602?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Zoom in Zoom out Bäume (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Zoom in Zoom out Bäume</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127827272?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Weihnachten (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Weihnachten</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127820407?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Sonne Ifen (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Sonne Ifen</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(0,119,255,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127528220?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Zwölfer runter (Winter)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Zwölfer runter</h3><p class="meta">Winter · Kleinwalsertal</p></article>
-    </div>
+    <div class="grid" id="winterGrid"></div>
 
     <div style="text-align:center;margin-top:32px;">
       <p class="license">
         📜 <strong>Regel:</strong> Videos dürfen kostenlos verwendet werden.<br>
         Urheber ist <strong>walserfly.com</strong> – Namensnennung <strong>@walserfly</strong> erforderlich!<br><br>
         ✉️ Für Anfragen oder spezielle Aufträge erreichst du mich unter:<br>
-        <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
+        <a href="mailto:walserfly@gmail.com" style="color:#66ccff">walserfly@gmail.com</a><br>
         💶 Wenn dir meine Aufnahmen gefallen, füll mir doch den Tank… mit Kaffee oder Bier ☕🍺😉:<br>
-        <a href="https://paypal.me/walserfly" target="_blank">paypal.me/walserfly</a>
+        <a href="https://paypal.me/walserfly" target="_blank" style="color:#66ccff">paypal.me/walserfly</a>
       </p>
     </div>
   </div>
@@ -412,53 +416,29 @@
         <p class="fs-sub">Morgentau, frisches Grün, sanfte Linien.</p>
       </header>
 
-      <!-- 🌱 FRÜHLING DOWNLOAD MIT FORMULAR -->
       <div style="text-align:center;">
-        <!-- Sichtbarer Button -->
-        <a id="showFormSpring" class="download-btn fruehling-btn" href="#" onclick="event.preventDefault();toggleFormSpring();">
+        <a class="download-btn fruehling-btn" href="#" onclick="event.preventDefault();toggleForm('springForm');">
           ⬇️ Frühling Download
         </a>
 
-        <!-- Formular (zuerst versteckt) -->
-        <form id="springForm"
-              action="https://formspree.io/f/mvgwndgg"
-              method="POST"
-              style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
-                     background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
-
-          <label style="color:#ccc;display:block;margin-bottom:10px;">
+        <form id="springForm" class="download-form" action="https://formspree.io/f/mvgwndgg" method="POST">
+          <label>
             Name:<br>
-            <input type="text" name="name" required
-                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+            <input type="text" name="name" required>
           </label>
-
-          <label style="color:#ccc;display:block;margin-bottom:10px;">
+          <label>
             E-Mail-Adresse:<br>
-            <input type="email" name="email" required
-                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+            <input type="email" name="email" required>
           </label>
-
           <input type="hidden" name="season" value="Frühling">
-
-          <button type="submit"
-                  style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
-                         background:linear-gradient(90deg,#28a745,#8fd694);color:#fff;font-weight:600;font-size:15px;
-                         cursor:pointer;transition:opacity .3s ease;">
-            Absenden
-          </button>
-
-          <p id="springMsg"
-             style="display:none;text-align:center;color:#8fd694;margin-top:12px;">
-             Danke! Dein Download-Link ist jetzt freigeschaltet 👇
-          </p>
+          <button type="submit" style="background:linear-gradient(90deg,#28a745,#8fd694);">Absenden</button>
+          <p class="success-msg" id="springMsg">Danke! Dein Download-Link ist jetzt freigeschaltet 👇</p>
+          <p class="error-msg" id="springError">Fehler beim Absenden. Bitte versuch es erneut.</p>
         </form>
 
-        <!-- Versteckter Download-Link -->
-        <div id="springLink" style="display:none;text-align:center;margin-top:20px;">
-          <a class="download-btn fruehling-btn"
-             href="https://soellerhaus1.quickconnect.to/d/s/15S7BWQPkYUdz6I2Puk4832Js2FGnlyx/qhBpkLz5VlznNJ2326bC6mRIg0FWbn-f-ErWgezMVrAw"
-             target="_blank">
-             👉 Jetzt Frühling-Download starten
+        <div id="springLink" class="download-link">
+          <a class="download-btn fruehling-btn" href="https://soellerhaus1.quickconnect.to/d/s/15S7BWQPkYUdz6I2Puk4832Js2FGnlyx/qhBpkLz5VlznNJ2326bC6mRIg0FWbn-f-ErWgezMVrAw" target="_blank">
+            👉 Jetzt Frühling-Download starten
           </a>
         </div>
       </div>
@@ -469,33 +449,16 @@
       </p>
     </div>
 
-    <div class="grid" style="margin-top:20px;">
-      <!-- Alle Frühling-Videokarten wie gehabt -->
-        <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128871485?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Walmendinger Horn (Frühling)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Walmendingerhorn dive</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128939314?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Köpflegrat" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Köpflegrat</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128885650?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ochsenhofer Scharte bis Herzsee long" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Ochsenhofer Scharte bis Herzsee long</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128871485?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Walmendingerhorn dive" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Walmendingerhorn dive</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128870372?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Gipfelkreuz Walmendingerhorn umkreisen" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Gipfelkreuz Walmendingerhorn umkreisen</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127605050?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Walmendinger Horn" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Walmendinger Horn</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127964353?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Grünhorn (Frühling)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Grünhorn</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127965546?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Kreuz Walmendingerhorn (Frühling)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Kreuz Walmendingerhorn</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127967610?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Kreuz Walmendingerhorn 2 (Frühling)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Kreuz Walmendingerhorn 2</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127951512?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Melköde (Frühling)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Melköde</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127952268?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen Nord (Frühling)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Ifen Nord</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
-        <article class="card" style="background:rgba(255,102,179,0.1)"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127952954?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Widderstein (Frühling)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title">Widderstein</h3><p class="meta">Frühling · Kleinwalsertal</p></article>
-		<article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128939651?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Melköde 1" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Melköde 1</h3><p class="meta" style="color:#ffccb8">Frühling · Kleinwalsertal</p></article>
-		<article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128938364?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Melköde 2" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Melköde 2</h3><p class="meta" style="color:#ffccb8">Frühling · Kleinwalsertal</p></article>
-		<article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128937997?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Melköde 3" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Melköde 3</h3><p class="meta" style="color:#ffccb8">Frühling · Kleinwalsertal</p></article>	  
-    </div>
+    <div class="grid" id="fruehlingGrid"></div>
 
     <div style="text-align:center;margin-top:32px;">
       <p class="license">
         📜 <strong>Regel:</strong> Videos dürfen kostenlos verwendet werden.<br>
         Urheber ist <strong>walserfly.com</strong> – Namensnennung <strong>@walserfly</strong> erforderlich!<br><br>
         ✉️ Für Anfragen oder spezielle Aufträge erreichst du mich unter:<br>
-        <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
-        💶 Wenn dir meine Flüge gefallen, spendier mir ’nen Kaffee… oder gleich ein Bier ☕🍺😉:<br>
-        <a href="https://paypal.me/walserfly" target="_blank">paypal.me/walserfly</a>
+        <a href="mailto:walserfly@gmail.com" style="color:#e9408e">walserfly@gmail.com</a><br>
+        💶 Wenn dir meine Flüge gefallen, spendier mir 'nen Kaffee… oder gleich ein Bier ☕🍺😉:<br>
+        <a href="https://paypal.me/walserfly" target="_blank" style="color:#e9408e">paypal.me/walserfly</a>
       </p>
     </div>
   </div>
@@ -508,53 +471,29 @@
         <p class="fs-sub">Lange Tage, klare Farben, warme Luft.</p>
       </header>
 
-      <!-- ☀️ SOMMER DOWNLOAD MIT FORMULAR -->
       <div style="text-align:center;">
-        <!-- Sichtbarer Button -->
-        <a id="showFormSummer" class="download-btn sommer-btn" href="#" onclick="event.preventDefault();toggleFormSummer();">
+        <a class="download-btn sommer-btn" href="#" onclick="event.preventDefault();toggleForm('summerForm');">
           ⬇️ Sommer Download
         </a>
 
-        <!-- Formular (zuerst versteckt) -->
-        <form id="summerForm"
-              action="https://formspree.io/f/mvgwndgg"
-              method="POST"
-              style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
-                     background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
-
-          <label style="color:#ccc;display:block;margin-bottom:10px;">
+        <form id="summerForm" class="download-form" action="https://formspree.io/f/mvgwndgg" method="POST">
+          <label>
             Name:<br>
-            <input type="text" name="name" required
-                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+            <input type="text" name="name" required>
           </label>
-
-          <label style="color:#ccc;display:block;margin-bottom:10px;">
+          <label>
             E-Mail-Adresse:<br>
-            <input type="email" name="email" required
-                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+            <input type="email" name="email" required>
           </label>
-
           <input type="hidden" name="season" value="Sommer">
-
-          <button type="submit"
-                  style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
-                         background:linear-gradient(90deg,#f6b800,#fce181);color:#000;font-weight:600;font-size:15px;
-                         cursor:pointer;transition:opacity .3s ease;">
-            Absenden
-          </button>
-
-          <p id="summerMsg"
-             style="display:none;text-align:center;color:#fce181;margin-top:12px;">
-             Danke! Dein Download-Link ist jetzt freigeschaltet 👇
-          </p>
+          <button type="submit" style="background:linear-gradient(90deg,#f6b800,#fce181);color:#000;">Absenden</button>
+          <p class="success-msg" id="summerMsg" style="color:#fce181">Danke! Dein Download-Link ist jetzt freigeschaltet 👇</p>
+          <p class="error-msg" id="summerError">Fehler beim Absenden. Bitte versuch es erneut.</p>
         </form>
 
-        <!-- Versteckter Download-Link -->
-        <div id="summerLink" style="display:none;text-align:center;margin-top:20px;">
-          <a class="download-btn sommer-btn"
-             href="https://soellerhaus1.quickconnect.to/d/s/15S7Br6rSE0tRSfAIVgfqbx4Eupag4qN/GMURyBL-U4VSaMimPuARB67isCKtUfiq-9LWg53kVrAw"
-             target="_blank">
-             👉 Jetzt Sommer-Download starten
+        <div id="summerLink" class="download-link">
+          <a class="download-btn sommer-btn" href="https://soellerhaus1.quickconnect.to/d/s/15S7Br6rSE0tRSfAIVgfqbx4Eupag4qN/GMURyBL-U4VSaMimPuARB67isCKtUfiq-9LWg53kVrAw" target="_blank">
+            👉 Jetzt Sommer-Download starten
           </a>
         </div>
       </div>
@@ -565,39 +504,16 @@
       </p>
     </div>
 
-    <div class="grid" style="margin-top:20px;">
-      <!-- Alle Sommer-Videokarten wie gehabt -->
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127926929?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen Gipfelkreuz (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Ifen Gipfelkreuz</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127961450?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Talblick (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Talblick</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127590107?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Herzsee 2" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Herzsee 2</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127588921?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Herzsee" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Herzsee</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127946589?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Hammerspitze" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Hammerspitze</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127926526?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Gottesacker / Ifen" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Gottesacker Ifen</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127945276?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Gipfelkreuz Hammerspitze" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Kreuz Hammerspitze</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127962623?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Mittelberg (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Mittelberg</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127963157?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Hirschegg / Riezlern (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Hirschegg / Riezlern</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127963622?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Mittelberg 2 (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Mittelberg 2</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127948691?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Herzsee vom Heuberggrat" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Herzsee vom Heuberggrat</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127950035?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Wädele (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Wädele</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127950770?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Wald von Oben (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Wald von Oben</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127960855?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Schöntal (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Schöntal</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127962132?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Walmendinger Alpe (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Walmendinger Alpe</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127960514?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Bluemenwiese" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Bluemenwiese</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127821534?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Abendstimmung (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Abendstimmung</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127947483?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Kuhgehrenspitze (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Kuhgehrenspitze</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127945874?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Mittelberg Elfer Zwölfer (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Mittelberg Elfer Zwölfer</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127926526?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Gottesacker Ifen (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Gottesacker Ifen</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f180a"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127800307?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Melköde (Sommer)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#fff5e0">Melköde</h3><p class="meta" style="color:#ffe0a3">Sommer · Kleinwalsertal</p></article>
-    </div>
+    <div class="grid" id="sommerGrid"></div>
 
     <div style="text-align:center;margin-top:32px;">
       <p class="license">
         📜 <strong>Regel:</strong> Videos dürfen kostenlos verwendet werden.<br>
         Urheber ist <strong>walserfly.com</strong> – Namensnennung <strong>@walserfly</strong> erforderlich!<br><br>
         ✉️ Für Anfragen oder spezielle Aufträge erreichst du mich unter:<br>
-        <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
+        <a href="mailto:walserfly@gmail.com" style="color:#ff8c00">walserfly@gmail.com</a><br>
         💶 Unterstütz meine Flugleidenschaft – mit Koffein oder Hopfen ☕🍺😉:<br>
-        <a href="https://paypal.me/walserfly" target="_blank">paypal.me/walserfly</a>
+        <a href="https://paypal.me/walserfly" target="_blank" style="color:#ff8c00">paypal.me/walserfly</a>
       </p>
     </div>
   </div>
@@ -610,53 +526,29 @@
         <p class="fs-sub">Warme Farben, tiefe Sonne, ruhige Flüge.</p>
       </header>
 
-      <!-- 🍁 HERBST DOWNLOAD MIT FORMULAR -->
       <div style="text-align:center;">
-        <!-- Sichtbarer Button -->
-        <a id="showFormAutumn" class="download-btn herbst-btn" href="#" onclick="event.preventDefault();toggleFormAutumn();">
+        <a class="download-btn herbst-btn" href="#" onclick="event.preventDefault();toggleForm('autumnForm');">
           ⬇️ Herbst Download
         </a>
 
-        <!-- Formular (zuerst versteckt) -->
-        <form id="autumnForm"
-              action="https://formspree.io/f/mvgwndgg"
-              method="POST"
-              style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
-                     background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
-
-          <label style="color:#ccc;display:block;margin-bottom:10px;">
+        <form id="autumnForm" class="download-form" action="https://formspree.io/f/mvgwndgg" method="POST">
+          <label>
             Name:<br>
-            <input type="text" name="name" required
-                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+            <input type="text" name="name" required>
           </label>
-
-          <label style="color:#ccc;display:block;margin-bottom:10px;">
+          <label>
             E-Mail-Adresse:<br>
-            <input type="email" name="email" required
-                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+            <input type="email" name="email" required>
           </label>
-
           <input type="hidden" name="season" value="Herbst">
-
-          <button type="submit"
-                  style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
-                         background:linear-gradient(90deg,#e67300,#ffaf66);color:#fff;font-weight:600;font-size:15px;
-                         cursor:pointer;transition:opacity .3s ease;">
-            Absenden
-          </button>
-
-          <p id="autumnMsg"
-             style="display:none;text-align:center;color:#ffaf66;margin-top:12px;">
-             Danke! Dein Download-Link ist jetzt freigeschaltet 👇
-          </p>
+          <button type="submit" style="background:linear-gradient(90deg,#e67300,#ffaf66);">Absenden</button>
+          <p class="success-msg" id="autumnMsg" style="color:#ffaf66">Danke! Dein Download-Link ist jetzt freigeschaltet 👇</p>
+          <p class="error-msg" id="autumnError">Fehler beim Absenden. Bitte versuch es erneut.</p>
         </form>
 
-        <!-- Versteckter Download-Link -->
-        <div id="autumnLink" style="display:none;text-align:center;margin-top:20px;">
-          <a class="download-btn herbst-btn"
-             href="https://soellerhaus1.quickconnect.to/d/s/15S7B9Ub01INFo0jxWLAm84w6i4i3z2w/FX-e9hYOcFeWOeImoGGk2donpi8k3uUF-NrZgvYgVrAw"
-             target="_blank">
-             👉 Jetzt Herbst-Download starten
+        <div id="autumnLink" class="download-link">
+          <a class="download-btn herbst-btn" href="https://soellerhaus1.quickconnect.to/d/s/15S7B9Ub01INFo0jxWLAm84w6i4i3z2w/FX-e9hYOcFeWOeImoGGk2donpi8k3uUF-NrZgvYgVrAw" target="_blank">
+            👉 Jetzt Herbst-Download starten
           </a>
         </div>
       </div>
@@ -667,58 +559,16 @@
       </p>
     </div>
 
-    <div class="grid" style="margin-top:20px;">
-      <!-- Alle Herbst-Videokarten wie gehabt -->
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1132165347?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Hirschegg unten grün oben weiss" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Hirschegg unten grün oben weiss</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1132164892?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern unten grün oben weiss" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Riezlern unten grün oben weiss</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128935565?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Hirschegg hoch" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Hirschegg hoch</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128931758?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Brennboden" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Brennboden</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128933617?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Rohrsee 2" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Rohrsee 2</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128938626?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Köpfle - Melköde runter" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Köpfle - Melköde runter</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128937749?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Wäldele 1" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Wäldele 1</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128937607?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Marbuerger Haus" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Marburger Haus</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128937123?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Rohrweg 2" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Rohrweg 2</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128936625?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Schöntal Ifen" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Schöntal Ifen</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128936248?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Wäldele 2" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Wäldele 2</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128934668?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Rohrweg 1" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Rohrweg 1</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128933617?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Rohrweg 2" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Rohrweg 2</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128932641?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Rohrweg 3" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Rohrweg 3</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128931182?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Schöntal 1" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Schöntal 1</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128892622?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Grünhorn Herbstsonne" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Grünhorn Herbstsonne</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128926396?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen Südseite 1" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Ifen Südseite 1</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128925089?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen Südseite 2" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Ifen Südseite 2</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128921673?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen Fels" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Ifen Fels</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128903276?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Walmendingerhorn Gipfelkreuz up-down" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Walmendingerhorn Gipfelkreuz up-down</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128902867?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Horn Herbst Winter" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Horn Herbst Winter</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128902655?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Muttelberg" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Muttelberg</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128902513?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Lüchle Alp" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Lüchle Alp</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128901796?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen in Wolke" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Ifen in Wolke</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128901206?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen hoch" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Ifen hoch</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128900531?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen Bergstation" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Ifen Bergstation</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128899343?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Steinmandel - Grünhorn" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Steinmandel - Grünhorn</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127497743?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Der goldene Baum – Schwarzwassertal" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Der goldene Baum – Schwarzwassertal</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127521479?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Hirschegg – Herbstfarben" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Heuberg – Herbstfarben</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127592201?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Rohrsee mit Elfer & Zwölfer" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Rohrsee mit Elfer &amp; Zwölfer</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127801666?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen am Morgen (Herbst)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Ifen am Morgen</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127802365?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Hirschegg (Herbst)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Hirschegg</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127803723?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern / Hirschegg am Morgen (Herbst)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Riezlern / Hirschegg am Morgen</h3><p class="meta" style="color:#ffccb8">Herbst</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127806593?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern / Hirschegg (Herbst)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Riezlern / Hirschegg</h3><p class="meta" style="color:#ffccb8">Herbst</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127807812?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Rohrweg (Herbst)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Rohrweg</h3><p class="meta" style="color:#ffccb8">Herbst</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127884726?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Dorf Riezlern (Herbst)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Dorf Riezlern</h3><p class="meta" style="color:#ffccb8">Herbst</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127867636?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Richtung Wildental (Herbst)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Richtung Wildental</h3><p class="meta" style="color:#ffccb8">Herbst</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127801666?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Ifen am Morgen (Herbst)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Ifen am Morgen</h3><p class="meta" style="color:#ffccb8">Herbst</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1128934668?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Rohrsee" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Rohrsee</h3><p class="meta" style="color:#ffccb8">Herbst · Kleinwalsertal</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1127521479?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Hirschegg Fuchshof (Herbst)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Hirschegg Fuchshof</h3><p class="meta" style="color:#ffccb8">Herbst</p></article>
-    </div>
+    <div class="grid" id="herbstGrid"></div>
 
     <div style="text-align:center;margin-top:32px;">
       <p class="license">
         📜 <strong>Regel:</strong> Videos dürfen kostenlos verwendet werden.<br>
         Urheber ist <strong>walserfly.com</strong> – Namensnennung <strong>@walserfly</strong> erforderlich!<br><br>
         ✉️ Für Anfragen oder spezielle Aufträge erreichst du mich unter:<br>
-        <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
-        💶  Für jeden Kaffee flieg ich ’ne Extra-Runde ☕😉<br>
-        <a href="https://paypal.me/walserfly" target="_blank">paypal.me/walserfly</a>
+        <a href="mailto:walserfly@gmail.com" style="color:#ff9966">walserfly@gmail.com</a><br>
+        💶 Für jeden Kaffee flieg ich 'ne Extra-Runde ☕😉<br>
+        <a href="https://paypal.me/walserfly" target="_blank" style="color:#ff9966">paypal.me/walserfly</a>
       </p>
     </div>
   </div>
@@ -731,57 +581,29 @@
         <p class="fs-sub">Speziell aufbereitete Clips & Material für deine KI-Projekte.</p>
       </header>
 
-      <!-- 🤖 KI DOWNLOAD MIT FORMULAR -->
       <div style="text-align:center;">
-        <!-- Sichtbarer Button -->
-        <a id="showFormKI"
-           class="download-btn ki-btn"
-           href="#"
-           onclick="event.preventDefault();toggleFormKI();">
+        <a class="download-btn ki-btn" href="#" onclick="event.preventDefault();toggleForm('kiForm');">
           ⬇️ KI Download
         </a>
 
-        <!-- Formular (zuerst versteckt) -->
-        <form id="kiForm"
-              action="https://formspree.io/f/mvgwndgg"
-              method="POST"
-              style="display:none;margin-top:18px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto;
-                     background:#0b0b0b;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:12px;">
-
-          <label style="color:#ccc;display:block;margin-bottom:10px;">
+        <form id="kiForm" class="download-form" action="https://formspree.io/f/mvgwndgg" method="POST">
+          <label>
             Name:<br>
-            <input type="text" name="name" required
-                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+            <input type="text" name="name" required>
           </label>
-
-          <label style="color:#ccc;display:block;margin-bottom:10px;">
+          <label>
             E-Mail-Adresse:<br>
-            <input type="email" name="email" required
-                   style="width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#111;color:#eee;">
+            <input type="email" name="email" required>
           </label>
-
-          <!-- Saison ist jetzt KI -->
           <input type="hidden" name="season" value="KI">
-
-          <button type="submit"
-                  style="display:block;width:100%;margin-top:12px;padding:12px 0;border:0;border-radius:999px;
-                         background:linear-gradient(90deg,#1e90ff,#63b3ed);color:#fff;font-weight:600;font-size:15px;
-                         cursor:pointer;transition:opacity .3s ease;">
-            Absenden
-          </button>
-
-          <p id="kiMsg"
-             style="display:none;text-align:center;color:#8fd694;margin-top:12px;">
-             Danke! Dein Download-Link ist jetzt freigeschaltet 👇
-          </p>
+          <button type="submit" style="background:linear-gradient(90deg,#6a11cb,#2575fc);">Absenden</button>
+          <p class="success-msg" id="kiMsg">Danke! Dein Download-Link ist jetzt freigeschaltet 👇</p>
+          <p class="error-msg" id="kiError">Fehler beim Absenden. Bitte versuch es erneut.</p>
         </form>
 
-        <!-- Versteckter Download-Link -->
-        <div id="kiLink" style="display:none;text-align:center;margin-top:20px;">
-          <a class="download-btn ki-btn"
-             href="https://gofile.me/7sdkD/qwDgUvfax"
-             target="_blank">
-             👉 Jetzt KI-Download starten
+        <div id="kiLink" class="download-link">
+          <a class="download-btn ki-btn" href="https://soellerhaus1.quickconnect.to/d/s/DEIN_KI_DOWNLOAD_LINK" target="_blank">
+            👉 Jetzt KI-Download starten
           </a>
         </div>
       </div>
@@ -792,25 +614,24 @@
       </p>
     </div>
 
-    <div class="grid" style="margin-top:20px;">
-      <!-- Alle KI-Videokarten wie gehabt -->
-       <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137415413?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Burmi Winter(KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Burmi Winter</h3><p class="meta" style="color:#ffccb8">KI</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137215926?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern Kirche Herbst (KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Riezlern Kirche Herbst</h3><p class="meta" style="color:#ffccb8">KI</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137215970?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern Kirche Herbst 2(KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Riezlern Kirche Herbst 2</h3><p class="meta" style="color:#ffccb8">KI</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137216084?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Kirche 4 Jahreszeiten Zeitraffer(KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Kirche 4 Jahreszeiten Zeitraffer</h3><p class="meta" style="color:#ffccb8">KI</p></article>	  
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137216049?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern 4 Jahreszeiten Kirche Zeitraffer(KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Riezlern 4 Jahreszeiten Kirche Zeitraffer</h3><p class="meta" style="color:#ffccb8">KI</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137216570?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Kirche Mittelberg Zeitraffer Jahreszeiten(KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Kirche Mittelberg Zeitraffer Jahreszeiten</h3><p class="meta" style="color:#ffccb8">KI</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137216612?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Mittelberg Zeitraffer Kirche Sommer (KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Mittelberg Zeitraffer Kirche Sommer</h3><p class="meta" style="color:#ffccb8">KI</p></article>
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137216117?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern Zeitraffer 1 Jahr (KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Riezlern Zeitraffer 1 Jahr</h3><p class="meta" style="color:#ffccb8">KI</p></article>	  
-      <article class="card" style="background:#1f120d"><div class="ratio-916"><iframe data-src="https://player.vimeo.com/video/1137216012?title=0&byline=0&portrait=0&muted=1&autopause=1" title="Riezlern 4 Jahreszeiten Zeitraffer(KI)" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"></iframe></div><h3 class="title" style="color:#ffece4">Riezlern 4 Jahreszeiten Zeitraffer</h3><p class="meta" style="color:#ffccb8">KI</p></article>
-	  
+    <div class="grid" id="kiGrid"></div>
+
+    <div style="text-align:center;margin-top:32px;">
+      <p class="license">
+        📜 <strong>Regel:</strong> Videos dürfen kostenlos verwendet werden.<br>
+        Urheber ist <strong>walserfly.com</strong> – Namensnennung <strong>@walserfly</strong> erforderlich!<br><br>
+        ✉️ Für Anfragen oder spezielle Aufträge erreichst du mich unter:<br>
+        <a href="mailto:walserfly@gmail.com" style="color:#2575fc">walserfly@gmail.com</a><br>
+        💶 Unterstütze meine KI-Experimente ☕🍺😉:<br>
+        <a href="https://paypal.me/walserfly" target="_blank" style="color:#2575fc">paypal.me/walserfly</a>
+      </p>
     </div>
   </div>
 
 </section>
 
 <!-- Zurück nach oben Button -->
-<button id="backToTop" title="Nach oben">↑</button>
+<button id="backToTop" title="Nach oben" aria-label="Zurück nach oben">↑</button>
 
 <p style="margin:10px 0 0; font-size:.8rem; color:#8e8e8e; text-align:center;">
   © 2025 walserfly.com · 
@@ -818,14 +639,8 @@
   <a href="datenschutz.html" style="color:inherit; text-decoration:underline;">Datenschutz</a>
 </p>
 
-<!-- Weißes Instagram-Symbol fix unten mittig -->
-<a
-  href="https://www.instagram.com/walserfly/"
-  class="insta-btn-fixed"
-  target="_blank"
-  rel="noopener"
-  aria-label="Walserfly auf Instagram öffnen"
->
+<!-- Instagram-Symbol fix unten mittig -->
+<a href="https://www.instagram.com/walserfly/" class="insta-btn-fixed" target="_blank" rel="noopener" aria-label="Walserfly auf Instagram">
   <svg viewBox="0 0 24 24" aria-hidden="true" class="insta-icon-fixed">
     <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/>
   </svg>
@@ -834,60 +649,72 @@
 <!-- Vimeo API -->
 <script src="https://player.vimeo.com/api/player.js"></script>
 
+<!-- Video Konfiguration -->
+<script src="videos-config.js"></script>
+
+<!-- Main JavaScript -->
 <script>
-/* Form-Toggler für die Buttons */
-function toggleForm(){
-  const f = document.getElementById('winterForm');
-  if (!f) return;
-  f.style.display = (f.style.display === 'none' || !f.style.display) ? 'block' : 'none';
-}
-function toggleFormSpring(){
-  const f = document.getElementById('springForm');
-  if (!f) return;
-  f.style.display = (f.style.display === 'none' || !f.style.display) ? 'block' : 'none';
-}
-function toggleFormSummer(){
-  const f = document.getElementById('summerForm');
-  if (!f) return;
-  f.style.display = (f.style.display === 'none' || !f.style.display) ? 'block' : 'none';
-}
-function toggleFormAutumn(){
-  const f = document.getElementById('autumnForm');
-  if (!f) return;
-  f.style.display = (f.style.display === 'none' || !f.style.display) ? 'block' : 'none';
-}
-function toggleFormKI(){
-  const f = document.getElementById('kiForm');
+// ===== HELPER FUNKTIONEN =====
+function toggleForm(formId) {
+  const f = document.getElementById(formId);
   if (!f) return;
   f.style.display = (f.style.display === 'none' || !f.style.display) ? 'block' : 'none';
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-  // Tabs
-  const root = document.getElementById('fpv-seasons-tabs');
-  if (root) {
-    const tabs = root.querySelectorAll('.tab');
-    const panels = root.querySelectorAll('.panel');
-    tabs.forEach(btn => btn.addEventListener('click', e => {
-      e.preventDefault();
-      const target = btn.dataset.target;
-      tabs.forEach(t => t.classList.toggle('active', t === btn));
-      panels.forEach(p => p.classList.toggle('active', p.id === target));
-    }));
+// ===== VIDEO RENDERING =====
+function createVideoCard(video) {
+  const card = document.createElement('article');
+  card.className = 'card';
+  if (video.bgColor) {
+    card.style.background = video.bgColor;
   }
+  
+  card.innerHTML = `
+    <div class="ratio-916">
+      <iframe 
+        data-src="https://player.vimeo.com/video/${video.id}?title=0&byline=0&portrait=0&muted=1&autopause=1" 
+        title="FPV Video: ${video.title} - ${video.season} im Kleinwalsertal" 
+        loading="lazy" 
+        allow="autoplay; fullscreen; picture-in-picture"
+        aria-label="${video.title}">
+      </iframe>
+    </div>
+    <h3 class="title"${video.titleColor ? ` style="color:${video.titleColor}"` : ''}>${video.title}</h3>
+    <p class="meta"${video.metaColor ? ` style="color:${video.metaColor}"` : ''}>${video.season}${video.location ? ' · ' + video.location : ''}</p>
+  `;
+  
+  return card;
+}
 
-  // Lazy-Loading der iframes
+function renderVideos() {
+  const seasons = ['winter', 'fruehling', 'sommer', 'herbst', 'ki'];
+  
+  seasons.forEach(season => {
+    const grid = document.getElementById(`${season}Grid`);
+    if (!grid) return;
+    
+    const seasonVideos = window.VIDEOS[season] || [];
+    seasonVideos.forEach(video => {
+      grid.appendChild(createVideoCard(video));
+    });
+  });
+}
+
+// ===== LAZY LOADING =====
+function setupLazyLoading() {
   const iframes = Array.from(document.querySelectorAll('iframe[data-src]'));
+  
   const loadIframe = (el, autoplay = false) => {
     if (el.dataset.loaded) return;
     const url = new URL(el.getAttribute('data-src'));
-    if (autoplay) url.searchParams.set('autoplay','1');
+    if (autoplay) url.searchParams.set('autoplay', '1');
     el.src = url.toString();
     el.dataset.loaded = '1';
   };
-  // Klick-Fallback
+  
+  // Click fallback
   iframes.forEach(el => el.addEventListener('click', () => loadIframe(el, true), { once: true }));
-
+  
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -897,21 +724,34 @@ document.addEventListener("DOMContentLoaded", function() {
         }
       });
     }, { rootMargin: '200px 0px' });
+    
     iframes.forEach(el => io.observe(el));
   } else {
     setTimeout(() => iframes.forEach(el => loadIframe(el)), 800);
   }
+}
 
-  // Formspree-Submit-Handler für alle vier Jahreszeiten + KI
-  function initForm(formId, msgId, linkId){
-    const form = document.getElementById(formId);
-    if (!form) return;
-    const msg  = document.getElementById(msgId);
-    const link = document.getElementById(linkId);
+// ===== FORM HANDLING =====
+function initForm(formId, msgId, errorId, linkId) {
+  const form = document.getElementById(formId);
+  if (!form) return;
+  
+  const msg = document.getElementById(msgId);
+  const errorMsg = document.getElementById(errorId);
+  const link = document.getElementById(linkId);
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const data = new FormData(form);
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const btn = form.querySelector("button");
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Wird gesendet...';
+    }
+    
+    const data = new FormData(form);
+    
+    try {
       const response = await fetch(form.action, {
         method: form.method,
         body: data,
@@ -919,40 +759,76 @@ document.addEventListener("DOMContentLoaded", function() {
       });
 
       if (response.ok) {
-        const btn = form.querySelector("button");
         if (btn) {
-          btn.disabled = true;
           btn.style.opacity = ".6";
+          btn.textContent = 'Gesendet ✓';
         }
-        if (msg)  msg.style.display  = "block";
+        if (msg) msg.style.display = "block";
         if (link) link.style.display = "block";
+        if (errorMsg) errorMsg.style.display = "none";
       } else {
-        alert("Fehler beim Absenden. Bitte versuch es erneut.");
+        throw new Error('Server error');
       }
-    });
-  }
+    } catch (error) {
+      if (errorMsg) errorMsg.style.display = "block";
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Absenden';
+      }
+    }
+  });
+}
 
-  initForm("winterForm","winterMsg","winterLink");
-  initForm("springForm","springMsg","springLink");
-  initForm("summerForm","summerMsg","summerLink");
-  initForm("autumnForm","autumnMsg","autumnLink");
-  initForm("kiForm","kiMsg","kiLink");
+// ===== TABS =====
+function setupTabs() {
+  const root = document.getElementById('fpv-seasons-tabs');
+  if (!root) return;
+  
+  const tabs = root.querySelectorAll('.tab');
+  const panels = root.querySelectorAll('.panel');
+  
+  tabs.forEach(btn => btn.addEventListener('click', e => {
+    e.preventDefault();
+    const target = btn.dataset.target;
+    tabs.forEach(t => t.classList.toggle('active', t === btn));
+    panels.forEach(p => p.classList.toggle('active', p.id === target));
+  }));
+}
 
-  // Back-to-top
+// ===== BACK TO TOP =====
+function setupBackToTop() {
   const backToTop = document.getElementById("backToTop");
-  if (backToTop) {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 400) {
-        backToTop.classList.add("show");
-      } else {
-        backToTop.classList.remove("show");
-      }
-    });
+  if (!backToTop) return;
+  
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 400) {
+      backToTop.classList.add("show");
+    } else {
+      backToTop.classList.remove("show");
+    }
+  });
 
-    backToTop.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  }
+  backToTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
+// ===== INIT =====
+document.addEventListener("DOMContentLoaded", function() {
+  // Render videos from config
+  renderVideos();
+  
+  // Setup components
+  setupTabs();
+  setupLazyLoading();
+  setupBackToTop();
+  
+  // Init all forms
+  initForm("winterForm", "winterMsg", "winterError", "winterLink");
+  initForm("springForm", "springMsg", "springError", "springLink");
+  initForm("summerForm", "summerMsg", "summerError", "summerLink");
+  initForm("autumnForm", "autumnMsg", "autumnError", "autumnLink");
+  initForm("kiForm", "kiMsg", "kiError", "kiLink");
 });
 </script>
 
