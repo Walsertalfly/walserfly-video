@@ -1,0 +1,26 @@
+{
+  "wf_demo": {
+    "domains": ["walserfly.com", "www.walserfly.com", "localhost"],
+    "active": true,
+    "name": "WalserFly Demo",
+    "created": "2026-01-01"
+  },
+  "wf_premium_001": {
+    "domains": ["*.berghotel-example.de", "berghotel-example.de"],
+    "active": true,
+    "name": "Berghotel Example GmbH",
+    "created": "2026-01-02"
+  },
+  "wf_basic_002": {
+    "domains": ["skiverleih-muster.at", "www.skiverleih-muster.at"],
+    "active": true,
+    "name": "Skiverleih Muster",
+    "created": "2026-01-02"
+  },
+  "wf_cancelled_003": {
+    "domains": ["alte-domain.com"],
+    "active": false,
+    "name": "Gekündigter Kunde",
+    "created": "2025-06-01"
+  }
+}
