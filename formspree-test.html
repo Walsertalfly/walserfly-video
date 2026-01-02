@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formspree Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #1a1a1a;
+      color: #fff;
+    }
+    
+    .test-section {
+      background: #2a2a2a;
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+    }
+    
+    h2 {
+      color: #66ccff;
+      margin-bottom: 20px;
+    }
+    
+    button {
+      background: linear-gradient(90deg, #0077ff, #66ccff);
+      color: #fff;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 10px 10px 10px 0;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,119,255,0.4);
+    }
+    
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #1a1a1a;
+      border-radius: 8px;
+      border-left: 4px solid #66ccff;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    
+    .success {
+      border-left-color: #00ff00;
+    }
+    
+    .error {
+      border-left-color: #ff0000;
+    }
+    
+    code {
+      background: #1a1a1a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #66ccff;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🔍 Formspree Download-Tracking Test</h1>
+
+<!-- Test 1: FormData (empfohlen) -->
+<div class="test-section">
+  <h2>Test 1: FormData (application/x-www-form-urlencoded)</h2>
+  <p>Formspree bevorzugt FormData statt JSON</p>
+  <button onclick="testFormData()">📤 Test mit FormData senden</button>
+  <div id="result1" class="result"></div>
+</div>
+
+<!-- Test 2: JSON -->
+<div class="test-section">
+  <h2>Test 2: JSON (application/json)</h2>
+  <p>Alternative mit JSON-Payload</p>
+  <button onclick="testJSON()">📤 Test mit JSON senden</button>
+  <div id="result2" class="result"></div>
+</div>
+
+<!-- Test 3: fetch mit FormData -->
+<div class="test-section">
+  <h2>Test 3: fetch() mit FormData</h2>
+  <p>Standard fetch() statt sendBeacon()</p>
+  <button onclick="testFetchFormData()">📤 Test mit fetch() senden</button>
+  <div id="result3" class="result"></div>
+</div>
+
+<!-- Test 4: Echtes Formular -->
+<div class="test-section">
+  <h2>Test 4: Klassisches HTML-Formular</h2>
+  <p>Klassisches Submit (öffnet neue Seite)</p>
+  <form action="https://formspree.io/f/mvgwndgg" method="POST">
+    <input type="hidden" name="event" value="test_form">
+    <input type="hidden" name="season" value="Test-Season">
+    <input type="hidden" name="timestamp" value="">
+    <button type="submit">📤 Formular absenden</button>
+  </form>
+  <p style="color: #888; font-size: 14px; margin-top: 10px;">
+    ⚠️ Achtung: Leitet zu Formspree-Seite weiter
+  </p>
+</div>
+
+<script>
+const endpoint = 'https://formspree.io/f/mvgwndgg';
+
+// Test 1: FormData mit sendBeacon
+function testFormData() {
+  const result = document.getElementById('result1');
+  result.textContent = '⏳ Sende Anfrage...';
+  result.className = 'result';
+  
+  const formData = new FormData();
+  formData.append('event', 'download_click');
+  formData.append('season', 'Winter');
+  formData.append('timestamp', new Date().toISOString());
+  formData.append('page_url', window.location.href);
+  formData.append('download_url', 'https://gofile.me/7sdkD/test');
+  
+  // sendBeacon kann kein Response lesen, also verwenden wir fetch
+  fetch(endpoint, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Accept': 'application/json'
+    }
+  })
+  .then(response => {
+    console.log('Status:', response.status);
+    return response.json();
+  })
+  .then(data => {
+    result.className = 'result success';
+    result.textContent = `✅ ERFOLG!\n\nStatus: ${data.ok ? 'OK' : 'ERROR'}\n\nResponse:\n${JSON.stringify(data, null, 2)}\n\n👉 Prüfe deine E-Mail!`;
+  })
+  .catch(error => {
+    result.className = 'result error';
+    result.textContent = `❌ FEHLER:\n\n${error.message}\n\nPrüfe Browser-Console (F12) für Details`;
+    console.error('Error:', error);
+  });
+}
+
+// Test 2: JSON
+function testJSON() {
+  const result = document.getElementById('result2');
+  result.textContent = '⏳ Sende Anfrage...';
+  result.className = 'result';
+  
+  const payload = {
+    event: 'download_click',
+    season: 'Sommer',
+    timestamp: new Date().toISOString(),
+    page_url: window.location.href,
+    download_url: 'https://gofile.me/7sdkD/test'
+  };
+  
+  fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(response => {
+    console.log('Status:', response.status);
+    return response.json();
+  })
+  .then(data => {
+    result.className = 'result success';
+    result.textContent = `✅ ERFOLG!\n\nStatus: ${data.ok ? 'OK' : 'ERROR'}\n\nResponse:\n${JSON.stringify(data, null, 2)}\n\n👉 Prüfe deine E-Mail!`;
+  })
+  .catch(error => {
+    result.className = 'result error';
+    result.textContent = `❌ FEHLER:\n\n${error.message}\n\nPrüfe Browser-Console (F12) für Details`;
+    console.error('Error:', error);
+  });
+}
+
+// Test 3: fetch mit FormData
+function testFetchFormData() {
+  const result = document.getElementById('result3');
+  result.textContent = '⏳ Sende Anfrage...';
+  result.className = 'result';
+  
+  const formData = new FormData();
+  formData.append('event', 'download_click');
+  formData.append('season', 'Frühling');
+  formData.append('timestamp', new Date().toISOString());
+  formData.append('page_url', window.location.href);
+  formData.append('download_url', 'https://gofile.me/7sdkD/test');
+  
+  fetch(endpoint, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Accept': 'application/json'
+    }
+  })
+  .then(response => {
+    console.log('Status:', response.status);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    result.className = 'result success';
+    result.textContent = `✅ ERFOLG!\n\nStatus: ${data.ok ? 'OK' : 'ERROR'}\n\nResponse:\n${JSON.stringify(data, null, 2)}\n\n👉 Prüfe deine E-Mail!`;
+  })
+  .catch(error => {
+    result.className = 'result error';
+    result.textContent = `❌ FEHLER:\n\n${error.message}\n\nPrüfe Browser-Console (F12) für Details`;
+    console.error('Error:', error);
+  });
+}
+
+// Info beim Laden
+window.addEventListener('DOMContentLoaded', () => {
+  console.log('🔍 Formspree Test-Seite geladen');
+  console.log('📧 Endpoint:', endpoint);
+  console.log('💡 Tipp: Öffne Browser-Console (F12) für detaillierte Logs');
+});
+</script>
+
+</body>
+</html>
