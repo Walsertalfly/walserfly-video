@@ -181,7 +181,7 @@
       60% { transform: translateX(-50%) translateY(-5px); }
     }
 
-    /* ===== NAVIGATION (verstecktes SEO-Menü) ===== */
+    /* ===== NAVIGATION ===== */
     nav.main-nav {
       position: sticky;
       top: 0;
@@ -224,7 +224,7 @@
       color: #66ccff;
     }
 
-    /* Mobile Menu Toggle */
+    /* Mobile Menu */
     .mobile-menu-toggle {
       display: none;
       background: none;
@@ -256,7 +256,7 @@
       }
     }
 
-    /* ===== SEASONS SECTION (Video-fokussiert) ===== */
+    /* ===== SEASONS SECTION ===== */
     .seasons-section {
       padding: 80px 20px;
       max-width: 1600px;
@@ -295,6 +295,8 @@
       border: 1px solid rgba(255,255,255,0.08);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
+      text-decoration: none;
+      display: block;
     }
 
     .season-card:hover {
@@ -359,11 +361,11 @@
       transition: gap 0.3s ease;
     }
 
-    .season-link:hover {
+    .season-card:hover .season-link {
       gap: 12px;
     }
 
-    /* Color Accents für Jahreszeiten */
+    /* Color Accents */
     .season-card.winter { border-top: 4px solid #0077ff; }
     .season-card.winter .season-link { color: #66ccff; }
 
@@ -376,7 +378,7 @@
     .season-card.autumn { border-top: 4px solid #ff6633; }
     .season-card.autumn .season-link { color: #ff9966; }
 
-    /* ===== SEO TEXT (elegant versteckt) ===== */
+    /* ===== SEO ACCORDION ===== */
     .seo-accordion {
       max-width: 800px;
       margin: 80px auto;
@@ -435,58 +437,6 @@
       line-height: 1.8;
       padding-left: 24px;
       margin: 16px 0;
-    }
-
-    /* ===== LOCATIONS PREVIEW ===== */
-    .locations-section {
-      padding: 80px 20px;
-      background: #0a0a0a;
-    }
-
-    .locations-grid {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 24px;
-    }
-
-    .location-card {
-      background: #111;
-      border-radius: 16px;
-      padding: 24px;
-      border: 1px solid rgba(255,255,255,0.08);
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .location-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(102,204,255,0.3);
-    }
-
-    .location-icon {
-      font-size: 2.5rem;
-      margin-bottom: 12px;
-    }
-
-    .location-name {
-      font-size: 1.3rem;
-      color: #fff;
-      margin-bottom: 8px;
-    }
-
-    .location-height {
-      color: #888;
-      font-size: 0.9rem;
-      margin-bottom: 16px;
-    }
-
-    .location-link {
-      color: #66ccff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
     }
 
     /* ===== FOOTER ===== */
@@ -589,7 +539,7 @@
       fill: currentColor;
     }
 
-    /* Mobile Optimierung */
+    /* Mobile */
     @media (max-width: 768px) {
       .insta-btn-fixed {
         bottom: 80px;
@@ -629,12 +579,10 @@
     </button>
 
     <ul class="nav-links" id="navLinks">
-      <li><a href="/winter/">❄️ Winter</a></li>
-      <li><a href="/fruehling/">🌱 Frühling</a></li>
-      <li><a href="/sommer/">☀️ Sommer</a></li>
-      <li><a href="/herbst/">🍁 Herbst</a></li>
-      <li><a href="/locations/">📍 Locations</a></li>
-      <li><a href="/lizenz/">📜 Lizenz</a></li>
+      <li><a href="winter.html">❄️ Winter</a></li>
+      <li><a href="fruehling.html">🌱 Frühling</a></li>
+      <li><a href="sommer.html">☀️ Sommer</a></li>
+      <li><a href="herbst.html">🍁 Herbst</a></li>
     </ul>
   </div>
 </nav>
@@ -683,7 +631,7 @@
   <div class="seasons-grid">
     
     <!-- Winter -->
-    <a href="/winter/" class="season-card winter">
+    <a href="winter.html" class="season-card winter">
       <img src="https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?w=800" alt="Winter FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy">
       <div class="season-content">
         <span class="season-icon">❄️</span>
@@ -695,7 +643,7 @@
     </a>
 
     <!-- Frühling -->
-    <a href="/fruehling/" class="season-card spring">
+    <a href="fruehling.html" class="season-card spring">
       <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800" alt="Frühling FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy">
       <div class="season-content">
         <span class="season-icon">🌱</span>
@@ -707,7 +655,7 @@
     </a>
 
     <!-- Sommer -->
-    <a href="/sommer/" class="season-card summer">
+    <a href="sommer.html" class="season-card summer">
       <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" alt="Sommer FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy">
       <div class="season-content">
         <span class="season-icon">☀️</span>
@@ -719,7 +667,7 @@
     </a>
 
     <!-- Herbst -->
-    <a href="/herbst/" class="season-card autumn">
+    <a href="herbst.html" class="season-card autumn">
       <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" alt="Herbst FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy">
       <div class="season-content">
         <span class="season-icon">🍁</span>
@@ -733,7 +681,7 @@
   </div>
 </section>
 
-<!-- ===== SEO CONTENT (elegant versteckt) ===== -->
+<!-- ===== SEO CONTENT ===== -->
 <section class="seo-accordion">
   <div class="seo-toggle">
     <button class="seo-toggle-btn" onclick="toggleSeoContent()">
@@ -780,76 +728,22 @@
   </div>
 </section>
 
-<!-- ===== LOCATIONS PREVIEW ===== -->
-<section class="locations-section">
-  <div class="section-header">
-    <h2>Beliebte Locations</h2>
-    <p>Entdecke FPV-Videos von spezifischen Orten</p>
-  </div>
-
-  <div class="locations-grid">
-    <a href="/locations/ifen/" class="location-card">
-      <div class="location-icon">🏔️</div>
-      <h3 class="location-name">Ifen</h3>
-      <p class="location-height">2.230m</p>
-      <span class="location-link">Videos →</span>
-    </a>
-
-    <a href="/locations/walmendingerhorn/" class="location-card">
-      <div class="location-icon">⛰️</div>
-      <h3 class="location-name">Walmendinger Horn</h3>
-      <p class="location-height">1.990m</p>
-      <span class="location-link">Videos →</span>
-    </a>
-
-    <a href="/locations/kanzelwand/" class="location-card">
-      <div class="location-icon">🗻</div>
-      <h3 class="location-name">Kanzelwand</h3>
-      <p class="location-height">2.058m</p>
-      <span class="location-link">Videos →</span>
-    </a>
-
-    <a href="/locations/heuberg/" class="location-card">
-      <div class="location-icon">🏔️</div>
-      <h3 class="location-name">Heuberg</h3>
-      <p class="location-height">1.603m</p>
-      <span class="location-link">Videos →</span>
-    </a>
-
-    <a href="/locations/widderstein/" class="location-card">
-      <div class="location-icon">⛰️</div>
-      <h3 class="location-name">Widderstein</h3>
-      <p class="location-height">2.533m</p>
-      <span class="location-link">Videos →</span>
-    </a>
-  </div>
-</section>
-
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="footer-content">
     
     <div class="footer-section">
       <h4>Jahreszeiten</h4>
-      <a href="/winter/">❄️ Winter-Videos</a>
-      <a href="/fruehling/">🌱 Frühling-Videos</a>
-      <a href="/sommer/">☀️ Sommer-Videos</a>
-      <a href="/herbst/">🍁 Herbst-Videos</a>
-    </div>
-
-    <div class="footer-section">
-      <h4>Locations</h4>
-      <a href="/locations/ifen/">Ifen</a>
-      <a href="/locations/walmendingerhorn/">Walmendinger Horn</a>
-      <a href="/locations/kanzelwand/">Kanzelwand</a>
-      <a href="/locations/">Alle Locations →</a>
+      <a href="winter.html">❄️ Winter-Videos</a>
+      <a href="fruehling.html">🌱 Frühling-Videos</a>
+      <a href="sommer.html">☀️ Sommer-Videos</a>
+      <a href="herbst.html">🍁 Herbst-Videos</a>
     </div>
 
     <div class="footer-section">
       <h4>Informationen</h4>
-      <a href="/lizenz/">Lizenz & Nutzung</a>
-      <a href="/impressum.html">Impressum</a>
-      <a href="/datenschutz.html">Datenschutz</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
     </div>
 
     <div class="footer-section">
@@ -866,7 +760,7 @@
   </div>
 </footer>
 
-<!-- Back to Top Button -->
+<!-- Back to Top -->
 <button id="backToTop" onclick="scrollToTop()" aria-label="Zurück nach oben">↑</button>
 
 <!-- Instagram Button -->
@@ -888,7 +782,7 @@ function toggleSeoContent() {
   content.classList.toggle('expanded');
 }
 
-// Back to Top Button
+// Back to Top
 const backToTop = document.getElementById('backToTop');
 
 window.addEventListener('scroll', () => {
@@ -903,7 +797,7 @@ function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Smooth Scroll for Anchor Links
+// Smooth Scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
