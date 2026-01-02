@@ -304,7 +304,12 @@
   <div class="hero-content">
     <h1>❄️ FPV Winter-Videos</h1>
     <p class="hero-subtitle">55+ kostenlose Drohnenvideos aus verschneiten Alpengipfeln</p>
-    <a href="https://gofile.me/7sdkD/gDq3mY0QH" class="download-btn" target="_blank" rel="noopener">
+    <a href="https://gofile.me/7sdkD/gDq3mY0QH" 
+       class="download-btn download-track" 
+       data-season="Winter"
+       data-download-url="https://gofile.me/7sdkD/gDq3mY0QH"
+       target="_blank" 
+       rel="noopener">
       <span>📦</span>
       <span>Alle Winter-Videos herunterladen</span>
     </a>
@@ -432,6 +437,56 @@ function scrollToTop() {
 
 // Init
 document.addEventListener('DOMContentLoaded', renderWinterVideos);
+
+// ===== DOWNLOAD TRACKING =====
+function trackDownload(season, downloadUrl) {
+  const formspreeEndpoint = 'https://formspree.io/f/mvgwndgg';
+  
+  const payload = {
+    event: 'download_click',
+    season: season,
+    timestamp: new Date().toISOString(),
+    page_url: window.location.href,
+    download_url: downloadUrl
+  };
+
+  // navigator.sendBeacon für zuverlässiges Tracking (funktioniert auch beim Tab-Schließen)
+  const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+  
+  if (navigator.sendBeacon) {
+    navigator.sendBeacon(formspreeEndpoint, blob);
+  } else {
+    // Fallback zu fetch() wenn sendBeacon nicht verfügbar
+    fetch(formspreeEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).catch(err => console.log('Tracking error:', err));
+  }
+}
+
+// Event-Listener für Download-Buttons
+document.addEventListener('DOMContentLoaded', function() {
+  const downloadButtons = document.querySelectorAll('.download-track');
+  
+  downloadButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault(); // Verhindert sofortiges Öffnen
+      
+      const season = this.getAttribute('data-season');
+      const downloadUrl = this.getAttribute('data-download-url');
+      
+      // Tracking auslösen
+      trackDownload(season, downloadUrl);
+      
+      // Download nach kurzer Verzögerung öffnen (50ms)
+      setTimeout(() => {
+        window.open(downloadUrl, '_blank');
+      }, 50);
+    });
+  });
+});
 </script>
 
 </body>
