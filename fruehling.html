@@ -304,7 +304,12 @@
   <div class="hero-content">
     <h1>🌱 FPV Frühling-Videos</h1>
     <p class="hero-subtitle">15+ kostenlose Drohnenvideos – Erwachende Natur im Kleinwalsertal</p>
-    <a href="https://gofile.me/7sdkD/G0XyRZW63" class="download-btn" target="_blank" rel="noopener">
+    <a href="https://gofile.me/7sdkD/Z0TIVv2g5" 
+       class="download-btn download-track" 
+       data-season="Frühling"
+       data-download-url="https://gofile.me/7sdkD/Z0TIVv2g5"
+       target="_blank" 
+       rel="noopener">
       <span>📦</span>
       <span>Alle Frühling-Videos herunterladen</span>
     </a>
@@ -431,6 +436,52 @@ function scrollToTop() {
 
 // Init
 document.addEventListener('DOMContentLoaded', renderFruehlingVideos);
+
+// ===== DOWNLOAD TRACKING =====
+function trackDownload(season, downloadUrl) {
+  const formspreeEndpoint = 'https://formspree.io/f/mvgwndgg';
+  
+  const payload = {
+    event: 'download_click',
+    season: season,
+    timestamp: new Date().toISOString(),
+    page_url: window.location.href,
+    download_url: downloadUrl
+  };
+
+  const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+  
+  if (navigator.sendBeacon) {
+    navigator.sendBeacon(formspreeEndpoint, blob);
+  } else {
+    fetch(formspreeEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).catch(err => console.log('Tracking error:', err));
+  }
+}
+
+// Event-Listener für Download-Buttons
+document.addEventListener('DOMContentLoaded', function() {
+  const downloadButtons = document.querySelectorAll('.download-track');
+  
+  downloadButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      const season = this.getAttribute('data-season');
+      const downloadUrl = this.getAttribute('data-download-url');
+      
+      trackDownload(season, downloadUrl);
+      
+      setTimeout(() => {
+        window.open(downloadUrl, '_blank');
+      }, 50);
+    });
+  });
+});
 </script>
 
 </body>
