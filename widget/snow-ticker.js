@@ -103,8 +103,8 @@
       .snow-ticker-banner{position:relative;width:100%;height:70px;background:linear-gradient(135deg,rgba(15,15,15,.97) 0%,rgba(30,30,30,.97) 50%,rgba(45,45,45,.97) 100%);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);overflow:hidden;box-shadow:${pos==='top'?'0 4px 30px rgba(0,0,0,.3)':'0 -4px 30px rgba(0,0,0,.3)'};border-${pos==='top'?'bottom':'top'}:1px solid rgba(255,255,255,.08)}
       .banner-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-image:radial-gradient(circle at 20% 50%,rgba(255,255,255,.03) 0%,transparent 50%),radial-gradient(circle at 80% 50%,rgba(255,255,255,.03) 0%,transparent 50%);background-size:200% 100%;animation:shimmer 8s ease-in-out infinite;pointer-events:none}
       @keyframes shimmer{0%,100%{background-position:0% 0%}50%{background-position:100% 0%}}
-      .ticker-track{position:relative;display:flex;align-items:center;height:100%;animation:scroll-left 30s linear infinite;will-change:transform}
-      .snow-ticker-banner:hover .ticker-track{animation-play-state:paused}
+      .ticker-track{position:relative;display:flex;align-items:center;height:100%;will-change:transform}
+      .snow-ticker-banner:hover .ticker-track{animation-play-state:paused!important}
       .ticker-item{display:flex;align-items:center;gap:16px;padding:0 28px;margin:0 8px;height:54px;background:rgba(255,255,255,.06);backdrop-filter:blur(10px);border-radius:27px;border:1px solid rgba(255,255,255,.1);white-space:nowrap;flex-shrink:0;transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:0 4px 15px rgba(0,0,0,.2);cursor:default}
       .ticker-item:hover{background:rgba(255,255,255,.12);transform:translateY(-2px) scale(1.02);box-shadow:0 8px 25px rgba(0,0,0,.4);border-color:rgba(255,255,255,.2)}
       .location-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.15);border-radius:50%;flex-shrink:0}
@@ -124,7 +124,6 @@
       .ticker-loading{display:flex;align-items:center;justify-content:center;height:100%;width:100%;color:rgba(255,255,255,.7);font-size:14px;font-weight:600;gap:12px}
       .spinner{width:20px;height:20px;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
       @keyframes spin{to{transform:rotate(360deg)}}
-      @keyframes scroll-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
       @media(max-width:768px){.snow-ticker-banner{height:60px}.ticker-item{height:46px;gap:12px;padding:0 20px}.location-icon{width:28px;height:28px}.location-name{font-size:12px}.snow-value{font-size:22px}.forecast-badge{padding:6px 10px}}
       .snowflake{position:absolute;top:-10px;color:rgba(255,255,255,.4);font-size:14px;animation:fall linear infinite;pointer-events:none;user-select:none}
       @keyframes fall{to{transform:translateY(80px);opacity:0}}
@@ -344,16 +343,18 @@
       document.body.appendChild(host);
     }
     
-    return { banner, track };
+    return { banner, track, shadow };
   };
 
-  const loadTickerData = async (track, banner) => {
+  const loadTickerData = async (track, banner, shadow) => {
     try {
       const results = await Promise.all(
         WIDGET_CONFIG.LOCATIONS.map(loc => getData(loc).then(data => ({ loc, data })))
       );
       
       track.innerHTML = '';
+      track.style.animation = 'none'; // Reset animation
+      
       const fragment = document.createDocumentFragment();
       
       // Insert items with ad at position 3 (index 2)
@@ -387,6 +388,48 @@
       track.appendChild(clone);
       
       addSnowflakes(banner);
+      
+      // ============================================
+      // SEAMLESS INFINITE LOOP - Key Implementation
+      // ============================================
+      // After rendering, measure the width of the first set of items
+      // Then create a dynamic keyframe animation that scrolls exactly that distance
+      // This ensures a perfect loop regardless of item count or width
+      
+      requestAnimationFrame(() => {
+        // Get all items and calculate width of first half
+        const items = track.querySelectorAll('.ticker-item');
+        const halfCount = Math.ceil(items.length / 2);
+        let firstHalfWidth = 0;
+        
+        for (let i = 0; i < halfCount; i++) {
+          const item = items[i];
+          const style = getComputedStyle(item);
+          const marginLeft = parseFloat(style.marginLeft) || 0;
+          const marginRight = parseFloat(style.marginRight) || 0;
+          firstHalfWidth += item.offsetWidth + marginLeft + marginRight;
+        }
+        
+        // Calculate duration based on width to maintain consistent speed
+        // Original: 30s for full scroll - adjust pixelsPerSecond to match
+        const pixelsPerSecond = 100; // ~30s for typical 9-item ticker
+        const duration = firstHalfWidth / pixelsPerSecond;
+        
+        // Create dynamic keyframe animation
+        const animationName = 'ticker-scroll-' + Date.now();
+        const keyframeStyle = document.createElement('style');
+        keyframeStyle.textContent = `
+          @keyframes ${animationName} {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-${firstHalfWidth}px); }
+          }
+        `;
+        shadow.appendChild(keyframeStyle);
+        
+        // Apply animation to track
+        track.style.animation = `${animationName} ${duration}s linear infinite`;
+      });
+      
     } catch {
       track.innerHTML = '<div class="ticker-error">⚠️ Fehler beim Laden der Daten</div>';
     }
@@ -402,9 +445,9 @@
     
     const ensureBody = () => {
       if (document.body) {
-        const { banner, track } = createWidget();
-        loadTickerData(track, banner);
-        setInterval(() => loadTickerData(track, banner), WIDGET_CONFIG.cacheMinutes * 60000);
+        const { banner, track, shadow } = createWidget();
+        loadTickerData(track, banner, shadow);
+        setInterval(() => loadTickerData(track, banner, shadow), WIDGET_CONFIG.cacheMinutes * 60000);
       } else {
         requestAnimationFrame(ensureBody);
       }
