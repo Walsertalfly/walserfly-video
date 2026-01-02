@@ -438,30 +438,34 @@ function scrollToTop() {
 // Init
 document.addEventListener('DOMContentLoaded', renderHerbstVideos);
 
-// ===== DOWNLOAD TRACKING =====
+// ===== DOWNLOAD TRACKING (VERBESSERT MIT FORMDATA) =====
 function trackDownload(season, downloadUrl) {
   const formspreeEndpoint = 'https://formspree.io/f/mvgwndgg';
   
-  const payload = {
-    event: 'download_click',
-    season: season,
-    timestamp: new Date().toISOString(),
-    page_url: window.location.href,
-    download_url: downloadUrl
-  };
-
-  const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+  // FormData statt JSON - Formspree bevorzugt dies!
+  const formData = new FormData();
+  formData.append('event', 'download_click');
+  formData.append('season', season);
+  formData.append('timestamp', new Date().toISOString());
+  formData.append('page_url', window.location.href);
+  formData.append('download_url', downloadUrl);
   
-  if (navigator.sendBeacon) {
-    navigator.sendBeacon(formspreeEndpoint, blob);
-  } else {
-    fetch(formspreeEndpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      keepalive: true
-    }).catch(err => console.log('Tracking error:', err));
-  }
+  // fetch() mit FormData (zuverlässiger als sendBeacon für Formspree)
+  fetch(formspreeEndpoint, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Accept': 'application/json'
+    }
+  }).then(response => {
+    if (response.ok) {
+      console.log('✅ Download getrackt:', season);
+    } else {
+      console.log('⚠️ Formspree Status:', response.status);
+    }
+  }).catch(err => {
+    console.log('⚠️ Tracking-Fehler:', err);
+  });
 }
 
 // Event-Listener für Download-Buttons
@@ -477,9 +481,8 @@ document.addEventListener('DOMContentLoaded', function() {
       
       trackDownload(season, downloadUrl);
       
-      setTimeout(() => {
-        window.open(downloadUrl, '_blank');
-      }, 50);
+      // Download sofort öffnen (kein setTimeout nötig mit fetch)
+      window.open(downloadUrl, '_blank');
     });
   });
 });
