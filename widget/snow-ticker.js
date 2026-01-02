@@ -411,7 +411,7 @@
         }
         
         // Calculate duration based on width to maintain consistent speed
-        // Original: 30s for full scroll - adjust pixelsPerSecond to match
+        // Original: 40s for full scroll - adjust pixelsPerSecond to match
         const pixelsPerSecond = 100; // ~30s for typical 9-item ticker
         const duration = firstHalfWidth / pixelsPerSecond;
         
