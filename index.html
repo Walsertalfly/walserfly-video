@@ -107,7 +107,7 @@
 
     .hero-mosaic img {
       width: 100%;
-      aspect-ratio: 16/9;
+      aspect-ratio: 9/16;
       object-fit: cover;
       display: block;
       border-radius: 3px;
@@ -151,18 +151,18 @@
       pointer-events: none;
     }
 
-    /* Responsive Mosaik-Spalten */
+    /* Responsive Mosaik-Spalten (Hochformat) */
     @media (max-width: 600px) {
-      .hero-mosaic { --mosaic-cols: 4; gap: 2px; }
+      .hero-mosaic { --mosaic-cols: 5; gap: 2px; }
     }
     @media (min-width: 601px) and (max-width: 900px) {
-      .hero-mosaic { --mosaic-cols: 6; }
-    }
-    @media (min-width: 901px) and (max-width: 1400px) {
       .hero-mosaic { --mosaic-cols: 8; }
     }
+    @media (min-width: 901px) and (max-width: 1400px) {
+      .hero-mosaic { --mosaic-cols: 11; }
+    }
     @media (min-width: 1401px) {
-      .hero-mosaic { --mosaic-cols: 10; }
+      .hero-mosaic { --mosaic-cols: 14; }
     }
 
     .hero-content {
@@ -877,9 +877,11 @@ document.addEventListener('DOMContentLoaded', function() {
         var tmp = allIds[i]; allIds[i] = allIds[j]; allIds[j] = tmp;
       }
 
-      // Berechne wie viele Thumbnails wir brauchen (Grid füllen)
-      var cols = window.innerWidth <= 600 ? 4 : window.innerWidth <= 900 ? 6 : window.innerWidth <= 1400 ? 8 : 10;
-      var rows = Math.ceil(window.innerHeight / (window.innerWidth / cols * 0.5625)) + 4;
+      // Berechne wie viele Thumbnails wir brauchen (Hochformat-Grid)
+      var cols = window.innerWidth <= 600 ? 5 : window.innerWidth <= 900 ? 8 : window.innerWidth <= 1400 ? 11 : 14;
+      var cellWidth = window.innerWidth * 1.2 / cols;
+      var cellHeight = cellWidth * (16/9); // Hochformat
+      var rows = Math.ceil((window.innerHeight * 1.2) / cellHeight) + 2;
       var needed = cols * rows;
 
       // Wiederhole IDs falls nötig
