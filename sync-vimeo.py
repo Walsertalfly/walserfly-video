@@ -4,6 +4,7 @@ WalserFly Vimeo Auto-Sync
 =========================
 Liest Videos aus Vimeo-Ordnern (Winter, Frühling, Sommer, Herbst, KI)
 und ergänzt videos-config.js automatisch mit neuen Videos.
+Generiert außerdem season-covers.js mit den neuesten Thumbnails pro Ordner.
 
 Bestehende Videos in videos-config.js werden NICHT gelöscht.
 Nur neue Videos aus Vimeo werden hinzugefügt.
@@ -20,6 +21,7 @@ from datetime import datetime
 # ===== KONFIGURATION =====
 VIMEO_TOKEN = os.environ.get("VIMEO_TOKEN", "")
 CONFIG_FILE = "videos-config.js"
+COVERS_FILE = "season-covers.js"
 
 # Mapping: Vimeo-Ordnername → JavaScript-Key
 FOLDER_MAP = {
@@ -63,7 +65,6 @@ def get_folders():
     for project in data.get("data", []):
         name = project.get("name", "")
         uri = project.get("uri", "")
-        # URI ist z.B. /users/123456/projects/789
         folders.append({"name": name, "uri": uri})
         print(f"  📁 Ordner gefunden: {name} ({uri})")
 
@@ -71,18 +72,17 @@ def get_folders():
 
 
 def get_videos_in_folder(folder_uri):
-    """Holt alle Videos aus einem Vimeo-Ordner."""
+    """Holt alle Videos aus einem Vimeo-Ordner, sortiert nach Datum (neueste zuerst)."""
     videos = []
     page = 1
 
     while True:
-        data = vimeo_api(f"{folder_uri}/videos?per_page=100&page={page}")
+        data = vimeo_api(f"{folder_uri}/videos?per_page=100&page={page}&sort=date&direction=desc")
         if not data:
             break
 
         for video in data.get("data", []):
             video_uri = video.get("uri", "")
-            # URI ist z.B. /videos/123456789
             video_id = video_uri.split("/")[-1]
 
             videos.append({
@@ -94,7 +94,6 @@ def get_videos_in_folder(folder_uri):
                 "thumbnail": get_thumbnail(video),
             })
 
-        # Pagination
         paging = data.get("paging", {})
         if paging.get("next"):
             page += 1
@@ -109,17 +108,21 @@ def get_thumbnail(video):
     pictures = video.get("pictures", {})
     sizes = pictures.get("sizes", [])
 
-    # Nimm das größte Thumbnail
-    for size in reversed(sizes):
-        if size.get("link"):
-            return size["link"]
+    best = ""
+    best_width = 0
+    for size in sizes:
+        link = size.get("link", "")
+        width = size.get("width", 0)
+        if link and width > best_width:
+            best = link
+            best_width = width
 
-    return ""
+    return best
 
 
 def parse_existing_config(filepath):
     """Liest die bestehende videos-config.js und extrahiert vorhandene Video-IDs."""
-    existing_ids = {}  # season -> set of video IDs
+    existing_ids = {}
 
     if not os.path.exists(filepath):
         print(f"  ⚠️ {filepath} nicht gefunden. Wird neu erstellt.")
@@ -128,10 +131,8 @@ def parse_existing_config(filepath):
     with open(filepath, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Extrahiere alle Vimeo-Video-IDs pro Kategorie
     for js_key in ["winter", "fruehling", "sommer", "herbst", "ki"]:
         existing_ids[js_key] = set()
-        # Suche nach player.vimeo.com/video/XXXXXXX
         pattern = rf"(?:'{js_key}'|{js_key})\s*:\s*\[(.*?)\]"
         match = re.search(pattern, content, re.DOTALL)
         if match:
@@ -145,7 +146,6 @@ def parse_existing_config(filepath):
 
 def build_video_entry(video):
     """Erstellt einen JavaScript-Eintrag für ein Video."""
-    # Escape einfache Anführungszeichen im Titel
     title = video["title"].replace("'", "\\'")
     return f"    {{ id: '{video['id']}', title: '{title}', url: '{video['url']}' }}"
 
@@ -154,7 +154,6 @@ def update_config(existing_ids, existing_content, new_videos_by_season):
     """Aktualisiert videos-config.js mit neuen Videos."""
 
     if not existing_content:
-        # Erstelle komplett neue Datei
         existing_content = "window.VIDEOS = {\n"
         for key in ["winter", "fruehling", "sommer", "herbst", "ki"]:
             existing_content += f"  {key}: [],\n"
@@ -164,7 +163,6 @@ def update_config(existing_ids, existing_content, new_videos_by_season):
     total_new = 0
 
     for season, videos in new_videos_by_season.items():
-        # Filtere nur wirklich neue Videos
         new_videos = [v for v in videos if v["id"] not in existing_ids.get(season, set())]
 
         if not new_videos:
@@ -173,22 +171,44 @@ def update_config(existing_ids, existing_content, new_videos_by_season):
         total_new += len(new_videos)
         print(f"  ✨ {season}: {len(new_videos)} neue Videos gefunden!")
 
-        # Erstelle neue Einträge
         new_entries = ",\n".join([build_video_entry(v) for v in new_videos])
 
-        # Füge neue Videos am ANFANG des Arrays ein (neueste zuerst)
-        pattern = rf"({season}\s*:\s*\[)"
-        replacement = f"{season}: [\n{new_entries},\n"
-
-        # Prüfe ob das Array leer ist
         empty_pattern = rf"{season}\s*:\s*\[\s*\]"
         if re.search(empty_pattern, updated_content):
             replacement_empty = f"{season}: [\n{new_entries}\n  ]"
             updated_content = re.sub(empty_pattern, replacement_empty, updated_content)
         else:
+            pattern = rf"({season}\s*:\s*\[)"
+            replacement = f"{season}: [\n{new_entries},\n"
             updated_content = re.sub(pattern, replacement, updated_content, count=1)
 
     return updated_content, total_new
+
+
+def generate_covers(all_videos_by_season):
+    """Generiert season-covers.js mit dem neuesten Thumbnail pro Jahreszeit."""
+    covers = {}
+
+    for season, videos in all_videos_by_season.items():
+        if videos and videos[0].get("thumbnail"):
+            covers[season] = videos[0]["thumbnail"]
+            print(f"  🖼️  {season} Cover: {videos[0]['title']}")
+
+    js_content = "// Auto-generiert von sync-vimeo.py\n"
+    js_content += f"// Letzte Aktualisierung: {datetime.now().isoformat()}\n"
+    js_content += "window.SEASON_COVERS = {\n"
+
+    for season in ["winter", "fruehling", "sommer", "herbst", "ki"]:
+        if season in covers:
+            js_content += f"  {season}: '{covers[season]}',\n"
+
+    js_content += "};\n"
+
+    with open(COVERS_FILE, "w", encoding="utf-8") as f:
+        f.write(js_content)
+
+    print(f"  ✅ {COVERS_FILE} generiert mit {len(covers)} Covers")
+    return len(covers)
 
 
 def main():
@@ -199,7 +219,6 @@ def main():
 
     if not VIMEO_TOKEN:
         print("❌ VIMEO_TOKEN nicht gesetzt!")
-        print("   Setze den Token als GitHub Secret oder Umgebungsvariable.")
         sys.exit(1)
 
     # 1. Vimeo-Ordner auslesen
@@ -212,7 +231,7 @@ def main():
 
     # 2. Videos pro Ordner abrufen
     print("\n🎥 Lese Videos aus Ordnern...")
-    new_videos_by_season = {}
+    all_videos_by_season = {}
 
     for folder in folders:
         folder_name = folder["name"]
@@ -227,28 +246,33 @@ def main():
         print(f"     → {len(videos)} Videos gefunden")
 
         if videos:
-            new_videos_by_season[js_key] = videos
+            all_videos_by_season[js_key] = videos
 
-    # 3. Bestehende Config lesen
+    # 3. Covers generieren (immer, auch ohne neue Videos)
+    print("\n🖼️  Generiere Season-Covers...")
+    covers_count = generate_covers(all_videos_by_season)
+
+    # 4. Bestehende Config lesen
     print(f"\n📋 Lese bestehende {CONFIG_FILE}...")
     existing_ids, existing_content = parse_existing_config(CONFIG_FILE)
 
-    # 4. Config aktualisieren
+    # 5. Config aktualisieren
     print("\n🔄 Aktualisiere Config...")
     updated_content, total_new = update_config(
-        existing_ids, existing_content, new_videos_by_season
+        existing_ids, existing_content, all_videos_by_season
     )
 
-    if total_new == 0:
+    if total_new > 0:
+        with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+            f.write(updated_content)
+        print(f"\n🎉 {total_new} neue Videos hinzugefügt!")
+    else:
         print("\n✅ Keine neuen Videos gefunden. Alles aktuell!")
-        return
 
-    # 5. Datei speichern
-    with open(CONFIG_FILE, "w", encoding="utf-8") as f:
-        f.write(updated_content)
-
-    print(f"\n🎉 {total_new} neue Videos hinzugefügt!")
-    print(f"✅ {CONFIG_FILE} aktualisiert!")
+    if covers_count > 0 or total_new > 0:
+        print(f"\n🎉 Sync abgeschlossen! {total_new} neue Videos, {covers_count} Covers aktualisiert.")
+    else:
+        print("\n✅ Alles aktuell, keine Änderungen nötig.")
 
 
 if __name__ == "__main__":
