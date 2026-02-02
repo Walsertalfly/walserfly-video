@@ -24,6 +24,16 @@ window.VIDEOS = {
   // WINTER VIDEOS
   // ========================================
   winter: [
+    { id: '1161095765', title: 'Namensnennung Walserfly - Winterstrasse', url: 'https://player.vimeo.com/video/1161095765' },
+    { id: '1161095373', title: 'Namensnennung Walserfly -  Ifen Nahe', url: 'https://player.vimeo.com/video/1161095373' },
+    { id: '1161094899', title: 'Namensnennung Walserfly Bergkette Zwölger Schaf..', url: 'https://player.vimeo.com/video/1161094899' },
+    { id: '1161094514', title: 'Namensnennung Walserfly - Mittelberg am Morgen', url: 'https://player.vimeo.com/video/1161094514' },
+    { id: '1161094232', title: 'Namensnennung Walserfly - Kirche Riezlern Zoom', url: 'https://player.vimeo.com/video/1161094232' },
+    { id: '1161093951', title: 'Namensnennung Walserfly - Strasse winter', url: 'https://player.vimeo.com/video/1161093951' },
+    { id: '1161093744', title: 'Namensnennung Walserfly - Schwarzwasserstrasse', url: 'https://player.vimeo.com/video/1161093744' },
+    { id: '1161093540', title: 'Namensnennung Walserfly - Ifen Grünhorn Berkette', url: 'https://player.vimeo.com/video/1161093540' },
+    { id: '1161093361', title: 'Namensnennung Walserfly - Widderstein Heuberggrat', url: 'https://player.vimeo.com/video/1161093361' },
+
     { id: '1161077866', title: 'Guten Morgen Riezlern', url: 'https://player.vimeo.com/video/1161077866' },
     { id: '1161077285', title: 'Mittelberg erwacht', url: 'https://player.vimeo.com/video/1161077285' },
     { id: '1161076851', title: 'heuberggrat und Widderstein', url: 'https://player.vimeo.com/video/1161076851' },
