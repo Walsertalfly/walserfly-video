@@ -315,7 +315,7 @@
     /* ===== SEASONS SECTION (VERBESSERT) ===== */
     .seasons-section {
       padding: 60px 20px 30px;
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
     }
 
@@ -339,13 +339,13 @@
     .seasons-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
+      gap: 14px;
       margin-bottom: 40px;
     }
 
     .season-card {
       position: relative;
-      border-radius: 14px;
+      border-radius: 10px;
       overflow: hidden;
       background: #111;
       border: 1px solid rgba(255,255,255,0.08);
@@ -356,8 +356,8 @@
     }
 
     .season-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     }
 
     .season-card::before {
@@ -370,7 +370,7 @@
 
     .season-image {
       width: 100%;
-      height: 300px;
+      height: 280px;
       object-fit: cover;
     }
 
@@ -379,43 +379,44 @@
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 28px;
+      padding: 16px;
       z-index: 2;
     }
 
     .season-icon {
-      font-size: 2.8rem;
-      margin-bottom: 10px;
+      font-size: 1.8rem;
+      margin-bottom: 4px;
       display: block;
     }
 
     .season-title {
-      font-size: 1.8rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
 
     .season-description {
       color: #ccc;
-      margin-bottom: 12px;
-      font-size: 0.95rem;
+      margin-bottom: 6px;
+      font-size: 0.75rem;
+      line-height: 1.3;
     }
 
     .season-count {
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       color: #888;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
     }
 
     .season-link {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       color: #fff;
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.8rem;
       transition: gap 0.3s ease;
     }
 
@@ -424,19 +425,19 @@
     }
 
     /* Color Accents */
-    .season-card.winter { border-top: 4px solid #0077ff; }
+    .season-card.winter { border-top: 3px solid #0077ff; }
     .season-card.winter .season-link { color: #66ccff; }
 
-    .season-card.spring { border-top: 4px solid #e9408e; }
+    .season-card.spring { border-top: 3px solid #e9408e; }
     .season-card.spring .season-link { color: #ff99cc; }
 
-    .season-card.summer { border-top: 4px solid #ffd000; }
+    .season-card.summer { border-top: 3px solid #ffd000; }
     .season-card.summer .season-link { color: #ffeb99; }
 
-    .season-card.autumn { border-top: 4px solid #ff6633; }
+    .season-card.autumn { border-top: 3px solid #ff6633; }
     .season-card.autumn .season-link { color: #ff9966; }
 
-    .season-card.ai { border-top: 4px solid #6a11cb; }
+    .season-card.ai { border-top: 3px solid #6a11cb; }
     .season-card.ai .season-link { color: #b19cd9; }
 
     /* ===== SEO ACCORDION (VERBESSERT) ===== */
