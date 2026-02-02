@@ -626,7 +626,7 @@
     
     <!-- Winter -->
     <a href="winter.html" class="season-card winter">
-      <img src="https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?w=800" alt="Winter FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?w=800" alt="Winter FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy" data-season="winter">
       <div class="season-content">
         <span class="season-icon">❄️</span>
         <h3 class="season-title">Winter</h3>
@@ -638,7 +638,7 @@
 
     <!-- Frühling -->
     <a href="fruehling.html" class="season-card spring">
-      <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800" alt="Frühling FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800" alt="Frühling FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy" data-season="fruehling">
       <div class="season-content">
         <span class="season-icon">🌱</span>
         <h3 class="season-title">Frühling</h3>
@@ -650,7 +650,7 @@
 
     <!-- Sommer -->
     <a href="sommer.html" class="season-card summer">
-      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" alt="Sommer FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" alt="Sommer FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy" data-season="sommer">
       <div class="season-content">
         <span class="season-icon">☀️</span>
         <h3 class="season-title">Sommer</h3>
@@ -662,7 +662,7 @@
 
     <!-- Herbst -->
     <a href="herbst.html" class="season-card autumn">
-      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" alt="Herbst FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" alt="Herbst FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy" data-season="herbst">
       <div class="season-content">
         <span class="season-icon">🍁</span>
         <h3 class="season-title">Herbst</h3>
@@ -674,7 +674,7 @@
 
     <!-- KI -->
     <a href="ki.html" class="season-card ai">
-      <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800" alt="KI-optimierte FPV Drohnenvideos" class="season-image" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800" alt="KI-optimierte FPV Drohnenvideos" class="season-image" loading="lazy" data-season="ki">
       <div class="season-content">
         <span class="season-icon">🤖</span>
         <h3 class="season-title">KI</h3>
@@ -756,7 +756,7 @@
 
     <div class="footer-section">
       <h4>Kontakt</h4>
-      <a href="mailto:walserfly@gmail.com">📧 E-Mail</a>
+      <a href="/cdn-cgi/l/email-protection#1b6c7a77687e697d77625b7c767a727735787476">📧 E-Mail</a>
       <a href="https://instagram.com/walserfly" target="_blank" rel="noopener">📱 Instagram</a>
       <a href="https://paypal.me/walserfly" target="_blank" rel="noopener">💶 Spende</a>
     </div>
@@ -778,6 +778,22 @@
   </svg>
 </a>
 
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<!-- Season Covers (auto-generiert von Vimeo Sync) -->
+<script src="season-covers.js"></script>
+<script>
+// Dynamische Vimeo-Thumbnails als Season-Card Cover laden
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.SEASON_COVERS) {
+    document.querySelectorAll('.season-image[data-season]').forEach(function(img) {
+      var season = img.getAttribute('data-season');
+      if (window.SEASON_COVERS[season]) {
+        img.src = window.SEASON_COVERS[season];
+      }
+    });
+  }
+});
+</script>
 <script>
 // Mobile Menu Toggle
 function toggleMobileMenu() {
@@ -809,13 +825,4 @@ function scrollToTop() {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-});
-</script>
-
-</body>
-</html>
+    const target = document.querySelector(this.get
