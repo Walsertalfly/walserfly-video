@@ -114,6 +114,27 @@
       filter: brightness(0.65) saturate(0.85);
     }
 
+    /* Live-Video-Tiles im Mosaik */
+    .hero-mosaic .mosaic-video {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9/16;
+      overflow: hidden;
+      border-radius: 3px;
+    }
+
+    .hero-mosaic .mosaic-video iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300%;
+      height: 300%;
+      transform: translate(-50%, -50%);
+      border: none;
+      pointer-events: none;
+      filter: brightness(0.65) saturate(0.85);
+    }
+
     @keyframes mosaicDrift {
       0% { transform: translate(0, 0); }
       25% { transform: translate(-3%, -2%); }
@@ -890,28 +911,45 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       allIds = allIds.slice(0, needed);
 
-      // Erstelle Thumbnail-Bilder (vumbnail.com = kostenloser Vimeo-Thumbnail-Service)
+      // Erstelle Thumbnail-Bilder + einige Live-Video-Tiles
       var fragment = document.createDocumentFragment();
       var loadCount = 0;
+      var LIVE_TILES = 7; // Anzahl lebendiger Video-Kacheln
 
-      allIds.forEach(function(vid) {
-        var img = document.createElement('img');
-        img.src = 'https://vumbnail.com/' + vid + '_medium.jpg';
-        img.alt = '';
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        img.onerror = function() {
-          // Fallback: dunkles Placeholder
-          this.style.background = '#1a1a1a';
-          this.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180"><rect fill="#1a1a1a" width="320" height="180"/></svg>');
-        };
-        img.onload = function() {
-          loadCount++;
-          if (loadCount >= Math.min(20, allIds.length)) {
-            mosaic.classList.add('loaded');
-          }
-        };
-        fragment.appendChild(img);
+      // Wähle zufällige Positionen für Live-Videos (gut verteilt)
+      var livePositions = {};
+      var step = Math.floor(needed / LIVE_TILES);
+      for (var lt = 0; lt < LIVE_TILES; lt++) {
+        var pos = Math.floor(step * lt + Math.random() * step);
+        if (pos < needed) livePositions[pos] = true;
+      }
+
+      allIds.forEach(function(vid, index) {
+        if (livePositions[index]) {
+          // Live-Video-Tile
+          var wrapper = document.createElement('div');
+          wrapper.className = 'mosaic-video';
+          wrapper.innerHTML = '<iframe src="https://player.vimeo.com/video/' + vid + '?background=1&autoplay=1&loop=1&muted=1&quality=540p" allow="autoplay" loading="lazy" tabindex="-1"></iframe>';
+          fragment.appendChild(wrapper);
+        } else {
+          // Statisches Thumbnail
+          var img = document.createElement('img');
+          img.src = 'https://vumbnail.com/' + vid + '_medium.jpg';
+          img.alt = '';
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          img.onerror = function() {
+            this.style.background = '#1a1a1a';
+            this.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="180" height="320"><rect fill="#1a1a1a" width="180" height="320"/></svg>');
+          };
+          img.onload = function() {
+            loadCount++;
+            if (loadCount >= Math.min(20, allIds.length)) {
+              mosaic.classList.add('loaded');
+            }
+          };
+          fragment.appendChild(img);
+        }
       });
 
       mosaic.appendChild(fragment);
