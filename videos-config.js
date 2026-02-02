@@ -24,6 +24,15 @@ window.VIDEOS = {
   // WINTER VIDEOS
   // ========================================
   winter: [
+    { id: '1161077866', title: 'Guten Morgen Riezlern', url: 'https://player.vimeo.com/video/1161077866' },
+    { id: '1161077285', title: 'Mittelberg erwacht', url: 'https://player.vimeo.com/video/1161077285' },
+    { id: '1161076851', title: 'heuberggrat und Widderstein', url: 'https://player.vimeo.com/video/1161076851' },
+    { id: '1161076638', title: 'Kurz vor Sonnenaufgang', url: 'https://player.vimeo.com/video/1161076638' },
+    { id: '1161076441', title: 'Kanzelwandstation', url: 'https://player.vimeo.com/video/1161076441' },
+    { id: '1161076206', title: 'Blick vom Schöntal ins Kleinwalsertal', url: 'https://player.vimeo.com/video/1161076206' },
+    { id: '1161076084', title: 'Blick aufs Nebelhorn', url: 'https://player.vimeo.com/video/1161076084' },
+    { id: '1161075767', title: 'Riezlern in der Früh', url: 'https://player.vimeo.com/video/1161075767' },
+
     { id: "1127958002", title: "Riezlern am Morgen", season: "Winter", location: "Kleinwalsertal", bgColor: "rgba(0,119,255,0.1)" },
     { id: "1127905939", title: "Advent", season: "Winter", location: "Kleinwalsertal", bgColor: "rgba(0,119,255,0.1)" },
     { id: "1128885169", title: "Gipfelkreuz Ifen Winter FPV", season: "Winter", location: "Kleinwalsertal", bgColor: "rgba(0,119,255,0.1)" },
