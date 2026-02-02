@@ -72,7 +72,7 @@
       overflow-x: hidden;
     }
 
-    /* ===== HERO SECTION (VERBESSERT) ===== */
+    /* ===== HERO SECTION MIT MOSAIK ===== */
     .hero {
       position: relative;
       min-height: 100vh;
@@ -81,10 +81,48 @@
       justify-content: center;
       text-align: center;
       padding: 40px 20px 60px;
-      background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+      background: #000;
       overflow: hidden;
     }
 
+    /* Mosaik-Container */
+    .hero-mosaic {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
+      z-index: 0;
+      display: grid;
+      grid-template-columns: repeat(var(--mosaic-cols, 8), 1fr);
+      gap: 3px;
+      animation: mosaicDrift 60s linear infinite;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    .hero-mosaic.loaded {
+      opacity: 1;
+    }
+
+    .hero-mosaic img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      border-radius: 3px;
+      filter: brightness(0.65) saturate(0.85);
+    }
+
+    @keyframes mosaicDrift {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(-3%, -2%); }
+      50% { transform: translate(-1%, -4%); }
+      75% { transform: translate(-4%, -1%); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* Dunkles Overlay */
     .hero::before {
       content: '';
       position: absolute;
@@ -92,10 +130,39 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(0,119,255,0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 50%, rgba(233,64,142,0.08) 0%, transparent 50%);
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 1;
       pointer-events: none;
+    }
+
+    /* Gradient-Akzent + Vignette */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(0,119,255,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(233,64,142,0.05) 0%, transparent 50%),
+        linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 25%, transparent 75%, rgba(0,0,0,0.7) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Responsive Mosaik-Spalten */
+    @media (max-width: 600px) {
+      .hero-mosaic { --mosaic-cols: 4; gap: 2px; }
+    }
+    @media (min-width: 601px) and (max-width: 900px) {
+      .hero-mosaic { --mosaic-cols: 6; }
+    }
+    @media (min-width: 901px) and (max-width: 1400px) {
+      .hero-mosaic { --mosaic-cols: 8; }
+    }
+    @media (min-width: 1401px) {
+      .hero-mosaic { --mosaic-cols: 10; }
     }
 
     .hero-content {
@@ -245,7 +312,7 @@
 
     /* ===== SEASONS SECTION (VERBESSERT) ===== */
     .seasons-section {
-      padding: 60px 20px 80px;
+      padding: 60px 20px 30px;
       max-width: 1600px;
       margin: 0 auto;
     }
@@ -373,7 +440,7 @@
     /* ===== SEO ACCORDION (VERBESSERT) ===== */
     .seo-accordion {
       max-width: 800px;
-      margin: 80px auto 60px;
+      margin: 20px auto 40px;
       padding: 0 20px;
     }
 
@@ -587,6 +654,9 @@
 
 <!-- ===== HERO SECTION ===== -->
 <section class="hero">
+  <!-- Thumbnail-Mosaik Hintergrund -->
+  <div class="hero-mosaic" id="heroMosaic"></div>
+
   <div class="hero-content">
     <h1>FPV & Drohnenaufnahmen<br>Kleinwalsertal</h1>
     <p class="hero-subtitle">
@@ -781,9 +851,75 @@
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <!-- Season Covers (auto-generiert von Vimeo Sync) -->
 <script src="season-covers.js"></script>
+<script src="videos-config.js"></script>
 <script>
-// Dynamische Vimeo-Thumbnails als Season-Card Cover laden
+// ===== HERO MOSAIK =====
+// Erstellt ein animiertes Thumbnail-Grid aus allen Videos
 document.addEventListener('DOMContentLoaded', function() {
+  var mosaic = document.getElementById('heroMosaic');
+  
+  if (window.VIDEOS && mosaic) {
+    // Alle Video-IDs sammeln
+    var allIds = [];
+    ['winter', 'fruehling', 'sommer', 'herbst', 'ki'].forEach(function(cat) {
+      if (window.VIDEOS[cat]) {
+        window.VIDEOS[cat].forEach(function(v) {
+          var vid = v.id || v.url.split('/').pop();
+          if (vid) allIds.push(vid);
+        });
+      }
+    });
+
+    if (allIds.length > 0) {
+      // Mische die IDs zufällig
+      for (var i = allIds.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = allIds[i]; allIds[i] = allIds[j]; allIds[j] = tmp;
+      }
+
+      // Berechne wie viele Thumbnails wir brauchen (Grid füllen)
+      var cols = window.innerWidth <= 600 ? 4 : window.innerWidth <= 900 ? 6 : window.innerWidth <= 1400 ? 8 : 10;
+      var rows = Math.ceil(window.innerHeight / (window.innerWidth / cols * 0.5625)) + 4;
+      var needed = cols * rows;
+
+      // Wiederhole IDs falls nötig
+      while (allIds.length < needed) {
+        allIds = allIds.concat(allIds);
+      }
+      allIds = allIds.slice(0, needed);
+
+      // Erstelle Thumbnail-Bilder (vumbnail.com = kostenloser Vimeo-Thumbnail-Service)
+      var fragment = document.createDocumentFragment();
+      var loadCount = 0;
+
+      allIds.forEach(function(vid) {
+        var img = document.createElement('img');
+        img.src = 'https://vumbnail.com/' + vid + '_medium.jpg';
+        img.alt = '';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.onerror = function() {
+          // Fallback: dunkles Placeholder
+          this.style.background = '#1a1a1a';
+          this.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180"><rect fill="#1a1a1a" width="320" height="180"/></svg>');
+        };
+        img.onload = function() {
+          loadCount++;
+          if (loadCount >= Math.min(20, allIds.length)) {
+            mosaic.classList.add('loaded');
+          }
+        };
+        fragment.appendChild(img);
+      });
+
+      mosaic.appendChild(fragment);
+
+      // Fallback: nach 3 Sekunden trotzdem einblenden
+      setTimeout(function() { mosaic.classList.add('loaded'); }, 3000);
+    }
+  }
+
+  // Season Covers: Ersetze Unsplash-Bilder mit echten Vimeo-Thumbnails
   if (window.SEASON_COVERS) {
     document.querySelectorAll('.season-image[data-season]').forEach(function(img) {
       var season = img.getAttribute('data-season');
