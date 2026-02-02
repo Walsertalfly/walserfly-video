@@ -115,27 +115,6 @@
       filter: brightness(0.65) saturate(0.85);
     }
 
-    /* Live-Video-Tiles im Mosaik */
-    .hero-mosaic .mosaic-video {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 9/16;
-      overflow: hidden;
-      border-radius: 3px;
-    }
-
-    .hero-mosaic .mosaic-video iframe {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 300%;
-      height: 300%;
-      transform: translate(-50%, -50%);
-      border: none;
-      pointer-events: none;
-      filter: brightness(0.65) saturate(0.85);
-    }
-
     @keyframes mosaicDrift {
       0% { transform: translate(0, 0); }
       25% { transform: translate(-3%, -2%); }
@@ -896,7 +875,6 @@ document.addEventListener('DOMContentLoaded', function() {
         var tmp = allIds[i]; allIds[i] = allIds[j]; allIds[j] = tmp;
       }
 
-      // Weniger Kacheln berechnen
       var cols = window.innerWidth <= 600 ? 4 : window.innerWidth <= 900 ? 6 : window.innerWidth <= 1400 ? 8 : 10;
       var cellWidth = window.innerWidth * 1.2 / cols;
       var cellHeight = cellWidth * (16/9);
@@ -906,62 +884,23 @@ document.addEventListener('DOMContentLoaded', function() {
       while (allIds.length < needed) allIds = allIds.concat(allIds);
       allIds = allIds.slice(0, needed);
 
-      // 4 Live-Video-Positionen (verteilt)
-      var LIVE_TILES = 4;
-      var livePositions = {};
-      var step = Math.floor(needed / LIVE_TILES);
-      for (var lt = 0; lt < LIVE_TILES; lt++) {
-        livePositions[Math.floor(step * lt + Math.random() * step)] = true;
-      }
-
-      // Thumbnails sofort laden (kleine Version = schnell)
       var fragment = document.createDocumentFragment();
       var loadCount = 0;
 
-      allIds.forEach(function(vid, index) {
-        if (livePositions[index]) {
-          // Placeholder-Bild für Video-Tiles (wird nach 3s durch iframe ersetzt)
-          var img = document.createElement('img');
-          img.src = 'https://vumbnail.com/' + vid + '_small.jpg';
-          img.alt = '';
-          img.dataset.videoId = vid;
-          img.dataset.liveSlot = 'true';
-          img.className = 'live-placeholder';
-          img.onload = function() { loadCount++; checkReady(); };
-          img.onerror = function() { this.style.background = '#1a1a1a'; loadCount++; checkReady(); };
-          fragment.appendChild(img);
-        } else {
-          var img = document.createElement('img');
-          img.src = 'https://vumbnail.com/' + vid + '_small.jpg';
-          img.alt = '';
-          img.loading = 'lazy';
-          img.decoding = 'async';
-          img.onload = function() { loadCount++; checkReady(); };
-          img.onerror = function() { this.style.background = '#1a1a1a'; loadCount++; checkReady(); };
-          fragment.appendChild(img);
-        }
+      allIds.forEach(function(vid) {
+        var img = document.createElement('img');
+        // Maximale Qualität (1280px)
+        img.src = 'https://vumbnail.com/' + vid + '.jpg';
+        img.alt = '';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.onload = function() { loadCount++; if (loadCount >= 10) mosaic.classList.add('loaded'); };
+        img.onerror = function() { this.style.background = '#1a1a1a'; loadCount++; if (loadCount >= 10) mosaic.classList.add('loaded'); };
+        fragment.appendChild(img);
       });
 
       mosaic.appendChild(fragment);
-
-      // Einblenden sobald 10 Bilder geladen sind
-      function checkReady() {
-        if (loadCount >= 10) mosaic.classList.add('loaded');
-      }
-
-      // Fallback
       setTimeout(function() { mosaic.classList.add('loaded'); }, 2000);
-
-      // Live-Videos erst nach 3 Sekunden laden (Seite erst fertig rendern)
-      setTimeout(function() {
-        mosaic.querySelectorAll('.live-placeholder').forEach(function(img) {
-          var vid = img.dataset.videoId;
-          var wrapper = document.createElement('div');
-          wrapper.className = 'mosaic-video';
-          wrapper.innerHTML = '<iframe src="https://player.vimeo.com/video/' + vid + '?background=1&autoplay=1&loop=1&muted=1&quality=360p" allow="autoplay" loading="lazy" tabindex="-1"></iframe>';
-          img.parentNode.replaceChild(wrapper, img);
-        });
-      }, 3000);
     }
   }
 
