@@ -1,0 +1,52 @@
+name: 🎬 Vimeo Auto-Sync
+
+# Wann läuft die Action?
+on:
+  # Automatisch: Jeden Tag um 06:00 und 18:00 Uhr (UTC = 07:00/19:00 CET)
+  schedule:
+    - cron: '0 6,18 * * *'
+
+  # Manuell: Jederzeit per Knopfdruck im GitHub UI
+  workflow_dispatch:
+
+  # Optional: Bei jedem Push auf main (falls gewünscht, entkommentieren)
+  # push:
+  #   branches: [main]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Repository auschecken
+      - name: 📥 Repository auschecken
+        uses: actions/checkout@v4
+
+      # 2. Python einrichten
+      - name: 🐍 Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # 3. Sync-Script ausführen
+      - name: 🔄 Vimeo-Videos synchronisieren
+        env:
+          VIMEO_TOKEN: ${{ secrets.VIMEO_TOKEN }}
+        run: python sync-vimeo.py
+
+      # 4. Änderungen committen und pushen (nur wenn es Änderungen gibt)
+      - name: 📤 Änderungen committen
+        run: |
+          git config user.name "WalserFly Bot"
+          git config user.email "bot@walserfly.com"
+          git add videos-config.js
+          
+          # Nur committen wenn es Änderungen gibt
+          if git diff --cached --quiet; then
+            echo "✅ Keine Änderungen - alles aktuell!"
+          else
+            TIMESTAMP=$(date +"%Y-%m-%d %H:%M")
+            git commit -m "🎬 Neue Videos synchronisiert ($TIMESTAMP)"
+            git push
+            echo "🎉 Neue Videos gepusht!"
+          fi
