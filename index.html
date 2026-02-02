@@ -98,7 +98,8 @@
       gap: 3px;
       animation: mosaicDrift 60s linear infinite;
       opacity: 0;
-      transition: opacity 1.5s ease;
+      transition: opacity 1s ease;
+      background: #0a0a0a;
     }
 
     .hero-mosaic.loaded {
@@ -174,16 +175,16 @@
 
     /* Responsive Mosaik-Spalten (Hochformat) */
     @media (max-width: 600px) {
-      .hero-mosaic { --mosaic-cols: 5; gap: 2px; }
+      .hero-mosaic { --mosaic-cols: 4; gap: 2px; }
     }
     @media (min-width: 601px) and (max-width: 900px) {
-      .hero-mosaic { --mosaic-cols: 8; }
+      .hero-mosaic { --mosaic-cols: 6; }
     }
     @media (min-width: 901px) and (max-width: 1400px) {
-      .hero-mosaic { --mosaic-cols: 11; }
+      .hero-mosaic { --mosaic-cols: 8; }
     }
     @media (min-width: 1401px) {
-      .hero-mosaic { --mosaic-cols: 14; }
+      .hero-mosaic { --mosaic-cols: 10; }
     }
 
     .hero-content {
@@ -874,13 +875,10 @@
 <script src="season-covers.js"></script>
 <script src="videos-config.js"></script>
 <script>
-// ===== HERO MOSAIK =====
-// Erstellt ein animiertes Thumbnail-Grid aus allen Videos
 document.addEventListener('DOMContentLoaded', function() {
   var mosaic = document.getElementById('heroMosaic');
   
   if (window.VIDEOS && mosaic) {
-    // Alle Video-IDs sammeln
     var allIds = [];
     ['winter', 'fruehling', 'sommer', 'herbst', 'ki'].forEach(function(cat) {
       if (window.VIDEOS[cat]) {
@@ -892,80 +890,86 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     if (allIds.length > 0) {
-      // Mische die IDs zufällig
+      // Mische zufällig
       for (var i = allIds.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
         var tmp = allIds[i]; allIds[i] = allIds[j]; allIds[j] = tmp;
       }
 
-      // Berechne wie viele Thumbnails wir brauchen (Hochformat-Grid)
-      var cols = window.innerWidth <= 600 ? 5 : window.innerWidth <= 900 ? 8 : window.innerWidth <= 1400 ? 11 : 14;
+      // Weniger Kacheln berechnen
+      var cols = window.innerWidth <= 600 ? 4 : window.innerWidth <= 900 ? 6 : window.innerWidth <= 1400 ? 8 : 10;
       var cellWidth = window.innerWidth * 1.2 / cols;
-      var cellHeight = cellWidth * (16/9); // Hochformat
+      var cellHeight = cellWidth * (16/9);
       var rows = Math.ceil((window.innerHeight * 1.2) / cellHeight) + 2;
       var needed = cols * rows;
 
-      // Wiederhole IDs falls nötig
-      while (allIds.length < needed) {
-        allIds = allIds.concat(allIds);
-      }
+      while (allIds.length < needed) allIds = allIds.concat(allIds);
       allIds = allIds.slice(0, needed);
 
-      // Erstelle Thumbnail-Bilder + einige Live-Video-Tiles
-      var fragment = document.createDocumentFragment();
-      var loadCount = 0;
-      var LIVE_TILES = 7; // Anzahl lebendiger Video-Kacheln
-
-      // Wähle zufällige Positionen für Live-Videos (gut verteilt)
+      // 4 Live-Video-Positionen (verteilt)
+      var LIVE_TILES = 4;
       var livePositions = {};
       var step = Math.floor(needed / LIVE_TILES);
       for (var lt = 0; lt < LIVE_TILES; lt++) {
-        var pos = Math.floor(step * lt + Math.random() * step);
-        if (pos < needed) livePositions[pos] = true;
+        livePositions[Math.floor(step * lt + Math.random() * step)] = true;
       }
+
+      // Thumbnails sofort laden (kleine Version = schnell)
+      var fragment = document.createDocumentFragment();
+      var loadCount = 0;
 
       allIds.forEach(function(vid, index) {
         if (livePositions[index]) {
-          // Live-Video-Tile
-          var wrapper = document.createElement('div');
-          wrapper.className = 'mosaic-video';
-          wrapper.innerHTML = '<iframe src="https://player.vimeo.com/video/' + vid + '?background=1&autoplay=1&loop=1&muted=1&quality=540p" allow="autoplay" loading="lazy" tabindex="-1"></iframe>';
-          fragment.appendChild(wrapper);
-        } else {
-          // Statisches Thumbnail
+          // Placeholder-Bild für Video-Tiles (wird nach 3s durch iframe ersetzt)
           var img = document.createElement('img');
-          img.src = 'https://vumbnail.com/' + vid + '_medium.jpg';
+          img.src = 'https://vumbnail.com/' + vid + '_small.jpg';
+          img.alt = '';
+          img.dataset.videoId = vid;
+          img.dataset.liveSlot = 'true';
+          img.className = 'live-placeholder';
+          img.onload = function() { loadCount++; checkReady(); };
+          img.onerror = function() { this.style.background = '#1a1a1a'; loadCount++; checkReady(); };
+          fragment.appendChild(img);
+        } else {
+          var img = document.createElement('img');
+          img.src = 'https://vumbnail.com/' + vid + '_small.jpg';
           img.alt = '';
           img.loading = 'lazy';
           img.decoding = 'async';
-          img.onerror = function() {
-            this.style.background = '#1a1a1a';
-            this.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="180" height="320"><rect fill="#1a1a1a" width="180" height="320"/></svg>');
-          };
-          img.onload = function() {
-            loadCount++;
-            if (loadCount >= Math.min(20, allIds.length)) {
-              mosaic.classList.add('loaded');
-            }
-          };
+          img.onload = function() { loadCount++; checkReady(); };
+          img.onerror = function() { this.style.background = '#1a1a1a'; loadCount++; checkReady(); };
           fragment.appendChild(img);
         }
       });
 
       mosaic.appendChild(fragment);
 
-      // Fallback: nach 3 Sekunden trotzdem einblenden
-      setTimeout(function() { mosaic.classList.add('loaded'); }, 3000);
+      // Einblenden sobald 10 Bilder geladen sind
+      function checkReady() {
+        if (loadCount >= 10) mosaic.classList.add('loaded');
+      }
+
+      // Fallback
+      setTimeout(function() { mosaic.classList.add('loaded'); }, 2000);
+
+      // Live-Videos erst nach 3 Sekunden laden (Seite erst fertig rendern)
+      setTimeout(function() {
+        mosaic.querySelectorAll('.live-placeholder').forEach(function(img) {
+          var vid = img.dataset.videoId;
+          var wrapper = document.createElement('div');
+          wrapper.className = 'mosaic-video';
+          wrapper.innerHTML = '<iframe src="https://player.vimeo.com/video/' + vid + '?background=1&autoplay=1&loop=1&muted=1&quality=360p" allow="autoplay" loading="lazy" tabindex="-1"></iframe>';
+          img.parentNode.replaceChild(wrapper, img);
+        });
+      }, 3000);
     }
   }
 
-  // Season Covers: Ersetze Unsplash-Bilder mit echten Vimeo-Thumbnails
+  // Season Covers
   if (window.SEASON_COVERS) {
     document.querySelectorAll('.season-image[data-season]').forEach(function(img) {
       var season = img.getAttribute('data-season');
-      if (window.SEASON_COVERS[season]) {
-        img.src = window.SEASON_COVERS[season];
-      }
+      if (window.SEASON_COVERS[season]) img.src = window.SEASON_COVERS[season];
     });
   }
 });
