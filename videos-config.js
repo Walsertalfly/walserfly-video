@@ -1,9 +1,8 @@
 // Auto-generiert von sync-vimeo.py (FULL SYNC)
-// 2026-02-03 17:37
+// 2026-02-03 17:54
 window.VIDEOS = {
   winter: [
     { id: '1161484046', title: 'Namensnennung Walserfly -Mittelberg KWT 1', url: 'https://player.vimeo.com/video/1161484046' },
-    { id: '1161483514', title: 'Namensnennung Walserfly -Mittelberg KWT 2', url: 'https://player.vimeo.com/video/1161483514' },
     { id: '1161482988', title: 'Namensnennung Walserfly -Mittelberg KWT 3', url: 'https://player.vimeo.com/video/1161482988' },
     { id: '1161482739', title: 'Namensnennung Walserfly -Heuberggrat Sonnenuntergang', url: 'https://player.vimeo.com/video/1161482739' },
     { id: '1161482402', title: 'Namensnennung Walserfly -Walmendingerhorn', url: 'https://player.vimeo.com/video/1161482402' },
