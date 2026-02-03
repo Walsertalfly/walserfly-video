@@ -24,6 +24,21 @@ window.VIDEOS = {
   // WINTER VIDEOS
   // ========================================
   winter: [
+    { id: '1161484046', title: 'Namensnennung Walserfly -Mittelberg KWT 1', url: 'https://player.vimeo.com/video/1161484046' },
+    { id: '1161483514', title: 'Namensnennung Walserfly -Mittelberg KWT 2', url: 'https://player.vimeo.com/video/1161483514' },
+    { id: '1161482988', title: 'Namensnennung Walserfly -Mittelberg KWT 3', url: 'https://player.vimeo.com/video/1161482988' },
+    { id: '1161482739', title: 'Namensnennung Walserfly -Heuberggrat Sonnenuntergang', url: 'https://player.vimeo.com/video/1161482739' },
+    { id: '1161482402', title: 'Namensnennung Walserfly -Walmendingerhorn', url: 'https://player.vimeo.com/video/1161482402' },
+    { id: '1161482206', title: 'Namensnennung Walserfly -Kanzelwand', url: 'https://player.vimeo.com/video/1161482206' },
+    { id: '1161481773', title: 'Namensnennung Walserfly -Mittelberg Dämmerung', url: 'https://player.vimeo.com/video/1161481773' },
+    { id: '1161481274', title: 'Namensnennung Walserfly -Strassen Hirschegg von Oben', url: 'https://player.vimeo.com/video/1161481274' },
+    { id: '1161480921', title: 'Namensnennung Walserfly - Neuschnee Wald KWT 2', url: 'https://player.vimeo.com/video/1161480921' },
+    { id: '1161480300', title: 'Namensnennung Walserfly - Neuschnee Wald KWT 3', url: 'https://player.vimeo.com/video/1161480300' },
+    { id: '1161479799', title: 'Namensnennung Walserfly - Neuschnee Wald KWT 4', url: 'https://player.vimeo.com/video/1161479799' },
+    { id: '1161479355', title: 'Namensnennung Walserfly - Neuschnee Wald KWT 5', url: 'https://player.vimeo.com/video/1161479355' },
+    { id: '1161479070', title: 'Namensnennung Walserfly - Neuschnee Wald KWT 6', url: 'https://player.vimeo.com/video/1161479070' },
+    { id: '1161478906', title: 'Namensnennung Walserfly -Neuschnee Mittelberg', url: 'https://player.vimeo.com/video/1161478906' },
+
     { id: '1161095765', title: 'Namensnennung Walserfly - Winterstrasse', url: 'https://player.vimeo.com/video/1161095765' },
     { id: '1161095373', title: 'Namensnennung Walserfly -  Ifen Nahe', url: 'https://player.vimeo.com/video/1161095373' },
     { id: '1161094899', title: 'Namensnennung Walserfly Bergkette Zwölger Schaf..', url: 'https://player.vimeo.com/video/1161094899' },
