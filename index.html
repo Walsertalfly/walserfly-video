@@ -354,6 +354,7 @@
       cursor: pointer;
       text-decoration: none;
       display: block;
+      height: 280px;
     }
 
     .season-card:hover {
@@ -370,9 +371,13 @@
     }
 
     .season-image {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: 280px;
+      height: 100%;
       object-fit: cover;
+      object-position: center;
     }
 
     .season-content {
@@ -625,7 +630,7 @@
         gap: 8px;
       }
 
-      .season-image {
+      .season-card {
         height: 220px;
       }
     }
@@ -636,7 +641,7 @@
         gap: 10px;
       }
 
-      .season-image {
+      .season-card {
         height: 260px;
       }
     }
