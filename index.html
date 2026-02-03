@@ -16,7 +16,7 @@
   
   <!-- SEO Meta -->
   <title>FPV & Drohnenaufnahmen Kleinwalsertal | Kostenlos & Lizenzfrei</title>
-  <meta name="description" content="Über 150 kostenlose FPV & Drohnenaufnahmen aus dem Kleinwalsertal. Winter, Frühling, Sommer, Herbst & KI. 4K-Qualität, lizenzfrei für kommerzielle Nutzung.">
+  <meta name="description" content="Über 170 kostenlose FPV & Drohnenaufnahmen aus dem Kleinwalsertal. Winter, Frühling, Sommer, Herbst & KI. 4K-Qualität, lizenzfrei für kommerzielle Nutzung.">
   <meta name="keywords" content="FPV Drohne Kleinwalsertal, Drohnenvideos Österreich, Drohnenaufnahmen Allgäu, kostenlose Drohnenvideos, lizenzfreie FPV Videos">
   <meta name="author" content="walserfly">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -29,7 +29,7 @@
   
   <!-- Open Graph -->
   <meta property="og:title" content="FPV & Drohnenaufnahmen Kleinwalsertal | Kostenlos & Lizenzfrei">
-  <meta property="og:description" content="Über 150 kostenlose FPV & Drohnenaufnahmen aus dem Kleinwalsertal. 4K-Qualität, lizenzfrei.">
+  <meta property="og:description" content="Über 170 kostenlose FPV & Drohnenaufnahmen aus dem Kleinwalsertal. 4K-Qualität, lizenzfrei.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://walserfly.com/">
   <meta property="og:image" content="https://walserfly.com/images/og-image.jpg">
@@ -73,11 +73,17 @@
       box-sizing: border-box;
     }
 
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
+    }
+
     body {
       background: #000;
       color: #ccc;
       font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
-      overflow-x: hidden;
+      position: relative;
     }
 
     /* ===== HERO SECTION MIT MOSAIK ===== */
@@ -303,17 +309,24 @@
       .nav-links {
         position: fixed;
         top: 60px;
-        right: -100%;
+        right: 0;
         width: 250px;
+        height: auto;
+        max-height: calc(100vh - 60px);
         background: rgba(0,0,0,0.98);
         flex-direction: column;
         padding: 20px;
-        transition: right 0.3s ease;
+        transition: transform 0.3s ease, opacity 0.3s ease;
         border-left: 1px solid rgba(255,255,255,0.1);
+        transform: translateX(100%);
+        opacity: 0;
+        pointer-events: none;
       }
 
       .nav-links.active {
-        right: 0;
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: auto;
       }
 
       .mobile-menu-toggle {
@@ -583,9 +596,8 @@
     /* ===== INSTAGRAM BUTTON ===== */
     .insta-btn-fixed {
       position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+      bottom: 28px;
+      left: 28px;
       width: 48px;
       height: 48px;
       background: rgba(255,255,255,0.08);
@@ -596,13 +608,13 @@
       justify-content: center;
       color: #fff;
       transition: all 0.3s ease;
-      z-index: 1000;
+      z-index: 98;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
     .insta-btn-fixed:hover {
       background: #E4405F;
-      transform: translateX(-50%) scale(1.1);
+      transform: scale(1.1);
     }
 
     .insta-icon-fixed {
@@ -614,7 +626,22 @@
     /* Mobile */
     @media (max-width: 768px) {
       .insta-btn-fixed {
-        bottom: 80px;
+        bottom: 20px;
+        left: 20px;
+        width: 42px;
+        height: 42px;
+      }
+
+      .insta-icon-fixed {
+        width: 20px;
+        height: 20px;
+      }
+
+      #backToTop {
+        bottom: 20px;
+        right: 20px;
+        width: 42px;
+        height: 42px;
       }
 
       .hero h1 {
@@ -690,7 +717,7 @@
 
     <div class="hero-stats">
       <div class="stat">
-        <span class="stat-number">150+</span>
+        <span class="stat-number" id="totalVideoCount">170+</span>
         <span class="stat-label">Videos</span>
       </div>
       <div class="stat">
@@ -726,7 +753,7 @@
         <span class="season-icon">❄️</span>
         <h3 class="season-title">Winter</h3>
         <p class="season-description">Verschneite Gipfel, Schneeflocken, winterliche Stille</p>
-        <p class="season-count">55+ Videos</p>
+        <p class="season-count" data-count="winter">Videos</p>
         <span class="season-link">Videos ansehen →</span>
       </div>
     </a>
@@ -738,7 +765,7 @@
         <span class="season-icon">🌱</span>
         <h3 class="season-title">Frühling</h3>
         <p class="season-description">Erwachende Natur, schmelzender Schnee, erste Blüten</p>
-        <p class="season-count">15+ Videos</p>
+        <p class="season-count" data-count="fruehling">Videos</p>
         <span class="season-link">Videos ansehen →</span>
       </div>
     </a>
@@ -750,7 +777,7 @@
         <span class="season-icon">☀️</span>
         <h3 class="season-title">Sommer</h3>
         <p class="season-description">Grüne Almen, kristallklare Bergseen, endlose Sommertage</p>
-        <p class="season-count">20+ Videos</p>
+        <p class="season-count" data-count="sommer">Videos</p>
         <span class="season-link">Videos ansehen →</span>
       </div>
     </a>
@@ -762,7 +789,7 @@
         <span class="season-icon">🍁</span>
         <h3 class="season-title">Herbst</h3>
         <p class="season-description">Goldene Wälder, mystischer Nebel, warme Farben</p>
-        <p class="season-count">40+ Videos</p>
+        <p class="season-count" data-count="herbst">Videos</p>
         <span class="season-link">Videos ansehen →</span>
       </div>
     </a>
@@ -774,7 +801,7 @@
         <span class="season-icon">🤖</span>
         <h3 class="season-title">KI</h3>
         <p class="season-description">KI-optimiert & AI-enhanced Aufnahmen</p>
-        <p class="season-count">20+ Videos</p>
+        <p class="season-count" data-count="ki">Videos</p>
         <span class="season-link">Videos ansehen →</span>
       </div>
     </a>
@@ -808,7 +835,7 @@
 
     <h3>Kostenlose Nutzung & Lizenz</h3>
     <p>
-      Alle <strong>150+ Videos sind kostenlos und lizenzfrei</strong> für private und kommerzielle Projekte nutzbar. 
+      Alle <strong><span id="seoVideoCount">170+</span> Videos sind kostenlos und lizenzfrei</strong> für private und kommerzielle Projekte nutzbar. 
       Einzige Bedingung: Namensnennung <strong>@walserfly</strong> oder Link zu walserfly.com. 
       Perfekt für Social Media, YouTube, Websites, Werbung, Dokumentationen und kreative Projekte.
     </p>
@@ -932,6 +959,27 @@ document.addEventListener('DOMContentLoaded', function() {
       var season = img.getAttribute('data-season');
       if (window.SEASON_COVERS[season]) img.src = window.SEASON_COVERS[season];
     });
+  }
+
+  // Dynamic Video Count
+  if (window.VIDEOS) {
+    var total = 0;
+    ['winter', 'fruehling', 'sommer', 'herbst', 'ki'].forEach(function(cat) {
+      var count = window.VIDEOS[cat] ? window.VIDEOS[cat].length : 0;
+      total += count;
+      
+      // Update season card count
+      var countEl = document.querySelector('[data-count="' + cat + '"]');
+      if (countEl && count > 0) countEl.textContent = count + '+ Videos';
+    });
+    
+    // Update hero total count
+    var totalEl = document.getElementById('totalVideoCount');
+    if (totalEl && total > 0) totalEl.textContent = total + '+';
+    
+    // Update SEO section count
+    var seoEl = document.getElementById('seoVideoCount');
+    if (seoEl && total > 0) seoEl.textContent = total + '+';
   }
 });
 </script>
