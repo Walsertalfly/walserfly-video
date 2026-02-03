@@ -1,4 +1,4 @@
-name: 🎬 Vimeo Auto-Sync
+name: 🎬 Vimeo Full-Sync
 
 on:
   schedule:
@@ -11,17 +11,13 @@ permissions:
 jobs:
   sync:
     runs-on: ubuntu-latest
-
     steps:
-      - name: 📥 Repository auschecken
-        uses: actions/checkout@v4
-
-      - name: 🐍 Python einrichten
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: 🔄 Vimeo-Videos synchronisieren
+      - name: 🔄 Vimeo Full-Sync
         env:
           VIMEO_TOKEN: ${{ secrets.VIMEO_TOKEN }}
         run: python sync-vimeo.py
@@ -31,12 +27,9 @@ jobs:
           git config user.name "WalserFly Bot"
           git config user.email "bot@walserfly.com"
           git add videos-config.js season-covers.js
-          
           if git diff --cached --quiet; then
-            echo "✅ Keine Änderungen - alles aktuell!"
+            echo "✅ Keine Änderungen"
           else
-            TIMESTAMP=$(date +"%Y-%m-%d %H:%M")
-            git commit -m "🎬 Neue Videos synchronisiert ($TIMESTAMP)"
+            git commit -m "🎬 Videos synchronisiert ($(date +%Y-%m-%d))"
             git push
-            echo "🎉 Neue Videos gepusht!"
           fi
