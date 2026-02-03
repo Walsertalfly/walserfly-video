@@ -1,7 +1,7 @@
 {
   "wf_demo": {
     "domains": ["walserfly.com", "www.walserfly.com", "localhost"],
-    "active": true,
+    "active": false,
     "name": "WalserFly Demo",
     "created": "2026-01-01"
   },
