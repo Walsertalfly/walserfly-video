@@ -3,491 +3,212 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>FPV Winter-Videos Kleinwalsertal | 55+ Schneeflug-Aufnahmen 4K</title>
-  <meta name="description" content="Über 55 kostenlose FPV Winter-Drohnenvideos aus dem verschneiten Kleinwalsertal. Ifen, Kanzelwand, Walmendinger Horn. 4K-Qualität, lizenzfrei.">
-  <meta name="keywords" content="FPV Winter Kleinwalsertal, Drohne Schnee, Winter Drohnenvideos Österreich">
-  
-  <link rel="canonical" href="https://walserfly.com/winter/">
-  <meta name="robots" content="index, follow">
-  
-  <!-- Open Graph -->
+  <title>FPV Winter-Videos Kleinwalsertal | Schneeflug-Aufnahmen 4K</title>
+  <meta name="description" content="Kostenlose FPV Winter-Drohnenvideos aus dem Kleinwalsertal. 4K, lizenzfrei.">
+  <link rel="canonical" href="https://walserfly.com/winter.html">
   <meta property="og:title" content="FPV Winter-Videos Kleinwalsertal">
-  <meta property="og:description" content="55+ kostenlose FPV-Drohnenvideos aus dem verschneiten Kleinwalsertal">
-  <meta property="og:image" content="https://walserfly.com/images/winter-og.jpg">
-  <meta property="og:url" content="https://walserfly.com/winter/">
-  
-  <!-- Schema.org -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "FPV Winter-Videos Kleinwalsertal",
-    "description": "Sammlung von über 55 FPV-Drohnenvideos aus dem winterlichen Kleinwalsertal",
-    "url": "https://walserfly.com/winter/"
-  }
-  </script>
+  <meta property="og:url" content="https://walserfly.com/winter.html">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000; color: #ccc; font-family: 'Segoe UI', sans-serif; }
 
-    body {
-      background: #000;
-      color: #ccc;
-      font-family: 'Segoe UI', sans-serif;
-    }
-
-    /* Navigation */
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
       background: rgba(0,0,0,0.95);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-
     .nav-container {
-      max-width: 1600px;
-      margin: 0 auto;
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      max-width: 1600px; margin: 0 auto; padding: 14px 20px;
+      display: flex; justify-content: space-between; align-items: center;
     }
+    .logo { font-size: 1.4rem; font-weight: 700; color: #fff; text-decoration: none; }
+    .breadcrumb { display: flex; gap: 10px; align-items: center; font-size: 0.85rem; }
+    .breadcrumb a { color: #888; text-decoration: none; }
+    .breadcrumb a:hover { color: #66ccff; }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .breadcrumb {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      font-size: 0.9rem;
-    }
-
-    .breadcrumb a {
-      color: #888;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .breadcrumb a:hover {
-      color: #66ccff;
-    }
-
-    .breadcrumb span {
-      color: #444;
-    }
-
-    /* Hero Section */
+    /* Compact Hero */
     .hero {
-      position: relative;
-      height: 60vh;
-      min-height: 400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: linear-gradient(135deg, #001a33 0%, #003366 100%);
+      padding: 50px 20px;
       text-align: center;
-      padding: 20px;
-      background: linear-gradient(135deg, #001f3f 0%, #003d80 100%);
-      overflow: hidden;
     }
-
-    .hero::before {
-      content: '❄️';
-      position: absolute;
-      font-size: 20rem;
-      opacity: 0.05;
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 800px;
-    }
-
     .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      color: #fff;
-      margin-bottom: 20px;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: #fff; margin-bottom: 10px; font-weight: 700;
     }
-
-    .hero-subtitle {
-      font-size: 1.3rem;
-      color: #a8d8ff;
-      margin-bottom: 32px;
-    }
-
+    .hero-subtitle { font-size: 1rem; color: #88c8ff; margin-bottom: 20px; }
     .download-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px 40px;
-      background: linear-gradient(90deg, #0077ff, #66ccff);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 24px rgba(0,119,255,0.4);
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px;
+      background: linear-gradient(90deg, #0066dd, #55aaff);
+      color: #fff; text-decoration: none; border-radius: 30px;
+      font-weight: 600; font-size: 0.95rem;
+      box-shadow: 0 4px 16px rgba(0,102,221,0.35);
+      transition: all 0.3s;
     }
+    .download-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,102,221,0.5); }
 
-    .download-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(0,119,255,0.6);
+    /* Intro Box */
+    .intro-section {
+      max-width: 1000px; margin: 0 auto; padding: 40px 20px 30px;
     }
+    .intro-box {
+      background: rgba(0,100,200,0.08);
+      border: 1px solid rgba(0,150,255,0.15);
+      border-radius: 12px; padding: 24px 28px;
+    }
+    .intro-box h2 { color: #66ccff; font-size: 1.3rem; margin-bottom: 10px; }
+    .intro-box p { color: #999; line-height: 1.6; font-size: 0.9rem; margin-bottom: 8px; }
+    .intro-box .meta { font-size: 0.85rem; color: #777; }
+    .intro-box .meta strong { color: #aaa; }
 
     /* Video Grid */
-    .videos-section {
-      max-width: 1600px;
-      margin: 60px auto;
-      padding: 0 20px 80px;
-    }
-
-    .section-intro {
-      max-width: 800px;
-      margin: 0 auto 60px;
-      padding: 32px;
-      background: rgba(0,119,255,0.05);
-      border-radius: 16px;
-      border: 1px solid rgba(0,119,255,0.2);
-    }
-
-    .section-intro h2 {
-      color: #66ccff;
-      font-size: 1.8rem;
-      margin-bottom: 16px;
-    }
-
-    .section-intro p {
-      color: #aaa;
-      line-height: 1.7;
-      margin-bottom: 12px;
-    }
-
+    .videos-section { max-width: 1600px; margin: 0 auto; padding: 20px 20px 60px; }
     .video-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
     }
-
     .video-card {
-      background: #0a0a0a;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(0,119,255,0.2);
-      transition: all 0.3s ease;
+      background: #0a0a0a; border-radius: 10px; overflow: hidden;
+      border: 1px solid rgba(0,150,255,0.12);
+      transition: all 0.3s;
     }
-
     .video-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 32px rgba(0,119,255,0.3);
-      border-color: rgba(102,204,255,0.5);
-    }
-
-    .video-wrapper {
-      position: relative;
-      padding-bottom: 177.78%; /* 9:16 */
-      background: #000;
-    }
-
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .video-info {
-      padding: 16px;
-    }
-
-    .video-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #eaf6ff;
-      margin-bottom: 6px;
-    }
-
-    .video-meta {
-      font-size: 0.9rem;
-      color: #66ccff;
-    }
-
-    /* Footer */
-    footer {
-      background: #0a0a0a;
-      border-top: 1px solid rgba(0,119,255,0.2);
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    footer a {
-      color: #66ccff;
-      text-decoration: none;
-      margin: 0 16px;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    /* Back to Top */
-    #backToTop {
-      position: fixed;
-      bottom: 28px;
-      right: 28px;
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(90deg, #0077ff, #66ccff);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      font-size: 20px;
-      cursor: pointer;
-      opacity: 0;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0,119,255,0.4);
-      z-index: 99;
-    }
-
-    #backToTop.show {
-      opacity: 1;
-    }
-
-    #backToTop:hover {
       transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,150,255,0.2);
+      border-color: rgba(100,200,255,0.3);
     }
+    .video-wrapper { position: relative; padding-bottom: 177.78%; background: #000; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-info { padding: 12px; }
+    .video-title { font-size: 0.95rem; font-weight: 600; color: #e8f4ff; margin-bottom: 3px; }
+    .video-meta { font-size: 0.8rem; color: #66aadd; }
 
-    /* Mobile */
+    footer {
+      background: #050505; border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 28px 20px; text-align: center;
+    }
+    footer a { color: #66aadd; text-decoration: none; margin: 0 10px; font-size: 0.9rem; }
+    footer a:hover { text-decoration: underline; }
+    footer p { color: #555; font-size: 0.8rem; margin-top: 12px; }
+
+    #backToTop {
+      position: fixed; bottom: 20px; right: 20px;
+      width: 40px; height: 40px;
+      background: linear-gradient(90deg, #0066dd, #55aaff);
+      color: #fff; border: none; border-radius: 50%;
+      font-size: 16px; cursor: pointer; opacity: 0;
+      transition: all 0.3s; z-index: 99;
+    }
+    #backToTop.show { opacity: 1; }
+
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-
-      .video-grid {
-        grid-template-columns: 1fr;
-      }
+      .hero { padding: 35px 15px; }
+      .hero h1 { font-size: 1.6rem; }
+      .video-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    }
+    @media (max-width: 480px) {
+      .video-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- Navigation -->
 <nav>
   <div class="nav-container">
-    <a href="/" class="logo">walserfly</a>
+    <a href="index.html" class="logo">walserfly</a>
     <div class="breadcrumb">
-      <a href="/">Home</a>
-      <span>›</span>
-      <strong style="color: #66ccff;">❄️ Winter</strong>
+      <a href="index.html">Home</a>
+      <span style="color:#444">›</span>
+      <strong style="color:#66ccff">❄️ Winter</strong>
     </div>
   </div>
 </nav>
 
-<!-- Hero -->
 <section class="hero">
-  <div class="hero-content">
-    <h1>❄️ FPV Winter-Videos</h1>
-    <p class="hero-subtitle">55+ kostenlose Drohnenvideos aus verschneiten Alpengipfeln</p>
-    <a href="https://gofile.me/7sdkD/gDq3mY0QH" 
-       class="download-btn download-track" 
-       data-season="Winter"
-       data-download-url="https://gofile.me/7sdkD/gDq3mY0QH"
-       target="_blank" 
-       rel="noopener">
-      <span>📦</span>
-      <span>Alle Winter-Videos herunterladen</span>
-    </a>
-  </div>
+  <h1>❄️ FPV Winter-Videos</h1>
+  <p class="hero-subtitle" id="videoCount">Kostenlose Drohnenvideos aus verschneiten Alpengipfeln</p>
+  <a href="https://gofile.me/7sdkD/gDq3mY0QH" class="download-btn" target="_blank" rel="noopener">
+    📦 Alle Videos herunterladen
+  </a>
 </section>
 
-<!-- Videos Section -->
-<section class="videos-section">
-  
-  <div class="section-intro">
+<section class="intro-section">
+  <div class="intro-box">
     <h2>Winterflüge durch das Kleinwalsertal</h2>
-    <p>
-      Das verschneite Kleinwalsertal zeigt sich von seiner magischsten Seite. Von dramatischen Schneeflügen durch 
-      die Gottesackerwände am Ifen bis zu friedlichen Gleitflügen über verschneite Wälder – diese Sammlung fängt 
-      die winterliche Schönheit der Alpen ein.
-    </p>
-    <p style="margin-bottom: 0;">
-      <strong>Locations:</strong> Ifen, Kanzelwand, Walmendinger Horn, Heuberggrat, Schwarzwassertal<br>
-      <strong>Qualität:</strong> 4K | <strong>Format:</strong> 9:16 (Vertical)<br>
-      <strong>Lizenz:</strong> Kostenlos mit Namensnennung @walserfly
+    <p>Das verschneite Kleinwalsertal zeigt sich von seiner magischsten Seite. Von dramatischen Schneeflügen durch die Gottesackerwände am Ifen bis zu friedlichen Gleitflügen über verschneite Wälder.</p>
+    <p class="meta">
+      <strong>Locations:</strong> Ifen, Kanzelwand, Walmendinger Horn, Heuberggrat &nbsp;|&nbsp;
+      <strong>Qualität:</strong> 4K &nbsp;|&nbsp;
+      <strong>Format:</strong> 9:16 &nbsp;|&nbsp;
+      <strong>Lizenz:</strong> Kostenlos mit @walserfly
     </p>
   </div>
-
-  <!-- Video Grid (dynamisch gefüllt) -->
-  <div class="video-grid" id="winterVideos"></div>
-
 </section>
 
-<!-- Footer -->
+<section class="videos-section">
+  <div class="video-grid" id="videoGrid"></div>
+</section>
+
 <footer>
-  <p style="margin-bottom: 20px; color: #aaa;">
-    📜 <strong>Lizenz:</strong> Kostenlos für kommerzielle Nutzung | Namensnennung <strong>@walserfly</strong> erforderlich
-  </p>
   <nav>
     <a href="index.html">Home</a>
     <a href="fruehling.html">🌱 Frühling</a>
     <a href="sommer.html">☀️ Sommer</a>
-    <a href="herbst.html">🍁 Herbst</a>
+    <a href="herbst.html">🍂 Herbst</a>
     <a href="ki.html">🤖 KI</a>
   </nav>
-  <p style="margin-top: 20px; color: #666;">
-    © 2025 walserfly.com
-  </p>
+  <p>© 2025 walserfly.com — Kostenlos mit Namensnennung @walserfly</p>
 </footer>
 
-<!-- Back to Top -->
 <button id="backToTop" onclick="scrollToTop()">↑</button>
 
-<!-- Vimeo Player API -->
-<script src="https://player.vimeo.com/api/player.js" defer></script>
-
-<!-- Videos Config -->
 <script src="videos-config.js"></script>
-
 <script>
-// Videos rendern aus config
-function renderWinterVideos() {
-  const grid = document.getElementById('winterVideos');
-  const winterVideos = window.VIDEOS.winter || [];
+function renderVideos() {
+  const grid = document.getElementById('videoGrid');
+  const videos = window.VIDEOS?.winter || [];
+  
+  if (videos.length > 0) {
+    document.getElementById('videoCount').textContent = videos.length + '+ kostenlose Drohnenvideos aus verschneiten Alpengipfeln';
+  }
 
-  winterVideos.forEach(video => {
+  videos.forEach(video => {
     const card = document.createElement('article');
     card.className = 'video-card';
-    
     card.innerHTML = `
       <div class="video-wrapper">
-        <iframe 
-          data-src="https://player.vimeo.com/video/${video.id}?title=0&byline=0&portrait=0&muted=1" 
-          title="FPV Video: ${video.title} - Winter im Kleinwalsertal"
-          loading="lazy"
-          allow="autoplay; fullscreen; picture-in-picture">
-        </iframe>
+        <iframe data-src="https://player.vimeo.com/video/${video.id}?title=0&byline=0&portrait=0&muted=1" 
+                title="${video.title}" loading="lazy" allow="autoplay; fullscreen"></iframe>
       </div>
       <div class="video-info">
         <h3 class="video-title">${video.title}</h3>
         <p class="video-meta">Winter · Kleinwalsertal</p>
       </div>
     `;
-    
     grid.appendChild(card);
   });
 
-  // Lazy Loading setup
-  setupLazyLoading();
-}
-
-// Lazy Loading für iframes
-function setupLazyLoading() {
-  const iframes = document.querySelectorAll('iframe[data-src]');
-  
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const iframe = entry.target;
-          iframe.src = iframe.getAttribute('data-src');
-          iframe.removeAttribute('data-src');
-          observer.unobserve(iframe);
-        }
-      });
-    }, { rootMargin: '200px' });
-
-    iframes.forEach(iframe => observer.observe(iframe));
-  } else {
-    // Fallback
-    iframes.forEach(iframe => {
-      iframe.src = iframe.getAttribute('data-src');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const iframe = entry.target;
+        iframe.src = iframe.dataset.src;
+        observer.unobserve(iframe);
+      }
     });
-  }
+  }, { rootMargin: '200px' });
+  document.querySelectorAll('iframe[data-src]').forEach(iframe => observer.observe(iframe));
 }
 
-// Back to Top
 window.addEventListener('scroll', () => {
-  const btn = document.getElementById('backToTop');
-  if (window.scrollY > 400) {
-    btn.classList.add('show');
-  } else {
-    btn.classList.remove('show');
-  }
+  document.getElementById('backToTop').classList.toggle('show', window.scrollY > 300);
 });
-
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// Init
-document.addEventListener('DOMContentLoaded', renderWinterVideos);
-
-// ===== DOWNLOAD TRACKING (VERBESSERT MIT FORMDATA) =====
-function trackDownload(season, downloadUrl) {
-  const formspreeEndpoint = 'https://formspree.io/f/mvgwndgg';
-  
-  // FormData statt JSON - Formspree bevorzugt dies!
-  const formData = new FormData();
-  formData.append('event', 'download_click');
-  formData.append('season', season);
-  formData.append('timestamp', new Date().toISOString());
-  formData.append('page_url', window.location.href);
-  formData.append('download_url', downloadUrl);
-  
-  // fetch() mit FormData (zuverlässiger als sendBeacon für Formspree)
-  fetch(formspreeEndpoint, {
-    method: 'POST',
-    body: formData,
-    headers: {
-      'Accept': 'application/json'
-    }
-  }).then(response => {
-    if (response.ok) {
-      console.log('✅ Download getrackt:', season);
-    } else {
-      console.log('⚠️ Formspree Status:', response.status);
-    }
-  }).catch(err => {
-    console.log('⚠️ Tracking-Fehler:', err);
-  });
-}
-
-// Event-Listener für Download-Buttons
-document.addEventListener('DOMContentLoaded', function() {
-  const downloadButtons = document.querySelectorAll('.download-track');
-  
-  downloadButtons.forEach(button => {
-    button.addEventListener('click', function(e) {
-      e.preventDefault(); // Verhindert sofortiges Öffnen
-      
-      const season = this.getAttribute('data-season');
-      const downloadUrl = this.getAttribute('data-download-url');
-      
-      // Tracking auslösen
-      trackDownload(season, downloadUrl);
-      
-      // Download sofort öffnen (kein setTimeout nötig mit fetch)
-      window.open(downloadUrl, '_blank');
-    });
-  });
-});
+function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+document.addEventListener('DOMContentLoaded', renderVideos);
 </script>
-
 </body>
 </html>
