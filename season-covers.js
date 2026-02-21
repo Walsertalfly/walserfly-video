@@ -1,5 +1,5 @@
 // Auto-generiert von sync-vimeo.py
-// 2026-02-21 06:37
+// 2026-02-21 18:29
 window.SEASON_COVERS = {
   winter: 'https://i.vimeocdn.com/video/2116879622-6b5770cd1078f83effc438f6753a4297da0c236eb77ce5225a3ca4362227c9fb-d_1920x1080?&r=pad&region=us',
   fruehling: 'https://i.vimeocdn.com/video/2072161705-f49353342337766f4e2c5eabda2ea22aeec3c1ee155d1ee95c32b1546df42815-d_1920x1080?&r=pad&region=us',
