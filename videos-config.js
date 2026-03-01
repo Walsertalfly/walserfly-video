@@ -1,5 +1,5 @@
 // Auto-generiert von sync-vimeo.py (FULL SYNC)
-// 2026-03-01 06:41
+// 2026-03-01 18:28
 window.VIDEOS = {
   winter: [
     { id: '1161484046', title: 'Namensnennung Walserfly -Mittelberg KWT 1', url: 'https://player.vimeo.com/video/1161484046' },
