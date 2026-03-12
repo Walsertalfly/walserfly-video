@@ -1,7 +1,10 @@
 // Auto-generiert von sync-vimeo.py (FULL SYNC)
-// 2026-03-12 06:50
+// 2026-03-12 18:48
 window.VIDEOS = {
   winter: [
+    { id: '1172877523', title: 'Namensnennung Walserfly - Sonna Alp', url: 'https://player.vimeo.com/video/1172877523' },
+    { id: '1172877096', title: 'Namensnennung Walserfly - Anflug Elfer', url: 'https://player.vimeo.com/video/1172877096' },
+    { id: '1172876223', title: 'Namensnennung Walserfly - Elfer runter ins Tal', url: 'https://player.vimeo.com/video/1172876223' },
     { id: '1161484046', title: 'Namensnennung Walserfly -Mittelberg KWT 1', url: 'https://player.vimeo.com/video/1161484046' },
     { id: '1161482988', title: 'Namensnennung Walserfly -Mittelberg KWT 3', url: 'https://player.vimeo.com/video/1161482988' },
     { id: '1161482739', title: 'Namensnennung Walserfly -Heuberggrat Sonnenuntergang', url: 'https://player.vimeo.com/video/1161482739' },
@@ -96,6 +99,7 @@ window.VIDEOS = {
     { id: '1127528220', title: 'Zwölfer runter', url: 'https://player.vimeo.com/video/1127528220' },
   ],
   fruehling: [
+    { id: '1172868287', title: 'Namensnennung Walserfly - Gipfelkreuz Walmendingerhorn umkreisen', url: 'https://player.vimeo.com/video/1172868287' },
     { id: '1128939651', title: 'Melköde 1', url: 'https://player.vimeo.com/video/1128939651' },
     { id: '1128939314', title: 'Köpflegrat', url: 'https://player.vimeo.com/video/1128939314' },
     { id: '1128938364', title: 'Melköde 2', url: 'https://player.vimeo.com/video/1128938364' },
