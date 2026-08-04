@@ -1,5 +1,5 @@
 // Auto-generiert von sync-vimeo.py (FULL SYNC)
-// 2026-08-03 19:24
+// 2026-08-04 08:29
 window.VIDEOS = {
   winter: [
     { id: '1172877523', title: 'Namensnennung Walserfly - Sonna Alp', url: 'https://player.vimeo.com/video/1172877523' },
