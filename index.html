@@ -534,6 +534,24 @@
     }
   }
 
+  /* ---- Instagram: am Handy die App oeffnen ----
+     Im Browser schickt Instagram jeden ausgeloggten Besucher auf seine Login-Wand.
+     Ist die App installiert, umgeht der Sprung ueber das instagram://-Schema das.
+     Passiert nichts (App fehlt), uebernimmt nach kurzer Wartezeit der normale Link. */
+  var insta = document.querySelector('.btn-insta');
+
+  if (insta && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    insta.addEventListener('click', function (e) {
+      e.preventDefault();
+      var web = this.href, weg = false;
+      var merken = function () { weg = true; };
+      document.addEventListener('visibilitychange', merken, { once: true });
+      window.addEventListener('pagehide', merken, { once: true });
+      window.location.href = 'instagram://user?username=walserfly';
+      setTimeout(function () { if (!weg) window.location.href = web; }, 1200);
+    });
+  }
+
   /* ---- Anfrage-Dialog ---- */
   var modal    = document.getElementById('inquiryModal');
   var openBtn  = document.getElementById('openInquiry');
