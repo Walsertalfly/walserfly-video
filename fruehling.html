@@ -1,196 +1,26 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WH4JH8XC54"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-WH4JH8XC54');
-  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FPV Frühling-Videos Kleinwalsertal | Drohnenaufnahmen 4K</title>
-  <meta name="description" content="Kostenlose FPV Frühling-Drohnenvideos aus dem Kleinwalsertal. 4K, lizenzfrei.">
-  <link rel="canonical" href="https://walserfly.com/fruehling.html">
-  <meta property="og:title" content="FPV Frühling-Videos Kleinwalsertal">
-  <meta property="og:url" content="https://walserfly.com/fruehling.html">
-
+  <title>walserfly</title>
+  <link rel="canonical" href="https://www.walserfly.com/">
+  <meta name="robots" content="noindex, follow">
+  <meta http-equiv="refresh" content="0; url=/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #000; color: #ccc; font-family: 'Segoe UI', sans-serif; }
-
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(0,0,0,0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .nav-container {
-      max-width: 1600px; margin: 0 auto; padding: 14px 20px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .logo { font-size: 1.4rem; font-weight: 700; color: #fff; text-decoration: none; }
-    .breadcrumb { display: flex; gap: 10px; align-items: center; font-size: 0.85rem; }
-    .breadcrumb a { color: #888; text-decoration: none; }
-    .breadcrumb a:hover { color: #ff99cc; }
-
-    .hero {
-      background: linear-gradient(135deg, #3d0f28 0%, #7a2050 100%);
-      padding: 50px 20px; text-align: center;
-    }
-    .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); color: #fff; margin-bottom: 10px; font-weight: 700; }
-    .hero-subtitle { font-size: 1rem; color: #ffccdd; margin-bottom: 20px; }
-    .download-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 28px;
-      background: linear-gradient(90deg, #d63384, #ff80b0);
-      color: #fff; text-decoration: none; border-radius: 30px;
-      font-weight: 600; font-size: 0.95rem;
-      box-shadow: 0 4px 16px rgba(214,51,132,0.35);
-      transition: all 0.3s;
-    }
-    .download-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(214,51,132,0.5); }
-
-    .intro-section { max-width: 1000px; margin: 0 auto; padding: 40px 20px 30px; }
-    .intro-box {
-      background: rgba(200,50,130,0.08);
-      border: 1px solid rgba(255,100,180,0.15);
-      border-radius: 12px; padding: 24px 28px;
-    }
-    .intro-box h2 { color: #ff99cc; font-size: 1.3rem; margin-bottom: 10px; }
-    .intro-box p { color: #999; line-height: 1.6; font-size: 0.9rem; margin-bottom: 8px; }
-    .intro-box .meta { font-size: 0.85rem; color: #777; }
-    .intro-box .meta strong { color: #aaa; }
-
-    .videos-section { max-width: 1600px; margin: 0 auto; padding: 20px 20px 60px; }
-    .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-    .video-card {
-      background: #0a0a0a; border-radius: 10px; overflow: hidden;
-      border: 1px solid rgba(255,100,180,0.12); transition: all 0.3s;
-    }
-    .video-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(255,100,180,0.2);
-      border-color: rgba(255,150,200,0.3);
-    }
-    .video-wrapper { position: relative; padding-bottom: 177.78%; background: #000; }
-    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-    .video-info { padding: 12px; }
-    .video-title { font-size: 0.95rem; font-weight: 600; color: #ffe8f0; margin-bottom: 3px; }
-    .video-meta { font-size: 0.8rem; color: #dd88aa; }
-
-    footer {
-      background: #050505; border-top: 1px solid rgba(255,255,255,0.08);
-      padding: 28px 20px; text-align: center;
-    }
-    footer a { color: #dd88aa; text-decoration: none; margin: 0 10px; font-size: 0.9rem; }
-    footer a:hover { text-decoration: underline; }
-    footer p { color: #555; font-size: 0.8rem; margin-top: 12px; }
-
-    #backToTop {
-      position: fixed; bottom: 20px; right: 20px;
-      width: 40px; height: 40px;
-      background: linear-gradient(90deg, #d63384, #ff80b0);
-      color: #fff; border: none; border-radius: 50%;
-      font-size: 16px; cursor: pointer; opacity: 0;
-      transition: all 0.3s; z-index: 99;
-    }
-    #backToTop.show { opacity: 1; }
-
-    @media (max-width: 768px) {
-      .hero { padding: 35px 15px; }
-      .hero h1 { font-size: 1.6rem; }
-      .video-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    }
-    @media (max-width: 480px) { .video-grid { grid-template-columns: 1fr; } }
+    html, body { height: 100%; margin: 0; background: #000; color: #a9b2bb;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+    .wrap { height: 100%; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 24px; }
+    a { color: #f2f4f6; }
   </style>
+  <script>location.replace("/");</script>
 </head>
 <body>
-
-<nav>
-  <div class="nav-container">
-    <a href="index.html" class="logo">walserfly</a>
-    <div class="breadcrumb">
-      <a href="index.html">Home</a>
-      <span style="color:#444">›</span>
-      <strong style="color:#ff99cc">🌱 Frühling</strong>
-    </div>
+  <div class="wrap">
+    <p>Die Fruehlings-Videoseite gibt es nicht mehr.<br>
+       Weiter zur <a href="/">Startseite von walserfly</a>.</p>
   </div>
-</nav>
-
-<section class="hero">
-  <h1>🌱 FPV Frühling-Videos</h1>
-  <p class="hero-subtitle" id="videoCount">Kostenlose Drohnenvideos — Erwachende Natur im Kleinwalsertal</p>
-  <a href="https://gofile.me/7sdkD/Z0TIVv2g5" class="download-btn" target="_blank" rel="noopener">
-    📦 Alle Videos herunterladen
-  </a>
-</section>
-
-<section class="intro-section">
-  <div class="intro-box">
-    <h2>Frühlingserwachen im Kleinwalsertal</h2>
-    <p>Wenn der Schnee schmilzt und die ersten Blumen blühen, zeigt sich das Kleinwalsertal von seiner zartesten Seite. Diese Sammlung fängt den Übergang vom Winter zum Frühling ein.</p>
-    <p class="meta">
-      <strong>Locations:</strong> Walmendinger Horn, Ifen, Widderstein &nbsp;|&nbsp;
-      <strong>Qualität:</strong> 4K &nbsp;|&nbsp;
-      <strong>Format:</strong> 9:16 &nbsp;|&nbsp;
-      <strong>Lizenz:</strong> Kostenlos mit @walserfly
-    </p>
-  </div>
-</section>
-
-<section class="videos-section">
-  <div class="video-grid" id="videoGrid"></div>
-</section>
-
-<footer>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="winter.html">❄️ Winter</a>
-    <a href="sommer.html">☀️ Sommer</a>
-    <a href="herbst.html">🍂 Herbst</a>
-    <a href="ki.html">🤖 KI</a>
-  </nav>
-  <p>© 2025 walserfly.com — Kostenlos mit Namensnennung @walserfly</p>
-</footer>
-
-<button id="backToTop" onclick="scrollToTop()">↑</button>
-
-<script src="videos-config.js"></script>
-<script>
-function renderVideos() {
-  const grid = document.getElementById('videoGrid');
-  const videos = window.VIDEOS?.fruehling || [];
-  if (videos.length > 0) {
-    document.getElementById('videoCount').textContent = videos.length + '+ kostenlose Drohnenvideos — Erwachende Natur im Kleinwalsertal';
-  }
-  videos.forEach(video => {
-    const card = document.createElement('article');
-    card.className = 'video-card';
-    card.innerHTML = `
-      <div class="video-wrapper">
-        <iframe data-src="https://player.vimeo.com/video/${video.id}?title=0&byline=0&portrait=0&muted=1" 
-                title="${video.title}" loading="lazy" allow="autoplay; fullscreen"></iframe>
-      </div>
-      <div class="video-info">
-        <h3 class="video-title">${video.title}</h3>
-        <p class="video-meta">Frühling · Kleinwalsertal</p>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) { entry.target.src = entry.target.dataset.src; observer.unobserve(entry.target); }
-    });
-  }, { rootMargin: '200px' });
-  document.querySelectorAll('iframe[data-src]').forEach(iframe => observer.observe(iframe));
-}
-window.addEventListener('scroll', () => { document.getElementById('backToTop').classList.toggle('show', window.scrollY > 300); });
-function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-document.addEventListener('DOMContentLoaded', renderVideos);
-</script>
 </body>
 </html>

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html lang="de" itemscope itemtype="https://schema.org/WebPage">
+<html lang="de">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WH4JH8XC54"></script>
   <script>
@@ -9,55 +12,46 @@
     gtag('js', new Date());
     gtag('config', 'G-WH4JH8XC54');
   </script>
+
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- SEO Meta -->
-  <title>FPV & Drohnenaufnahmen Kleinwalsertal | Kostenlos & Lizenzfrei</title>
-  <meta name="description" content="Über 170 kostenlose FPV & Drohnenaufnahmen aus dem Kleinwalsertal. Winter, Frühling, Sommer, Herbst & KI. 4K-Qualität, lizenzfrei für kommerzielle Nutzung.">
-  <meta name="keywords" content="FPV Drohne Kleinwalsertal, Drohnenvideos Österreich, Drohnenaufnahmen Allgäu, kostenlose Drohnenvideos, lizenzfreie FPV Videos">
+  <!-- SEO -->
+  <title>walserfly | FPV &amp; Drohnenaufnahmen aus dem Kleinwalsertal</title>
+  <meta name="description" content="walserfly – FPV- und Drohnenaufnahmen aus dem Kleinwalsertal. Aktuelle Aufnahmen auf Instagram, Anfragen direkt per Formular.">
   <meta name="author" content="walserfly">
   <meta name="robots" content="index, follow, max-image-preview:large">
-  
-  <!-- Canonical & Language -->
-  <link rel="canonical" href="https://walserfly.com/">
+  <link rel="canonical" href="https://www.walserfly.com/">
   <meta name="language" content="de-AT">
   <meta name="geo.region" content="AT-8">
   <meta name="geo.placename" content="Kleinwalsertal">
-  
+
   <!-- Open Graph -->
-  <meta property="og:title" content="FPV & Drohnenaufnahmen Kleinwalsertal | Kostenlos & Lizenzfrei">
-  <meta property="og:description" content="Über 170 kostenlose FPV & Drohnenaufnahmen aus dem Kleinwalsertal. 4K-Qualität, lizenzfrei.">
+  <meta property="og:title" content="walserfly | FPV &amp; Drohnenaufnahmen aus dem Kleinwalsertal">
+  <meta property="og:description" content="FPV- und Drohnenaufnahmen aus dem Kleinwalsertal. Aktuelle Aufnahmen auf Instagram.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://walserfly.com/">
-  <meta property="og:image" content="https://walserfly.com/images/og-image.jpg">
-  <meta property="og:site_name" content="Walserfly">
-  
-  <!-- Twitter Card -->
+  <meta property="og:url" content="https://www.walserfly.com/">
+  <meta property="og:image" content="https://www.walserfly.com/images/og-image.jpg">
+  <meta property="og:site_name" content="walserfly">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="FPV & Drohnenaufnahmen Kleinwalsertal">
-  <meta name="twitter:image" content="https://walserfly.com/images/og-image.jpg">
+  <meta name="twitter:title" content="walserfly | FPV &amp; Drohnenaufnahmen Kleinwalsertal">
+  <meta name="twitter:image" content="https://www.walserfly.com/images/og-image.jpg">
   <meta name="twitter:creator" content="@walserfly">
-  
-  <!-- Preconnect -->
-  <link rel="preconnect" href="https://player.vimeo.com">
+
+  <link rel="preconnect" href="https://vumbnail.com">
   <link rel="preconnect" href="https://cdn.counter.dev">
-  
+
   <!-- Counter -->
-  <script src="https://cdn.counter.dev/script.js" 
-          data-id="0d0e6b83-027c-4029-b963-019c7ddcc9b7" 
+  <script src="https://cdn.counter.dev/script.js"
+          data-id="0d0e6b83-027c-4029-b963-019c7ddcc9b7"
           data-utcoffset="2" defer></script>
 
-  <!-- Schema.org -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Walserfly",
-    "url": "https://walserfly.com",
-    "description": "Kostenlose FPV & Drohnenaufnahmen aus dem Kleinwalsertal",
+    "name": "walserfly",
+    "url": "https://www.walserfly.com",
+    "description": "FPV- und Drohnenaufnahmen aus dem Kleinwalsertal",
     "author": {
       "@type": "Person",
       "name": "walserfly",
@@ -67,40 +61,38 @@
   </script>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #f2f4f6;
+      --muted: #a9b2bb;
+      --line: rgba(255,255,255,.22);
     }
 
     html, body {
-      overflow-x: hidden;
+      height: 100%;
       width: 100%;
-      max-width: 100vw;
+      overflow: hidden;
+      background: #000;
     }
 
     body {
-      background: #000;
-      color: #ccc;
-      font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
-      position: relative;
+      color: var(--ink);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== HERO SECTION MIT MOSAIK ===== */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px 60px;
-      background: #000;
+    /* ===== MOSAIK-HINTERGRUND ===== */
+    .stage {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
       overflow: hidden;
+      background: #000;
     }
 
-    /* Mosaik-Container - Hochformat-Kacheln (6 Rows) */
-    .hero-mosaic {
+    .mosaic {
       position: absolute;
       top: -5%;
       left: -5%;
@@ -113,913 +105,483 @@
       gap: 3px;
       animation: mosaicDrift 60s linear infinite;
       opacity: 0;
-      transition: opacity 1s ease;
+      transition: opacity 1.4s ease;
       background: #0a0a0a;
     }
 
-    .hero-mosaic.loaded {
-      opacity: 1;
-    }
+    .mosaic.loaded { opacity: 1; }
 
-    .hero-mosaic img {
+    .mosaic img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
       display: block;
       border-radius: 2px;
-      filter: brightness(0.6) saturate(0.9);
+      filter: brightness(.6) saturate(.9);
     }
 
     @keyframes mosaicDrift {
-      0% { transform: translate(0, 0); }
-      25% { transform: translate(-2%, -1%); }
-      50% { transform: translate(-1%, -2%); }
-      75% { transform: translate(-2%, -1%); }
+      0%   { transform: translate(0, 0); }
+      25%  { transform: translate(-2%, -1%); }
+      50%  { transform: translate(-1%, -2%); }
+      75%  { transform: translate(-2%, -1%); }
       100% { transform: translate(0, 0); }
     }
 
-    /* Dunkles Overlay */
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.55);
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* Gradient-Akzent + Vignette */
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(0,119,255,0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 50%, rgba(233,64,142,0.05) 0%, transparent 50%),
-        linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 25%, transparent 75%, rgba(0,0,0,0.7) 100%);
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* Responsive Mosaik - Hochformat (6 Rows, viele Columns) */
-    @media (max-width: 600px) {
-      .hero-mosaic { --mosaic-cols: 6; gap: 2px; }
-    }
-    @media (min-width: 601px) and (max-width: 900px) {
-      .hero-mosaic { --mosaic-cols: 9; }
-    }
-    @media (min-width: 901px) and (max-width: 1400px) {
-      .hero-mosaic { --mosaic-cols: 12; }
-    }
-    @media (min-width: 1401px) {
-      .hero-mosaic { --mosaic-cols: 15; }
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 900px;
-    }
-
-    .hero h1 {
-      font-size: clamp(2rem, 6vw, 4rem);
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 24px;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
-      letter-spacing: -1px;
-      line-height: 1.2;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(1rem, 2.5vw, 1.4rem);
-      color: #aaa;
-      margin-bottom: 48px;
-      line-height: 1.6;
-    }
-
-    .hero-stats {
-      display: flex;
-      gap: 40px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 48px;
-    }
-
-    .stat {
-      text-align: center;
-    }
-
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #66ccff;
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    .stat-label {
-      font-size: 0.9rem;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .hero-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px 40px;
-      background: linear-gradient(90deg, #0077ff, #66ccff);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 24px rgba(0,119,255,0.3);
-    }
-
-    .hero-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(0,119,255,0.5);
-    }
-
-    /* ===== NAVIGATION ===== */
-    nav.main-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(0,0,0,0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .nav-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: #ccc;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-
-    .nav-links a:hover {
-      color: #66ccff;
-    }
-
-    /* Mobile Menu */
-    .mobile-menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        position: fixed;
-        top: 60px;
-        right: 0;
-        width: 250px;
-        height: auto;
-        max-height: calc(100vh - 60px);
-        background: rgba(0,0,0,0.98);
-        flex-direction: column;
-        padding: 20px;
-        transition: transform 0.3s ease, opacity 0.3s ease;
-        border-left: 1px solid rgba(255,255,255,0.1);
-        transform: translateX(100%);
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      .nav-links.active {
-        transform: translateX(0);
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .mobile-menu-toggle {
-        display: block;
-      }
-    }
-
-    /* ===== SEASONS SECTION (VERBESSERT) ===== */
-    .seasons-section {
-      padding: 60px 20px 30px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .section-header h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      color: #fff;
-      margin-bottom: 12px;
-    }
-
-    .section-header p {
-      color: #888;
-      font-size: 1.1rem;
-    }
-
-    /* Season Cards Grid */
-    .seasons-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
-      margin-bottom: 40px;
-    }
-
-    .season-card {
-      position: relative;
-      border-radius: 10px;
-      overflow: hidden;
-      background: #000;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-      text-decoration: none;
-      display: block;
-      aspect-ratio: 9/14;
-    }
-
-    .season-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    }
-
-    .season-card::before {
+    /* Abdunkelung + Vignette */
+    .stage::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.9) 100%);
+      background: rgba(0,0,0,.58);
       z-index: 1;
       pointer-events: none;
     }
 
-    .season-image {
+    .stage::after {
+      content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 45%, rgba(0,119,255,.10) 0%, transparent 55%),
+        radial-gradient(circle at 80% 55%, rgba(233,64,142,.07) 0%, transparent 55%),
+        linear-gradient(to bottom, rgba(0,0,0,.55) 0%, transparent 28%, transparent 68%, rgba(0,0,0,.85) 100%);
+      z-index: 1;
+      pointer-events: none;
     }
 
-    .season-content {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 16px 16px 16px 22px;
+    @media (max-width: 600px)  { .mosaic { --mosaic-cols: 6; gap: 2px; } }
+    @media (min-width: 601px) and (max-width: 900px)  { .mosaic { --mosaic-cols: 9; } }
+    @media (min-width: 901px) and (max-width: 1400px) { .mosaic { --mosaic-cols: 12; } }
+    @media (min-width: 1401px) { .mosaic { --mosaic-cols: 15; } }
+
+    /* ===== INHALT ===== */
+    .cover {
+      position: relative;
       z-index: 2;
+      text-align: center;
+      padding: 24px;
+      max-width: 780px;
+      animation: fadeUp 1.2s ease .2s both;
     }
 
-    .season-icon {
-      font-size: 1.8rem;
-      margin-bottom: 4px;
-      display: block;
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: none; }
     }
 
-    .season-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 4px;
+    .wordmark {
+      font-size: clamp(2.6rem, 9vw, 6rem);
+      font-weight: 200;
+      letter-spacing: .14em;
+      text-transform: lowercase;
+      line-height: 1;
+      text-shadow: 0 6px 40px rgba(0,0,0,.85);
     }
 
-    .season-description {
-      color: #ccc;
-      margin-bottom: 6px;
-      font-size: 0.75rem;
-      line-height: 1.3;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+    .rule {
+      width: 64px;
+      height: 1px;
+      margin: 26px auto 22px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,.7), transparent);
     }
 
-    .season-count {
-      font-size: 0.7rem;
-      color: #888;
-      margin-bottom: 6px;
+    .tagline {
+      font-size: clamp(.95rem, 2.4vw, 1.2rem);
+      font-weight: 300;
+      letter-spacing: .06em;
+      color: var(--muted);
+      text-shadow: 0 2px 20px rgba(0,0,0,.9);
     }
 
-    .season-link {
+    .actions {
+      margin-top: 40px;
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      color: #fff;
+      gap: 10px;
+      padding: 15px 30px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: .03em;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 0.8rem;
-      transition: gap 0.3s ease;
-    }
-
-    .season-card:hover .season-link {
-      gap: 12px;
-    }
-
-    /* Color Accents - nur Link-Farben */
-    .season-card.winter .season-link { color: #66ccff; }
-    .season-card.spring .season-link { color: #ff99cc; }
-    .season-card.summer .season-link { color: #ffeb99; }
-    .season-card.autumn .season-link { color: #ff9966; }
-    .season-card.ai .season-link { color: #b19cd9; }
-
-    /* ===== SEO ACCORDION (VERBESSERT) ===== */
-    .seo-accordion {
-      max-width: 800px;
-      margin: 20px auto 40px;
-      padding: 0 20px;
-    }
-
-    .seo-toggle {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .seo-toggle-btn {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #888;
-      padding: 14px 36px;
-      border-radius: 50px;
+      border: 1px solid transparent;
       cursor: pointer;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
+      font-family: inherit;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
     }
 
-    .seo-toggle-btn:hover {
-      background: rgba(255,255,255,0.08);
-      color: #ccc;
-    }
+    .btn svg { width: 20px; height: 20px; fill: currentColor; }
 
-    .seo-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.5s ease;
-      background: rgba(255,255,255,0.02);
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .seo-content.expanded {
-      max-height: 2000px;
-      padding: 40px;
-    }
-
-    .seo-content h3 {
-      color: #66ccff;
-      margin: 24px 0 12px;
-      font-size: 1.4rem;
-    }
-
-    .seo-content p {
-      color: #aaa;
-      line-height: 1.8;
-      margin-bottom: 16px;
-    }
-
-    .seo-content ul {
-      color: #aaa;
-      line-height: 1.8;
-      padding-left: 24px;
-      margin: 16px 0;
-    }
-
-    /* ===== FOOTER ===== */
-    footer {
-      background: #000;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding: 60px 20px 40px;
-    }
-
-    .footer-content {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 40px;
-      margin-bottom: 40px;
-    }
-
-    .footer-section h4 {
+    .btn-insta {
       color: #fff;
-      margin-bottom: 20px;
-      font-size: 1.1rem;
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      box-shadow: 0 10px 30px rgba(220,39,67,.32);
     }
 
-    .footer-section a {
-      display: block;
-      color: #888;
+    .btn-insta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 38px rgba(220,39,67,.45);
+    }
+
+    .btn-ghost {
+      color: var(--ink);
+      background: rgba(255,255,255,.06);
+      border-color: var(--line);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.14);
+      border-color: rgba(255,255,255,.45);
+    }
+
+    /* ===== FUSSZEILE ===== */
+    .legal {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
+      padding: 16px 20px;
+      text-align: center;
+      font-size: .78rem;
+      color: rgba(255,255,255,.5);
+      letter-spacing: .03em;
+    }
+
+    .legal a {
+      color: rgba(255,255,255,.65);
       text-decoration: none;
-      margin-bottom: 12px;
-      transition: color 0.3s ease;
+      margin: 0 8px;
     }
 
-    .footer-section a:hover {
-      color: #66ccff;
-    }
+    .legal a:hover { color: #fff; text-decoration: underline; }
 
-    .footer-bottom {
-      text-align: center;
-      padding-top: 40px;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      color: #666;
-    }
+    .legal .sep { opacity: .35; }
 
-    /* ===== BACK TO TOP ===== */
-    #backToTop {
+    /* ===== ANFRAGE-DIALOG ===== */
+    .modal {
       position: fixed;
-      bottom: 28px;
-      right: 28px;
-      z-index: 99;
-      background: linear-gradient(90deg, #444, #666);
-      color: #fff;
-      border: none;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      font-size: 20px;
-      cursor: pointer;
-      opacity: 0;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-
-    #backToTop:hover {
-      background: linear-gradient(90deg, #666, #888);
-      transform: translateY(-4px);
-    }
-
-    #backToTop.show {
-      opacity: 1;
-    }
-
-    /* ===== INSTAGRAM BUTTON ===== */
-    .insta-btn-fixed {
-      position: fixed;
-      bottom: 28px;
-      left: 28px;
-      width: 48px;
-      height: 48px;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
-      border-radius: 50%;
-      display: flex;
+      inset: 0;
+      z-index: 50;
+      display: none;
       align-items: center;
       justify-content: center;
-      color: #fff;
-      transition: all 0.3s ease;
-      z-index: 98;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      padding: 20px;
+      background: rgba(0,0,0,.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      overflow-y: auto;
     }
 
-    .insta-btn-fixed:hover {
-      background: #E4405F;
-      transform: scale(1.1);
+    .modal.open { display: flex; }
+
+    .modal-card {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+      background: #101317;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      padding: 34px 30px 30px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.7);
+      animation: fadeUp .35s ease both;
+      text-align: left;
     }
 
-    .insta-icon-fixed {
-      width: 24px;
-      height: 24px;
-      fill: currentColor;
+    .modal-card h2 {
+      font-size: 1.4rem;
+      font-weight: 400;
+      letter-spacing: .04em;
+      margin-bottom: 6px;
     }
 
-    /* Mobile */
-    @media (max-width: 768px) {
-      .insta-btn-fixed {
-        bottom: 20px;
-        left: 20px;
-        width: 42px;
-        height: 42px;
-      }
-
-      .insta-icon-fixed {
-        width: 20px;
-        height: 20px;
-      }
-
-      #backToTop {
-        bottom: 20px;
-        right: 20px;
-        width: 42px;
-        height: 42px;
-      }
-
-      .hero h1 {
-        font-size: 2rem;
-      }
-
-      .hero-stats {
-        gap: 24px;
-      }
-
-      .stat-number {
-        font-size: 2rem;
-      }
-
-      .seasons-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-      }
-
-      .season-card {
-        aspect-ratio: 9/14;
-      }
+    .modal-card .hint {
+      font-size: .88rem;
+      color: var(--muted);
+      margin-bottom: 22px;
+      line-height: 1.5;
     }
 
-    @media (min-width: 769px) and (max-width: 1100px) {
-      .seasons-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-      }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      background: none;
+      border: 0;
+      color: rgba(255,255,255,.55);
+      font-size: 1.6rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 6px;
+    }
 
-      .season-card {
-        aspect-ratio: 9/14;
-      }
+    .modal-close:hover { color: #fff; }
+
+    .field { margin-bottom: 14px; }
+
+    .field label {
+      display: block;
+      font-size: .78rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: .95rem;
+      transition: border-color .2s ease, background .2s ease;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: rgba(255,255,255,.45);
+      background: rgba(255,255,255,.09);
+    }
+
+    .field textarea { resize: vertical; min-height: 108px; }
+
+    .hp { position: absolute; left: -9999px; opacity: 0; }
+
+    .btn-submit {
+      width: 100%;
+      justify-content: center;
+      margin-top: 6px;
+      color: #0b0d10;
+      background: #f2f4f6;
+    }
+
+    .btn-submit:hover { transform: translateY(-2px); background: #fff; }
+    .btn-submit[disabled] { opacity: .6; cursor: default; transform: none; }
+
+    .form-note {
+      margin-top: 16px;
+      font-size: .78rem;
+      color: rgba(255,255,255,.45);
+      line-height: 1.6;
+    }
+
+    .form-note a { color: rgba(255,255,255,.7); }
+
+    .form-status {
+      display: none;
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+
+    .form-status.ok    { display: block; background: rgba(46,160,90,.14); border: 1px solid rgba(46,160,90,.4); color: #9be3b8; }
+    .form-status.error { display: block; background: rgba(220,39,67,.14); border: 1px solid rgba(220,39,67,.4); color: #ffb3bf; }
+
+    @media (max-width: 480px) {
+      .btn { padding: 14px 24px; font-size: .95rem; }
+      .actions { gap: 10px; }
+      .modal-card { padding: 30px 22px 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mosaic, .cover, .modal-card { animation: none; }
+      .btn { transition: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- ===== NAVIGATION ===== -->
-<nav class="main-nav">
-  <div class="nav-container">
-    <a href="/" class="logo">walserfly</a>
-    
-    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Menü öffnen">
-      ☰
-    </button>
+<main class="stage">
+  <div class="mosaic" id="mosaic" aria-hidden="true"></div>
 
-    <ul class="nav-links" id="navLinks">
-      <li><a href="winter.html">❄️ Winter</a></li>
-      <li><a href="fruehling.html">🌱 Frühling</a></li>
-      <li><a href="sommer.html">☀️ Sommer</a></li>
-      <li><a href="herbst.html">🍁 Herbst</a></li>
-      <li><a href="ki.html">🤖 KI</a></li>
-    </ul>
-  </div>
-</nav>
-<script 
-  src="https://www.walserfly.com/widget/snow-ticker.js"
-  data-key="wf_demo"
-  data-position="bottom"
-></script>
+  <div class="cover">
+    <h1 class="wordmark">walserfly</h1>
+    <div class="rule"></div>
+    <p class="tagline">FPV- &amp; Drohnenaufnahmen aus dem Kleinwalsertal</p>
 
-<!-- ===== HERO SECTION ===== -->
-<section class="hero">
-  <!-- Thumbnail-Mosaik Hintergrund -->
-  <div class="hero-mosaic" id="heroMosaic"></div>
+    <div class="actions">
+      <a class="btn btn-insta" href="https://www.instagram.com/walserfly/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/>
+        </svg>
+        <span>Instagram</span>
+      </a>
 
-  <div class="hero-content">
-    <h1>FPV & Drohnenaufnahmen<br>Kleinwalsertal</h1>
-    <p class="hero-subtitle">
-      Kostenlose 4K-Aufnahmen aus den Alpen. Lizenzfrei für kommerzielle Nutzung.
-    </p>
-
-    <div class="hero-stats">
-      <div class="stat">
-        <span class="stat-number" id="totalVideoCount">170+</span>
-        <span class="stat-label">Videos</span>
-      </div>
-      <div class="stat">
-        <span class="stat-number">4K</span>
-        <span class="stat-label">Qualität</span>
-      </div>
-      <div class="stat">
-        <span class="stat-number">100%</span>
-        <span class="stat-label">Kostenlos</span>
-      </div>
+      <button class="btn btn-ghost" type="button" id="openInquiry">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.4-8 4.6-8-4.6V6l8 4.6L20 6v2.4z"/>
+        </svg>
+        <span>Anfrage</span>
+      </button>
     </div>
-
-    <a href="#seasons" class="hero-cta">
-      <span>Videos entdecken</span>
-      <span>↓</span>
-    </a>
   </div>
-</section>
+</main>
 
-<!-- ===== SEASONS SECTION ===== -->
-<section id="seasons" class="seasons-section">
-  <div class="section-header">
-    <h2>Videos nach Jahreszeiten</h2>
-    <p>Entdecke das Kleinwalsertal in allen vier Jahreszeiten</p>
-  </div>
+<div class="legal">
+  <span>&copy; <span id="year">2026</span> walserfly</span>
+  <span class="sep">·</span>
+  <a href="impressum.html">Impressum</a>
+  <span class="sep">·</span>
+  <a href="datenschutz.html">Datenschutz</a>
+</div>
 
-  <div class="seasons-grid">
-    
-    <!-- Winter -->
-    <a href="winter.html" class="season-card winter">
-      <img src="https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?w=800" alt="Winter FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy" data-season="winter">
-      <div class="season-content">
-        <span class="season-icon">❄️</span>
-        <h3 class="season-title">Winter</h3>
-        <p class="season-description">Verschneite Gipfel, Schneeflocken, winterliche Stille</p>
-        <p class="season-count" data-count="winter">Videos</p>
-        <span class="season-link">Videos ansehen →</span>
+<!-- ===== ANFRAGE ===== -->
+<div class="modal" id="inquiryModal" role="dialog" aria-modal="true" aria-labelledby="inquiryTitle">
+  <div class="modal-card">
+    <button class="modal-close" type="button" id="closeInquiry" aria-label="Schließen">&times;</button>
+    <h2 id="inquiryTitle">Anfrage</h2>
+    <p class="hint">Aufnahmen für dein Projekt, eine Zusammenarbeit oder eine Frage? Schreib mir kurz – ich melde mich.</p>
+
+    <form id="inquiryForm" action="https://formspree.io/f/mvgwndgg" method="POST">
+      <input type="hidden" name="_subject" value="Anfrage über walserfly.com">
+      <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <div class="field">
+        <label for="f-name">Name</label>
+        <input type="text" id="f-name" name="name" required autocomplete="name">
       </div>
-    </a>
 
-    <!-- Frühling -->
-    <a href="fruehling.html" class="season-card spring">
-      <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800" alt="Frühling FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy" data-season="fruehling">
-      <div class="season-content">
-        <span class="season-icon">🌱</span>
-        <h3 class="season-title">Frühling</h3>
-        <p class="season-description">Erwachende Natur, schmelzender Schnee, erste Blüten</p>
-        <p class="season-count" data-count="fruehling">Videos</p>
-        <span class="season-link">Videos ansehen →</span>
+      <div class="field">
+        <label for="f-mail">E-Mail</label>
+        <input type="email" id="f-mail" name="email" required autocomplete="email">
       </div>
-    </a>
 
-    <!-- Sommer -->
-    <a href="sommer.html" class="season-card summer">
-      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" alt="Sommer FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy" data-season="sommer">
-      <div class="season-content">
-        <span class="season-icon">☀️</span>
-        <h3 class="season-title">Sommer</h3>
-        <p class="season-description">Grüne Almen, kristallklare Bergseen, endlose Sommertage</p>
-        <p class="season-count" data-count="sommer">Videos</p>
-        <span class="season-link">Videos ansehen →</span>
+      <div class="field">
+        <label for="f-msg">Nachricht</label>
+        <textarea id="f-msg" name="message" required></textarea>
       </div>
-    </a>
 
-    <!-- Herbst -->
-    <a href="herbst.html" class="season-card autumn">
-      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" alt="Herbst FPV Drohnenvideos Kleinwalsertal" class="season-image" loading="lazy" data-season="herbst">
-      <div class="season-content">
-        <span class="season-icon">🍁</span>
-        <h3 class="season-title">Herbst</h3>
-        <p class="season-description">Goldene Wälder, mystischer Nebel, warme Farben</p>
-        <p class="season-count" data-count="herbst">Videos</p>
-        <span class="season-link">Videos ansehen →</span>
-      </div>
-    </a>
+      <button class="btn btn-submit" type="submit" id="submitBtn">Absenden</button>
+    </form>
 
-    <!-- KI -->
-    <a href="ki.html" class="season-card ai">
-      <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800" alt="KI-optimierte FPV Drohnenvideos" class="season-image" loading="lazy" data-season="ki">
-      <div class="season-content">
-        <span class="season-icon">🤖</span>
-        <h3 class="season-title">KI</h3>
-        <p class="season-description">KI-optimiert & AI-enhanced Aufnahmen</p>
-        <p class="season-count" data-count="ki">Videos</p>
-        <span class="season-link">Videos ansehen →</span>
-      </div>
-    </a>
+    <div class="form-status" id="formStatus"></div>
 
-  </div>
-</section>
-
-<!-- ===== SEO CONTENT ===== -->
-<section class="seo-accordion">
-  <div class="seo-toggle">
-    <button class="seo-toggle-btn" onclick="toggleSeoContent()">
-      Mehr über FPV & Drohnenaufnahmen erfahren ↓
-    </button>
-  </div>
-  
-  <div class="seo-content" id="seoContent">
-    <h3>Über walserfly – FPV & Drohnenaufnahmen aus dem Kleinwalsertal</h3>
-    <p>
-      Das <strong>Kleinwalsertal in Vorarlberg, Österreich</strong> gehört zu den spektakulärsten Alpentälern Europas. 
-      Mit seinen markanten Gipfeln wie dem Ifen (2.230m), Walmendinger Horn (1.990m) und der Kanzelwand bietet das Tal 
-      perfekte Bedingungen für atemberaubende <strong>FPV-Drohnenaufnahmen und professionelle Drohnenvideos</strong>.
-    </p>
-
-    <h3>Was sind FPV-Drohnen?</h3>
-    <p>
-      <strong>FPV steht für "First Person View"</strong> – der Pilot steuert die Drohne über eine Live-Videoübertragung 
-      in einer FPV-Brille. Im Gegensatz zu klassischen Kameradrohnen ermöglichen FPV-Drohnen dynamische, filmische 
-      Flugmanöver durch enge Passagen, schnelle Richtungswechsel und dramatische Perspektiven. Neben FPV-Racing-Drohnen 
-      nutze ich auch klassische Drohnen für stabilere, weitwinklige Aufnahmen.
-    </p>
-
-    <h3>Kostenlose Nutzung & Lizenz</h3>
-    <p>
-      Alle <strong><span id="seoVideoCount">170+</span> Videos sind kostenlos und lizenzfrei</strong> für private und kommerzielle Projekte nutzbar. 
-      Einzige Bedingung: Namensnennung <strong>@walserfly</strong> oder Link zu walserfly.com. 
-      Perfekt für Social Media, YouTube, Websites, Werbung, Dokumentationen und kreative Projekte.
-    </p>
-
-    <h3>Locations im Kleinwalsertal</h3>
-    <ul>
-      <li><strong>Ifen (2.230m):</strong> Dramatische Gottesackerwände, oft mit Wolkenmeer</li>
-      <li><strong>Walmendinger Horn (1.990m):</strong> Sanfte Gipfel, perfekt für Sonnenaufgänge</li>
-      <li><strong>Kanzelwand:</strong> Grenzgipfel zwischen Deutschland und Österreich</li>
-      <li><strong>Schwarzwassertal:</strong> Ruhige Waldflüge, mystische Stimmung</li>
-      <li><strong>Heuberggrat:</strong> Schmaler Kamm mit spektakulären Tiefblicken</li>
-    </ul>
-
-    <h3>Technische Details</h3>
-    <p>
-      Aufgenommen mit professionellen FPV-Racing-Drohnen und Kameradrohnen, ausgestattet mit 4K-Kameras (GoPro Hero 11/12, DJI). 
-      Videolängen: 30 Sekunden bis 3 Minuten. Formate: 9:16 (Vertical) und 16:9 (Horizontal).
+    <p class="form-note">
+      Lieber direkt? <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
+      Mit dem Absenden stimmst du der Verarbeitung deiner Angaben zur Bearbeitung der Anfrage zu
+      (<a href="datenschutz.html">Datenschutz</a>).
     </p>
   </div>
-</section>
+</div>
 
-<!-- ===== FOOTER ===== -->
-<footer>
-  <div class="footer-content">
-    
-    <div class="footer-section">
-      <h4>Jahreszeiten</h4>
-      <a href="winter.html">❄️ Winter-Videos</a>
-      <a href="fruehling.html">🌱 Frühling-Videos</a>
-      <a href="sommer.html">☀️ Sommer-Videos</a>
-      <a href="herbst.html">🍁 Herbst-Videos</a>
-      <a href="ki.html">🤖 KI-Videos</a>
-    </div>
-
-    <div class="footer-section">
-      <h4>Informationen</h4>
-      <a href="impressum.html">Impressum</a>
-      <a href="datenschutz.html">Datenschutz</a>
-    </div>
-
-    <div class="footer-section">
-      <h4>Kontakt</h4>
-      <a href="/cdn-cgi/l/email-protection#1b6c7a77687e697d77625b7c767a727735787476">📧 E-Mail</a>
-      <a href="https://instagram.com/walserfly" target="_blank" rel="noopener">📱 Instagram</a>
-      <a href="https://paypal.me/walserfly" target="_blank" rel="noopener">💶 Spende</a>
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    <p>© 2025 walserfly.com – FPV & Drohnenaufnahmen aus dem Kleinwalsertal</p>
-  </div>
-</footer>
-
-<!-- Back to Top -->
-<button id="backToTop" onclick="scrollToTop()" aria-label="Zurück nach oben">↑</button>
-
-<!-- Instagram Button -->
-<a href="https://www.instagram.com/walserfly/" class="insta-btn-fixed" target="_blank" rel="noopener" aria-label="Instagram">
-  <svg viewBox="0 0 24 24" class="insta-icon-fixed">
-    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/>
-  </svg>
-</a>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-<!-- Season Covers (auto-generiert von Vimeo Sync) -->
-<script src="season-covers.js"></script>
+<!-- Eingefrorener Video-Bestand – dient nur noch als Bildquelle fuer das Mosaik -->
 <script src="videos-config.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  var mosaic = document.getElementById('heroMosaic');
-  
+(function () {
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---- Mosaik aufbauen ---- */
+  var mosaic = document.getElementById('mosaic');
+
   if (window.VIDEOS && mosaic) {
-    var allIds = [];
-    ['winter', 'fruehling', 'sommer', 'herbst', 'ki'].forEach(function(cat) {
-      if (window.VIDEOS[cat]) {
-        window.VIDEOS[cat].forEach(function(v) {
-          var vid = v.id || v.url.split('/').pop();
-          if (vid) allIds.push(vid);
-        });
-      }
+    var ids = [];
+    ['winter', 'fruehling', 'sommer', 'herbst', 'ki'].forEach(function (cat) {
+      (window.VIDEOS[cat] || []).forEach(function (v) {
+        var id = v.id || (v.url ? v.url.split('/').pop() : '');
+        if (id) ids.push(id);
+      });
     });
 
-    if (allIds.length > 0) {
-      // Mische zufällig
-      for (var i = allIds.length - 1; i > 0; i--) {
+    if (ids.length) {
+      for (var i = ids.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
-        var tmp = allIds[i]; allIds[i] = allIds[j]; allIds[j] = tmp;
+        var tmp = ids[i]; ids[i] = ids[j]; ids[j] = tmp;
       }
 
-      var cols = window.innerWidth <= 600 ? 6 : window.innerWidth <= 900 ? 9 : window.innerWidth <= 1400 ? 12 : 15;
-      var rows = 6;
-      var needed = cols * rows;
+      var w = window.innerWidth;
+      var cols = w <= 600 ? 6 : w <= 900 ? 9 : w <= 1400 ? 12 : 15;
+      var needed = cols * 6;
 
-      while (allIds.length < needed) allIds = allIds.concat(allIds);
-      allIds = allIds.slice(0, needed);
+      while (ids.length < needed) ids = ids.concat(ids);
+      ids = ids.slice(0, needed);
 
-      var fragment = document.createDocumentFragment();
-      var loadCount = 0;
+      var frag = document.createDocumentFragment();
+      var loaded = 0;
+      var reveal = function () { if (++loaded >= 10) mosaic.classList.add('loaded'); };
 
-      allIds.forEach(function(vid) {
+      ids.forEach(function (id) {
         var img = document.createElement('img');
-        // Maximale Qualität (1280px)
-        img.src = 'https://vumbnail.com/' + vid + '.jpg';
+        img.src = 'https://vumbnail.com/' + id + '.jpg';
         img.alt = '';
         img.loading = 'lazy';
         img.decoding = 'async';
-        img.onload = function() { loadCount++; if (loadCount >= 10) mosaic.classList.add('loaded'); };
-        img.onerror = function() { this.style.background = '#1a1a1a'; loadCount++; if (loadCount >= 10) mosaic.classList.add('loaded'); };
-        fragment.appendChild(img);
+        img.onload = reveal;
+        img.onerror = function () { this.style.background = '#1a1a1a'; reveal(); };
+        frag.appendChild(img);
       });
 
-      mosaic.appendChild(fragment);
-      setTimeout(function() { mosaic.classList.add('loaded'); }, 2000);
+      mosaic.appendChild(frag);
+      setTimeout(function () { mosaic.classList.add('loaded'); }, 2000);
     }
   }
 
-  // Season Covers
-  if (window.SEASON_COVERS) {
-    document.querySelectorAll('.season-image[data-season]').forEach(function(img) {
-      var season = img.getAttribute('data-season');
-      if (window.SEASON_COVERS[season]) img.src = window.SEASON_COVERS[season];
-    });
+  /* ---- Anfrage-Dialog ---- */
+  var modal    = document.getElementById('inquiryModal');
+  var openBtn  = document.getElementById('openInquiry');
+  var closeBtn = document.getElementById('closeInquiry');
+  var form     = document.getElementById('inquiryForm');
+  var status   = document.getElementById('formStatus');
+  var submit   = document.getElementById('submitBtn');
+
+  function openModal() {
+    modal.classList.add('open');
+    setTimeout(function () { document.getElementById('f-name').focus(); }, 60);
   }
 
-  // Dynamic Video Count
-  if (window.VIDEOS) {
-    var total = 0;
-    ['winter', 'fruehling', 'sommer', 'herbst', 'ki'].forEach(function(cat) {
-      var count = window.VIDEOS[cat] ? window.VIDEOS[cat].length : 0;
-      total += count;
-      
-      // Update season card count
-      var countEl = document.querySelector('[data-count="' + cat + '"]');
-      if (countEl && count > 0) countEl.textContent = count + '+ Videos';
-    });
-    
-    // Update hero total count
-    var totalEl = document.getElementById('totalVideoCount');
-    if (totalEl && total > 0) totalEl.textContent = total + '+';
-    
-    // Update SEO section count
-    var seoEl = document.getElementById('seoVideoCount');
-    if (seoEl && total > 0) seoEl.textContent = total + '+';
-  }
-});
-</script>
-<script>
-// Mobile Menu Toggle
-function toggleMobileMenu() {
-  document.getElementById('navLinks').classList.toggle('active');
-}
+  function closeModal() { modal.classList.remove('open'); }
 
-// SEO Content Toggle
-function toggleSeoContent() {
-  const content = document.getElementById('seoContent');
-  content.classList.toggle('expanded');
-}
-
-// Back to Top
-const backToTop = document.getElementById('backToTop');
-
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) {
-    backToTop.classList.add('show');
-  } else {
-    backToTop.classList.remove('show');
-  }
-});
-
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// Smooth Scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
   });
-});
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    status.className = 'form-status';
+    status.textContent = '';
+    submit.disabled = true;
+    submit.textContent = 'Wird gesendet …';
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function (res) {
+      if (!res.ok) throw new Error('send failed');
+      form.style.display = 'none';
+      status.className = 'form-status ok';
+      status.textContent = 'Danke! Deine Anfrage ist angekommen – ich melde mich.';
+      if (window.gtag) gtag('event', 'anfrage_gesendet');
+    }).catch(function () {
+      status.className = 'form-status error';
+      status.innerHTML = 'Das hat leider nicht geklappt. Schreib mir bitte direkt an <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a>.';
+    }).then(function () {
+      submit.disabled = false;
+      submit.textContent = 'Absenden';
+    });
+  });
+})();
 </script>
 
 </body>

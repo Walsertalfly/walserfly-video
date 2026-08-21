@@ -15,6 +15,18 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 from datetime import datetime
 
+# EINGEFROREN (21.08.2026)
+# ------------------------
+# walserfly.com ist eine reine Deckseite: keine Videoseiten, keine Downloads.
+# videos-config.js dient nur noch als Bildquelle fuer das Mosaik der Startseite
+# und soll sich nicht mehr veraendern. Der Sync bricht deshalb sofort ab.
+# Wieder einschalten: FROZEN = False (bzw. Umgebungsvariable UNFREEZE=1 setzen).
+FROZEN = os.environ.get("UNFREEZE") != "1"
+
+if FROZEN:
+    print("Sync eingefroren - videos-config.js bleibt unveraendert.")
+    sys.exit(0)
+
 VIMEO_TOKEN = os.environ.get("VIMEO_TOKEN", "")
 CONFIG_FILE = "videos-config.js"
 COVERS_FILE = "season-covers.js"
