@@ -17,7 +17,7 @@
 
   <!-- SEO -->
   <title>walserfly | FPV &amp; Drohnenaufnahmen aus dem Kleinwalsertal</title>
-  <meta name="description" content="walserfly – FPV- und Drohnenaufnahmen aus dem Kleinwalsertal. Aktuelle Aufnahmen auf Instagram, Anfragen direkt per Formular.">
+  <meta name="description" content="walserfly – FPV- und Drohnenaufnahmen aus dem Kleinwalsertal. Aktuelle Aufnahmen auf Instagram.">
   <meta name="author" content="walserfly">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://www.walserfly.com/">
@@ -270,140 +270,14 @@
 
     .legal .sep { opacity: .35; }
 
-    /* ===== ANFRAGE-DIALOG ===== */
-    .modal {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: rgba(0,0,0,.72);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      overflow-y: auto;
-    }
-
-    .modal.open { display: flex; }
-
-    .modal-card {
-      position: relative;
-      width: 100%;
-      max-width: 460px;
-      background: #101317;
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 18px;
-      padding: 34px 30px 30px;
-      box-shadow: 0 30px 80px rgba(0,0,0,.7);
-      animation: fadeUp .35s ease both;
-      text-align: left;
-    }
-
-    .modal-card h2 {
-      font-size: 1.4rem;
-      font-weight: 400;
-      letter-spacing: .04em;
-      margin-bottom: 6px;
-    }
-
-    .modal-card .hint {
-      font-size: .88rem;
-      color: var(--muted);
-      margin-bottom: 22px;
-      line-height: 1.5;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 12px;
-      right: 14px;
-      background: none;
-      border: 0;
-      color: rgba(255,255,255,.55);
-      font-size: 1.6rem;
-      line-height: 1;
-      cursor: pointer;
-      padding: 6px;
-    }
-
-    .modal-close:hover { color: #fff; }
-
-    .field { margin-bottom: 14px; }
-
-    .field label {
-      display: block;
-      font-size: .78rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .field input,
-    .field textarea {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      color: var(--ink);
-      font-family: inherit;
-      font-size: .95rem;
-      transition: border-color .2s ease, background .2s ease;
-    }
-
-    .field input:focus,
-    .field textarea:focus {
-      outline: none;
-      border-color: rgba(255,255,255,.45);
-      background: rgba(255,255,255,.09);
-    }
-
-    .field textarea { resize: vertical; min-height: 108px; }
-
-    .hp { position: absolute; left: -9999px; opacity: 0; }
-
-    .btn-submit {
-      width: 100%;
-      justify-content: center;
-      margin-top: 6px;
-      color: #0b0d10;
-      background: #f2f4f6;
-    }
-
-    .btn-submit:hover { transform: translateY(-2px); background: #fff; }
-    .btn-submit[disabled] { opacity: .6; cursor: default; transform: none; }
-
-    .form-note {
-      margin-top: 16px;
-      font-size: .78rem;
-      color: rgba(255,255,255,.45);
-      line-height: 1.6;
-    }
-
-    .form-note a { color: rgba(255,255,255,.7); }
-
-    .form-status {
-      display: none;
-      margin-top: 16px;
-      padding: 14px 16px;
-      border-radius: 10px;
-      font-size: .9rem;
-      line-height: 1.5;
-    }
-
-    .form-status.ok    { display: block; background: rgba(46,160,90,.14); border: 1px solid rgba(46,160,90,.4); color: #9be3b8; }
-    .form-status.error { display: block; background: rgba(220,39,67,.14); border: 1px solid rgba(220,39,67,.4); color: #ffb3bf; }
 
     @media (max-width: 480px) {
       .btn { padding: 14px 24px; font-size: .95rem; }
       .actions { gap: 10px; }
-      .modal-card { padding: 30px 22px 24px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .mosaic, .cover, .modal-card { animation: none; }
+      .mosaic, .cover { animation: none; }
       .btn { transition: none; }
     }
   </style>
@@ -426,12 +300,6 @@
         <span>@walserfly</span>
       </a>
 
-      <button class="btn btn-ghost" type="button" id="openInquiry">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.4-8 4.6-8-4.6V6l8 4.6L20 6v2.4z"/>
-        </svg>
-        <span>Anfrage</span>
-      </button>
     </div>
   </div>
 </main>
@@ -442,45 +310,6 @@
   <a href="impressum.html">Impressum</a>
   <span class="sep">·</span>
   <a href="datenschutz.html">Datenschutz</a>
-</div>
-
-<!-- ===== ANFRAGE ===== -->
-<div class="modal" id="inquiryModal" role="dialog" aria-modal="true" aria-labelledby="inquiryTitle">
-  <div class="modal-card">
-    <button class="modal-close" type="button" id="closeInquiry" aria-label="Schließen">&times;</button>
-    <h2 id="inquiryTitle">Anfrage</h2>
-    <p class="hint">Aufnahmen für dein Projekt, eine Zusammenarbeit oder eine Frage? Schreib mir kurz – ich melde mich.</p>
-
-    <form id="inquiryForm" action="https://formspree.io/f/mvgwndgg" method="POST">
-      <input type="hidden" name="_subject" value="Anfrage über walserfly.com">
-      <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-      <div class="field">
-        <label for="f-name">Name</label>
-        <input type="text" id="f-name" name="name" required autocomplete="name">
-      </div>
-
-      <div class="field">
-        <label for="f-mail">E-Mail</label>
-        <input type="email" id="f-mail" name="email" required autocomplete="email">
-      </div>
-
-      <div class="field">
-        <label for="f-msg">Nachricht</label>
-        <textarea id="f-msg" name="message" required></textarea>
-      </div>
-
-      <button class="btn btn-submit" type="submit" id="submitBtn">Absenden</button>
-    </form>
-
-    <div class="form-status" id="formStatus"></div>
-
-    <p class="form-note">
-      Lieber direkt? <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a><br>
-      Mit dem Absenden stimmst du der Verarbeitung deiner Angaben zur Bearbeitung der Anfrage zu
-      (<a href="datenschutz.html">Datenschutz</a>).
-    </p>
-  </div>
 </div>
 
 <!-- Eingefrorener Video-Bestand – dient nur noch als Bildquelle fuer das Mosaik -->
@@ -577,53 +406,6 @@
     });
   }
 
-  /* ---- Anfrage-Dialog ---- */
-  var modal    = document.getElementById('inquiryModal');
-  var openBtn  = document.getElementById('openInquiry');
-  var closeBtn = document.getElementById('closeInquiry');
-  var form     = document.getElementById('inquiryForm');
-  var status   = document.getElementById('formStatus');
-  var submit   = document.getElementById('submitBtn');
-
-  function openModal() {
-    modal.classList.add('open');
-    setTimeout(function () { document.getElementById('f-name').focus(); }, 60);
-  }
-
-  function closeModal() { modal.classList.remove('open'); }
-
-  openBtn.addEventListener('click', openModal);
-  closeBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-  });
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    status.className = 'form-status';
-    status.textContent = '';
-    submit.disabled = true;
-    submit.textContent = 'Wird gesendet …';
-
-    fetch(form.action, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
-    }).then(function (res) {
-      if (!res.ok) throw new Error('send failed');
-      form.style.display = 'none';
-      status.className = 'form-status ok';
-      status.textContent = 'Danke! Deine Anfrage ist angekommen – ich melde mich.';
-      if (window.gtag) gtag('event', 'anfrage_gesendet');
-    }).catch(function () {
-      status.className = 'form-status error';
-      status.innerHTML = 'Das hat leider nicht geklappt. Schreib mir bitte direkt an <a href="mailto:walserfly@gmail.com">walserfly@gmail.com</a>.';
-    }).then(function () {
-      submit.disabled = false;
-      submit.textContent = 'Absenden';
-    });
-  });
 })();
 </script>
 
