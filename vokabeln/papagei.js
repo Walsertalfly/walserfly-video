@@ -14,6 +14,28 @@
 
   const ROT = '#e8342a', ROT_D = '#c2281f', GELB = '#ffc61a', BLAU = '#1769d4', BLAU_D = '#0f4fa8';
 
+  // ------------------------------------------------------------ Die zehn Papageien
+  // Einer je Insel. Stufe 1 ist ein schlichter kleiner Sittich, Stufe 10 der
+  // Himmelskoenig. Jeder traegt die Farben seiner Insel.
+  // haube: Federhaube · kragen: Halskrause · schild: Brustschild · schweif: Prachtfedern
+  // funken: Leuchtpunkte · krone: Krone · schwingen: ausgebreitete Fluegel · aura: Lichtkranz
+  const ARTEN = [
+    { stufe:1,  id:'sittich',    name:'Sittich',          haupt:'#4ec97a', dunkel:'#2a9a52', hell:'#b7f0cb', zier:'#ffe066', gross:0.82 },
+    { stufe:2,  id:'muschel',    name:'Muschelsittich',   haupt:'#2ec4b6', dunkel:'#149c92', hell:'#aef1ea', zier:'#ffd166', gross:0.88, haube:1 },
+    { stufe:3,  id:'sonnenara',  name:'Sonnenara',        haupt:'#ffc247', dunkel:'#e08a14', hell:'#fff0c2', zier:'#ff7a45', gross:0.94, haube:1 },
+    { stufe:4,  id:'nachtara',   name:'Nachtara',         haupt:'#8b6cf0', dunkel:'#5633c0', hell:'#ded0ff', zier:'#ffd166', gross:1.00, haube:2, kragen:1 },
+    { stufe:5,  id:'sandara',    name:'Wüstenara',        haupt:'#e8b06a', dunkel:'#b87c2e', hell:'#ffe9c9', zier:'#2ec4b6', gross:1.00, haube:2, kragen:1, schweif:1 },
+    { stufe:6,  id:'korallara',  name:'Korallenara',      haupt:'#ff5fa2', dunkel:'#d62a75', hell:'#ffd3e6', zier:'#ffe066', gross:1.04, haube:2, kragen:1, schweif:1, schild:1 },
+    { stufe:7,  id:'eisara',     name:'Eiskronen-Ara',    haupt:'#79d2ff', dunkel:'#2a86c4', hell:'#dff3ff', zier:'#ffffff', gross:1.06, haube:3, kragen:1, schweif:2, schild:1, funken:1 },
+    { stufe:8,  id:'schattara',  name:'Schattenara',      haupt:'#6e4ad6', dunkel:'#38206e', hell:'#c9b3ff', zier:'#8ef0d4', gross:1.08, haube:3, kragen:2, schweif:2, schild:1, funken:1 },
+    { stufe:9,  id:'feuerara',   name:'Drachenara',       haupt:'#ff6a2a', dunkel:'#b32a08', hell:'#ffd0a8', zier:'#ffe066', gross:1.10, haube:3, kragen:2, schweif:3, schild:2, funken:2, krone:1 },
+    { stufe:10, id:'himmelsara', name:'Himmelskönig',     haupt:'#ffe9a8', dunkel:'#d4a311', hell:'#fffaf0', zier:'#79d2ff', gross:1.14, haube:3, kragen:2, schweif:3, schild:2, funken:3, krone:2, schwingen:1, aura:1 }
+  ];
+  function artVon(stufe){
+    const i = Math.max(1, Math.min(ARTEN.length, stufe || 3)) - 1;
+    return ARTEN[i];
+  }
+
   // ---------------------------------------------------------------- Zustände
   function zustandVon(p){
     if(p.tageWeg >= 5) return 'amBoden';
@@ -24,7 +46,7 @@
   }
 
   // ---------------------------------------------------------------- Kopf
-  function kopfTeil(z){
+  function kopfTeil(z, A){
     const liegt = z === 'amBoden';
 
     const auge =
@@ -46,18 +68,34 @@
           : '<path d="M48 75 q12 7 21 2 q-11 -1 -16 -7 Z" fill="#2e2721"/>')
       + '<circle cx="55" cy="52" r="2.2" fill="#6b5b3e"/>';
 
-    return '<circle cx="74" cy="52" r="31" fill="' + ROT + '"/>'
-      + '<path d="M74 21 q22 2 29 22 q-14 -10 -29 -9 Z" fill="' + ROT_D + '" opacity=".4"/>'
+    // Federhaube, Krone und Schmuck je nach Art
+    const haube = !A.haube ? '' :
+      A.haube === 1 ? '<path d="M70 22 q4 -14 14 -16 q-2 10 -4 16 Z" fill="' + A.dunkel + '"/>' :
+      A.haube === 2 ? '<path d="M66 22 q0 -16 10 -20 q0 10 -2 18 Z M76 20 q6 -16 16 -16 q-4 12 -8 18 Z" fill="' + A.dunkel + '"/>' :
+        '<path d="M62 24 q-4 -20 6 -26 q2 12 2 20 Z M72 19 q2 -22 12 -24 q0 14 -2 22 Z M84 20 q8 -18 18 -16 q-6 14 -12 20 Z" fill="' + A.dunkel + '"/>'
+        + '<path d="M72 19 q2 -18 10 -21" stroke="' + A.zier + '" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+    const krone = !A.krone ? '' :
+      '<g transform="translate(74,14)"><path d="M-16 6 L-12 -10 L-5 0 L0 -14 L5 0 L12 -10 L16 6 Z" fill="' + A.zier + '" stroke="' + A.dunkel + '" stroke-width="1.6"/>'
+      + (A.krone > 1 ? '<circle cx="0" cy="-10" r="3" fill="#fff"/><circle cx="-12" cy="-6" r="2" fill="#fff"/><circle cx="12" cy="-6" r="2" fill="#fff"/>' : '')
+      + '</g>';
+    const kragen = !A.kragen ? '' :
+      '<path d="M54 74 q22 16 44 2 q-4 12 -22 14 q-18 -2 -22 -16 Z" fill="' + A.zier + '" opacity="' + (A.kragen > 1 ? '.95' : '.8') + '"/>'
+      + (A.kragen > 1 ? '<path d="M58 80 q18 12 36 0" stroke="' + A.hell + '" stroke-width="2" fill="none"/>' : '');
+
+    return haube + krone
+      + '<circle cx="74" cy="52" r="31" fill="' + A.haupt + '"/>'
+      + '<path d="M74 21 q22 2 29 22 q-14 -10 -29 -9 Z" fill="' + A.dunkel + '" opacity=".4"/>'
       + '<path d="M60 32 q18 -8 30 4 q-6 30 -24 40 q-16 -8 -16 -24 q0 -14 10 -20 Z" fill="#fdf6ee"/>'
       + '<path d="M62 36 q12 -3 20 3 M58 46 q14 -3 22 5 M57 56 q13 -2 19 6 M58 66 q11 -1 15 6" '
       + 'stroke="#f0cfc2" stroke-width="1.6" fill="none" stroke-linecap="round"/>'
-      + auge + schnabel;
+      + auge + schnabel + kragen;
   }
 
   // ---------------------------------------------------------------- Ganzes Bild
-  function svg(p, deko){
+  function svg(p, deko, stufe){
     const z = zustandVon(p);
     deko = deko || {};
+    const A = artVon(stufe || (p && p.stufe) || 3);
     const liegt = z === 'amBoden';
     const neigung = z === 'traurig' ? 7 : z === 'schwach' ? 11 : z === 'gluecklich' ? -3 : 0;
     const huepf = z === 'gluecklich' ? 'pablo-huepf' : '';
@@ -101,23 +139,38 @@
       + '</g>' : '';
 
     // ---- Pablo ----
-    const pablo =
-      // langer Schwanz, das Kennzeichen des Aras
-        '<path d="M104 118 q46 34 62 108 q-17 -5 -28 -19 q-4 15 -11 21 q-34 -48 -42 -100 Z" fill="' + ROT_D + '"/>'
-      + '<path d="M112 128 q40 36 50 96 q-13 -7 -20 -20 q-20 -34 -36 -70 Z" fill="' + ROT + '"/>'
-      + '<path d="M126 158 q26 28 34 68 q-12 -8 -18 -20 q-9 -24 -20 -44 Z" fill="' + BLAU + '"/>'
-      + '<path d="M140 196 q12 14 16 30" stroke="' + BLAU_D + '" stroke-width="3" fill="none" stroke-linecap="round"/>'
+    // Prachtfedern im Schwanz, je hoeher die Stufe desto mehr
+    const prachtfedern = !A.schweif ? '' :
+        '<path d="M120 140 q52 40 70 118 q-10 -2 -18 -10" fill="none" stroke="' + A.zier + '" stroke-width="5" stroke-linecap="round"/>'
+      + (A.schweif > 1 ? '<path d="M126 150 q44 42 56 112" fill="none" stroke="' + A.hell + '" stroke-width="4" stroke-linecap="round" opacity=".9"/>' : '')
+      + (A.schweif > 2 ? '<path d="M132 164 q38 44 44 106" fill="none" stroke="' + A.zier + '" stroke-width="3.4" stroke-linecap="round" opacity=".8"/>'
+                       + '<circle cx="176" cy="258" r="5" fill="' + A.zier + '"/>' : '');
+    const schild = !A.schild ? '' :
+        '<path d="M62 96 q18 -8 34 2 q-2 26 -17 36 q-15 -10 -17 -38 Z" fill="' + A.zier + '" opacity=".9"/>'
+      + (A.schild > 1 ? '<path d="M70 104 q10 -4 18 2 q-2 14 -9 20 q-7 -6 -9 -22 Z" fill="' + A.hell + '"/>' : '');
+    const ausgebreitet = !A.schwingen ? '' :
+        '<path d="M70 92 q-56 -16 -62 34 q28 10 44 -4 q10 -12 18 -30 Z" fill="' + A.dunkel + '"/>'
+      + '<path d="M70 100 q-44 -8 -48 28 q22 6 34 -6 Z" fill="' + A.haupt + '"/>'
+      + '<path d="M68 110 q-32 -2 -34 20 q16 2 24 -6 Z" fill="' + A.zier + '"/>';
+
+    const pablo = ausgebreitet
+      // langer Schwanz
+      + '<path d="M104 118 q46 34 62 108 q-17 -5 -28 -19 q-4 15 -11 21 q-34 -48 -42 -100 Z" fill="' + A.dunkel + '"/>'
+      + '<path d="M112 128 q40 36 50 96 q-13 -7 -20 -20 q-20 -34 -36 -70 Z" fill="' + A.haupt + '"/>'
+      + '<path d="M126 158 q26 28 34 68 q-12 -8 -18 -20 q-9 -24 -20 -44 Z" fill="' + A.zier + '"/>'
+      + prachtfedern
       // Körper
-      + '<path d="M68 70 q-24 24 -20 58 q4 34 34 38 q32 4 42 -26 q10 -30 -6 -54 q-16 -24 -50 -16 Z" fill="' + ROT + '"/>'
-      + '<path d="M96 78 q24 16 24 54 q0 26 -14 32 q-6 -40 -10 -86 Z" fill="' + ROT_D + '" opacity=".3"/>'
-      // angelegter Flügel: rot, gelb, blau
-      + '<path d="M92 86 q30 10 32 44 q2 28 -14 38 q-20 -4 -26 -34 q-6 -30 8 -48 Z" fill="' + ROT_D + '"/>'
-      + '<path d="M99 104 q22 10 21 36 q-1 20 -11 26 q-13 -8 -15 -30 q-2 -22 5 -32 Z" fill="' + GELB + '"/>'
-      + '<path d="M105 132 q14 11 12 32 q-2 13 -9 16 q-9 -10 -9 -26 q0 -13 6 -22 Z" fill="' + BLAU + '"/>'
-      + '<path d="M103 152 q10 14 9 28" stroke="' + BLAU_D + '" stroke-width="3" fill="none" stroke-linecap="round"/>'
+      + '<path d="M68 70 q-24 24 -20 58 q4 34 34 38 q32 4 42 -26 q10 -30 -6 -54 q-16 -24 -50 -16 Z" fill="' + A.haupt + '"/>'
+      + '<path d="M96 78 q24 16 24 54 q0 26 -14 32 q-6 -40 -10 -86 Z" fill="' + A.dunkel + '" opacity=".3"/>'
+      // angelegter Flügel in drei Farbbändern
+      + '<path d="M92 86 q30 10 32 44 q2 28 -14 38 q-20 -4 -26 -34 q-6 -30 8 -48 Z" fill="' + A.dunkel + '"/>'
+      + '<path d="M99 104 q22 10 21 36 q-1 20 -11 26 q-13 -8 -15 -30 q-2 -22 5 -32 Z" fill="' + A.zier + '"/>'
+      + '<path d="M105 132 q14 11 12 32 q-2 13 -9 16 q-9 -10 -9 -26 q0 -13 6 -22 Z" fill="' + A.hell + '"/>'
+      + '<path d="M103 152 q10 14 9 28" stroke="' + A.dunkel + '" stroke-width="3" fill="none" stroke-linecap="round"/>'
       // Hals
-      + '<path d="M62 74 q-6 -18 8 -28 q16 -12 32 0 q12 10 6 30 Z" fill="' + ROT + '"/>'
-      + kopfTeil(z)
+      + '<path d="M62 74 q-6 -18 8 -28 q16 -12 32 0 q12 10 6 30 Z" fill="' + A.haupt + '"/>'
+      + schild
+      + kopfTeil(z, A)
       // Beine und Krallen
       + (liegt
           ? '<path d="M72 176 q-6 16 2 24 M88 178 q-2 16 6 22" stroke="#8a8a8a" stroke-width="6" fill="none" stroke-linecap="round"/>'
@@ -125,8 +178,19 @@
           + '<path d="M66 190 q10 6 20 0 M86 190 q10 6 20 0" stroke="#8a8a8a" stroke-width="7" fill="none" stroke-linecap="round"/>');
 
     const gruppe = liegt
-      ? '<g transform="translate(14,92) rotate(78 100 120) scale(.86)">' + pablo + '</g>'
-      : '<g class="' + huepf + '" transform="rotate(' + neigung + ' 92 150)">' + pablo + '</g>';
+      ? '<g transform="translate(14,92) rotate(78 100 120) scale(' + (0.86 * A.gross) + ')">' + pablo + '</g>'
+      : '<g class="' + huepf + '" transform="rotate(' + neigung + ' 92 150) translate(' + (100 - 100*A.gross) + ','
+        + (150 - 150*A.gross) + ') scale(' + A.gross + ')">' + pablo + '</g>';
+
+    // Leuchtpunkte und Lichtkranz der hohen Stufen
+    const funken = (!A.funken || liegt) ? '' : '<g class="pablo-funken">'
+      + [[34,60],[164,78],[28,128],[172,140],[48,36],[152,34],[18,96],[182,104]]
+          .slice(0, A.funken * 3)
+          .map(f => '<circle cx="' + f[0] + '" cy="' + f[1] + '" r="' + (1.8 + (f[0]%3)*0.5) + '" fill="' + A.zier + '"/>').join('')
+      + '</g>';
+    const aura = (!A.aura || liegt) ? '' :
+      '<circle cx="96" cy="120" r="86" fill="none" stroke="' + A.zier + '" stroke-width="3" opacity=".35"/>'
+      + '<circle cx="96" cy="120" r="74" fill="' + A.hell + '" opacity=".12"/>';
 
     const stange = liegt ? ''
       : '<path d="M26 192 H174" stroke="#a9702f" stroke-width="12" stroke-linecap="round"/>'
@@ -135,7 +199,7 @@
     return '<svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">'
       + kaefig + spiegel + leiter + glocke
       + '<ellipse cx="100" cy="236" rx="78" ry="6" fill="#e3e8df"/>'
-      + stange + federn + gruppe + napf
+      + aura + stange + federn + gruppe + funken + napf
       + '</svg>';
   }
 
@@ -200,6 +264,6 @@
     return { en:'Hello ' + du + '! Nice to see you.', de:'Hallo ' + du + '! Schön, dich zu sehen.' };
   }
 
-  window.PAPAGEI = { NAME: NAME, svg: svg, SHOP: SHOP, neuBerechnen: neuBerechnen,
+  window.PAPAGEI = { NAME: NAME, ARTEN: ARTEN, artVon: artVon, svg: svg, SHOP: SHOP, neuBerechnen: neuBerechnen,
                      zustandVon: zustandVon, spruch: spruch, PRO_STUNDE: PRO_STUNDE };
 })();

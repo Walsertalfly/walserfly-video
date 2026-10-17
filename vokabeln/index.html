@@ -59,6 +59,10 @@
   .balken em{font-style:normal;font-size:12px;color:var(--muted);width:34px;text-align:right}
   .pablo-huepf{animation:huepf 2.4s ease-in-out infinite}
   @keyframes huepf{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  .pablo-funken circle{animation:funkeln 2.6s ease-in-out infinite}
+  .pablo-funken circle:nth-child(2n){animation-delay:.8s}
+  .pablo-funken circle:nth-child(3n){animation-delay:1.6s}
+  @keyframes funkeln{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
   .pablo-glocke{animation:bimmel 3s ease-in-out infinite;transform-origin:168px 20px}
   @keyframes bimmel{0%,70%,100%{transform:rotate(0)}80%{transform:rotate(9deg)}90%{transform:rotate(-9deg)}}
   .pablo-federn path{animation:feder 4s ease-in-out infinite}
@@ -74,6 +78,17 @@
   .shop button.kannNicht{opacity:.45}
   .shop button.gekauft{border-color:var(--gruen);background:#eefbee}
   @media (max-width:380px){ .pablo-links{width:104px;flex-basis:104px} }
+  .weltbild{border-radius:14px;overflow:hidden}
+  .weltbild svg{width:100%;height:auto;display:block}
+  .weltkarte .rname{font-size:3.4px;font-weight:800;fill:#fff}
+  .weltkarte .rstufe{font-size:2.6px;fill:#b9cbe4}
+  .weltkarte .region.zu .rname{fill:#8ea3bd}
+  .weltkarte .region.frei{cursor:pointer}
+  .weltkarte .region.hier .rname{fill:#ffe066}
+  .sammlung{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:8px}
+  .sammlung div{text-align:center;font-size:10.5px;line-height:1.15;color:var(--muted)}
+  .sammlung svg{width:100%;height:auto;display:block}
+  .sammlung .zu{opacity:.25;filter:grayscale(1)}
   .zurueck{background:linear-gradient(135deg,#eefbee,#fff)}
   .zurueck h2{color:var(--gruen2)}
   .modus{display:flex;gap:8px;margin-bottom:14px}
@@ -222,7 +237,23 @@
       <table id="rang"></table>
       <p class="muted">Vorerst nur auf diesem Gerät. Eine gemeinsame Rangliste für die Klasse kommt später.</p>
     </div>
+    <button class="sek" id="btnWelt">🗺️ Weltkarte ansehen</button>
     <button class="sek" id="btnReset">Alles zurücksetzen</button>
+  </section>
+
+  <!-- WELTKARTE -->
+  <section id="sWelt" class="screen">
+    <div class="card">
+      <h2>Die Welt von Vokabel-Land</h2>
+      <div class="weltbild" id="weltBild"></div>
+      <p class="muted" id="weltText"></p>
+    </div>
+    <div class="card">
+      <h2>Deine Papageien</h2>
+      <p class="muted">Auf jeder Insel wartet ein eigener Papagei. Je weiter du kommst, desto prächtiger.</p>
+      <div class="sammlung" id="sammlung"></div>
+    </div>
+    <button class="sek" id="btnWeltZu">Zurück</button>
   </section>
 
   <!-- AUFGABE -->
@@ -310,6 +341,7 @@
 <script src="bilder.js"></script>
 <script src="emojis.js"></script>
 <script src="papagei.js"></script>
+<script src="welt.js"></script>
 <script>
 (function(){
   const LEVEL = window.VOKABEL_LEVEL || [];
@@ -555,7 +587,8 @@
   function zeigePablo(){
     if(!window.PAPAGEI) return;
     const p = pabloStand();
-    $('pabloBild').innerHTML = PAPAGEI.svg(p, p.deko || {});
+    const insel = (window.VOKABEL_WELT || []).find(r => r.id === MEINE_INSEL);
+    $('pabloBild').innerHTML = PAPAGEI.svg(p, p.deko || {}, insel ? insel.papagei : 3);
     setzeSpruch(PAPAGEI.spruch(p, S.name));
     [['Futter', p.futter], ['Wasser', p.wasser], ['Laune', p.laune]].forEach(([was, wert])=>{
       $('b'+was).style.width = wert + '%';
@@ -647,6 +680,33 @@
     $('btnWeiterUeben').textContent = (sterneVon(i) ? 'Weiter üben: ' : 'Jetzt dran: ') +
       LEVEL[i].name.replace(/^Level \d+ · /, 'Level '+(i+1)+' – ');
     $('btnWeiterUeben').onclick = ()=>starteLevel(i);
+  }
+
+  // ---------- Weltkarte ----------
+  // Lios Buch ist MORE! 1 (Workbook, Helbling), also erstes Lernjahr = 5. Schulstufe.
+  // Seine Woerter liegen darum in der Sonnenbucht. Die anderen Inseln warten auf ihre Listen.
+  const MEINE_INSEL = 'sonnen';
+  function offeneInseln(){
+    const offen = {};
+    (window.VOKABEL_WELT || []).forEach(r => { if(r.id === MEINE_INSEL) offen[r.id] = true; });
+    return offen;
+  }
+  function zeigeWelt(){
+    if(!window.WELTKARTE) return;
+    const offen = offeneInseln();
+    $('weltBild').innerHTML = WELTKARTE.svg(offen, MEINE_INSEL);
+    const hier = (window.VOKABEL_WELT || []).find(r => r.id === MEINE_INSEL);
+    $('weltText').textContent = hier
+      ? 'Du bist hier: ' + hier.name + ', ' + hier.stufe + '. ' + hier.was
+        + '. Die anderen Inseln bekommen ihre Wörter nach und nach.'
+      : '';
+    const gut = { futter:95, wasser:95, laune:95, tageWeg:0 };
+    $('sammlung').innerHTML = (window.VOKABEL_WELT || []).map(r => {
+      const frei = !!offen[r.id];
+      const art = PAPAGEI.artVon(r.papagei);
+      return '<div class="' + (frei ? '' : 'zu') + '">' + PAPAGEI.svg(gut, {}, r.papagei)
+        + '<div>' + (frei ? art.name : '🔒') + '</div></div>';
+    }).join('');
   }
 
   function setzeModus(m){
@@ -765,6 +825,8 @@
   $('pabloSpruch').onclick = deutschZeigen;
   $('pabloDe').onclick      = deutschZeigen;
   $('pabloBild').onclick    = deutschZeigen;
+  $('btnWelt').onclick   = ()=>{ zeigeWelt(); zeige('sWelt'); window.scrollTo(0,0); };
+  $('btnWeltZu').onclick = ()=>{ zeichneKarte(); zeige('sKarte'); };
   $('btnShop').onclick = ()=>{ zeigeShop(); $('shopKarte').style.display=''; $('shopKarte').scrollIntoView({behavior:'smooth', block:'nearest'}); };
   $('btnShopZu').onclick = ()=>{ $('shopKarte').style.display='none'; };
   $('btnTon').onclick = ()=>{ S.ton = S.ton === false; speichere(); zeigeTon(); if(S.ton !== false) klang('tipp'); };

@@ -1,4 +1,7 @@
-// Vokabel-Land – Wortlisten (aus dem Workbook, Unit 2: At the wildlife park)
+// Vokabel-Land – Wortlisten
+// Quelle: MORE! 1 Workbook (Helbling Languages), Unit 2 „At the wildlife park".
+// Abgetippt sind nur die Woerter selbst. Die Erklaerungen, Eselsbruecken und Bilder
+// sind alle selbst geschrieben bzw. gezeichnet, keine Saetze aus dem Buch.
 //
 // Pro Level: name, woerter[]. Jedes Wort: de (wird gezeigt), en (muss getippt werden),
 // warum (kurze Erklaerung zur Schreibweise), esel (Eselsbruecke).
