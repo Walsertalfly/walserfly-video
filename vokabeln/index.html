@@ -36,9 +36,14 @@
   button.sek{background:#fff;color:var(--gruen2);border:2px solid var(--gruen);box-shadow:none}
   button.blau{background:var(--blau);box-shadow:0 3px 0 var(--blau2)}
   button:disabled{background:var(--grau);color:#888;box-shadow:none;cursor:default}
-  input[type=text]{width:100%;font:inherit;font-size:24px;padding:14px;border:3px solid var(--grau);border-radius:12px;
-       text-align:center;outline:none;letter-spacing:1px}
-  input[type=text]:focus{border-color:var(--blau)}
+  input[type=text], input[type=number]{
+       width:100%;display:block;font:inherit;font-size:24px;padding:14px;border:3px solid var(--grau);
+       border-radius:12px;text-align:center;outline:none;letter-spacing:1px;
+       -moz-appearance:textfield;appearance:textfield}
+  /* die kleinen Pfeilchen am Zahlenfeld weg, getippt wird mit der Tastatur */
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  input[type=text]:focus, input[type=number]:focus{border-color:var(--blau)}
   input.ok{border-color:var(--gruen);background:#eefbee}
   input.falsch{border-color:var(--rot);background:#fff1f0}
 
@@ -214,7 +219,8 @@
       <p>Wie sollen wir dich nennen? Nur ein Spitzname, kein echter Name.</p>
       <input type="text" id="inName" maxlength="16" placeholder="Spitzname" autocomplete="off">
       <p style="margin-top:14px">Und eine Zahl von 1 bis 1000, die du dir merkst:</p>
-      <input type="number" id="inZahl" min="1" max="1000" placeholder="Deine Zahl" inputmode="numeric">
+      <input type="number" id="inZahl" min="1" max="1000" step="1" placeholder="Zahl von 1 bis 1000"
+             inputmode="numeric" autocomplete="off">
       <div class="meldung" id="startMeldung"></div>
       <button id="btnStart">Los geht's</button>
       <p class="muted">Mit Spitzname und Zahl kommst du auf jedem Gerät an deinen Stand.
