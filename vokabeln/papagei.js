@@ -204,26 +204,55 @@
   }
 
   // ---------------------------------------------------------------- Shop
+  // ------------------------------------------------------------ Der Shop
+  // futter/wasser/laune = was es Henry bringt. deko = bleibt dauerhaft im Kaefig.
+  // effekt = kleine Sondervorstellung beim Essen (siehe index.html).
+  // ruf = was er dabei auf Englisch sagt.
   const SHOP = [
-    { id:'koerner', name:'Körnermischung',   bild:'🌾', preis:3,  futter:35, wasser:0,  laune:4,
-      satz:{ en:'Mmm, seeds!', de:'Mmh, Körner!' } },
-    { id:'apfel',   name:'Stück Apfel',      bild:'🍎', preis:6,  futter:50, wasser:12, laune:12,
-      satz:{ en:'An apple! My favourite.', de:'Ein Apfel! Sein Lieblingsessen.' } },
-    { id:'wasser',  name:'Frisches Wasser',  bild:'💧', preis:2,  futter:0,  wasser:60, laune:4,
-      satz:{ en:'Fresh water. Thank you!', de:'Frisches Wasser. Danke!' } },
-    { id:'saft',    name:'Fruchtsaft',       bild:'🧃', preis:7,  futter:4,  wasser:65, laune:14,
-      satz:{ en:'Juice? What a treat!', de:'Saft? Was für ein Fest!' } },
-    { id:'nuss',    name:'Nuss zum Knabbern',bild:'🥜', preis:9,  futter:28, wasser:0,  laune:20,
-      satz:{ en:'Crack! I love nuts.', de:'Knack! Ich liebe Nüsse.' } },
-    // Zubehör bleibt dauerhaft im Käfig
-    { id:'glocke',  name:'Glöckchen',        bild:'🔔', preis:18, deko:true, laune:25,
-      satz:{ en:'A bell! Ring, ring, ring!', de:'Ein Glöckchen! Kling, kling, kling!' } },
-    { id:'leiter',  name:'Kletterleiter',    bild:'🪜', preis:28, deko:true, laune:30,
-      satz:{ en:'Now I can climb!', de:'Jetzt kann ich klettern!' } },
-    { id:'spiegel', name:'Spiegel',          bild:'🪞', preis:35, deko:true, laune:35,
-      satz:{ en:'Who is that handsome bird?', de:'Wer ist dieser hübsche Vogel?' } },
-    { id:'kaefig',  name:'Großer Käfig',     bild:'🏠', preis:60, deko:true, laune:40,
-      satz:{ en:'A real home. Thank you!', de:'Ein richtiges Zuhause. Danke!' } }
+    // ---- Zum Knabbern, guenstig ----
+    { id:'koerner', name:'Körnermischung', bild:'🌾', preis:3,  futter:35, wasser:0,  laune:4,
+      satz:{ en:'Mmm, seeds!', de:'Mmh, Körner!' }, ruf:'Yummy!' },
+    { id:'wasser',  name:'Frisches Wasser', bild:'💧', preis:2, futter:0,  wasser:60, laune:4,
+      satz:{ en:'Fresh water. Thank you!', de:'Frisches Wasser. Danke!' }, ruf:'Thank you!' },
+    { id:'apfel',   name:'Stück Apfel',    bild:'🍎', preis:6,  futter:50, wasser:12, laune:12,
+      satz:{ en:'An apple! My favourite.', de:'Ein Apfel! Mein Lieblingsessen.' }, ruf:'Lovely!' },
+    { id:'banane',  name:'Banane',         bild:'🍌', preis:7,  futter:46, wasser:10, laune:14,
+      satz:{ en:'A banana! Perfect for a parrot.', de:'Eine Banane! Genau richtig für einen Papagei.' }, ruf:'Well done!' },
+    { id:'trauben', name:'Weintrauben',    bild:'🍇', preis:8,  futter:34, wasser:26, laune:16,
+      satz:{ en:'Grapes! One by one.', de:'Trauben! Eine nach der anderen.' }, ruf:'Delicious!' },
+    { id:'karotte', name:'Karotte',        bild:'🥕', preis:5,  futter:40, wasser:8,  laune:10,
+      satz:{ en:'Crunch! Good for my eyes.', de:'Knack! Gut für meine Augen.' }, ruf:'Crunchy!' },
+
+    // ---- Mit Sondervorstellung ----
+    { id:'nuss',    name:'Nuss',           bild:'🥜', preis:9,  futter:28, wasser:0,  laune:20,
+      satz:{ en:'Crack! I love nuts.', de:'Knack! Ich liebe Nüsse.' }, ruf:'Crack!', effekt:'knacken' },
+    { id:'kokos',   name:'Kokosnuss',      bild:'🥥', preis:18, futter:60, wasser:30, laune:26,
+      satz:{ en:'Watch me crack this one!', de:'Schau zu, wie ich die knacke!' }, ruf:'Crack crack!', effekt:'knacken' },
+    { id:'steak',   name:'Steak',          bild:'🥩', preis:25, futter:85, wasser:0,  laune:34,
+      satz:{ en:'Stand back. I grill it myself!', de:'Zurücktreten. Das brate ich mir selbst!' },
+      ruf:'Fire!', effekt:'feuer' },
+    { id:'chili',   name:'Chilischote',    bild:'🌶️', preis:12, futter:22, wasser:0,  laune:30,
+      satz:{ en:'Hot! Hot! Hot!', de:'Scharf! Scharf! Scharf!' }, ruf:'So hot!', effekt:'feuer' },
+    { id:'popcorn', name:'Popcorn',        bild:'🍿', preis:14, futter:30, wasser:0,  laune:28,
+      satz:{ en:'Pop! Pop! Pop!', de:'Plopp! Plopp! Plopp!' }, ruf:'Pop pop!', effekt:'huepfen' },
+    { id:'eis',     name:'Eis',            bild:'🍦', preis:16, futter:26, wasser:40, laune:32,
+      satz:{ en:'Brrr! Cold but good.', de:'Brrr! Kalt, aber gut.' }, ruf:'So cold!', effekt:'zittern' },
+    { id:'keks',    name:'Keks',           bild:'🍪', preis:10, futter:38, wasser:0,  laune:22,
+      satz:{ en:'Crumbs everywhere!', de:'Krümel überall!' }, ruf:'Yum yum!' },
+    { id:'saft',    name:'Fruchtsaft',     bild:'🧃', preis:7,  futter:4,  wasser:65, laune:14,
+      satz:{ en:'Juice? What a treat!', de:'Saft? Was für ein Fest!' }, ruf:'Thank you!' },
+    { id:'ananas',  name:'Ananas',         bild:'🍍', preis:20, futter:70, wasser:45, laune:30,
+      satz:{ en:'Pineapple! Like home.', de:'Ananas! Wie zu Hause.' }, ruf:'Wonderful!' },
+
+    // ---- Zubehör, bleibt im Käfig ----
+    { id:'glocke',  name:'Glöckchen',      bild:'🔔', preis:18, deko:true, laune:25,
+      satz:{ en:'A bell! Ring, ring, ring!', de:'Ein Glöckchen! Kling, kling, kling!' }, ruf:'Ring ring!' },
+    { id:'leiter',  name:'Kletterleiter',  bild:'🪜', preis:28, deko:true, laune:30,
+      satz:{ en:'Now I can climb!', de:'Jetzt kann ich klettern!' }, ruf:'Up we go!' },
+    { id:'spiegel', name:'Spiegel',        bild:'🪞', preis:35, deko:true, laune:35,
+      satz:{ en:'Who is that handsome bird?', de:'Wer ist dieser hübsche Vogel?' }, ruf:'Hello, handsome!' },
+    { id:'kaefig',  name:'Großer Käfig',   bild:'🏠', preis:60, deko:true, laune:40,
+      satz:{ en:'A real home. Thank you!', de:'Ein richtiges Zuhause. Danke!' }, ruf:'Home sweet home!' }
   ];
 
   // ---------------------------------------------------------------- Zeit
