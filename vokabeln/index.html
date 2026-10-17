@@ -43,6 +43,33 @@
   input.falsch{border-color:var(--rot);background:#fff1f0}
 
   /* Modus-Umschalter */
+  .meldung{display:none;border-radius:12px;padding:10px 12px;margin-top:10px;font-size:15px;line-height:1.35}
+  .meldung.an{display:block}
+  .meldung.fehler{background:#fff1f0;border-left:4px solid var(--rot)}
+  .meldung.ok{background:#eefbee;border-left:4px solid var(--gruen)}
+  .meldung.warte{background:#fff6dc;border-left:4px solid var(--gelb)}
+  .konto{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+  .konto b{color:var(--text)}
+  /* Henry und die Rangliste stehen nebeneinander, sobald Platz da ist */
+  .oben{display:grid;grid-template-columns:1fr;gap:0}
+  @media (min-width:760px){
+    main{max-width:960px}
+    .oben{grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+    .oben > .card{margin-bottom:0}
+  }
+  .podest{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:4px 0 14px}
+  .podest .platz{text-align:center;border-radius:14px;padding:8px 4px;background:#f7faf5;border:2px solid var(--grau)}
+  .podest .platz.p1{border-color:#ff8c3a;background:linear-gradient(180deg,#fff3e6,#fff)}
+  .podest .platz.p2{border-color:#5ba8d8;background:linear-gradient(180deg,#e9f5fd,#fff)}
+  .podest .platz.p3{border-color:#9ec9de;background:linear-gradient(180deg,#f0f8fb,#fff)}
+  .podest .abz{width:40px;height:40px;margin:0 auto}
+  .podest .abz svg{width:100%;height:100%;display:block}
+  .podest .vogel{width:100%;max-width:92px;margin:0 auto}
+  .podest .vogel svg{width:100%;height:auto;display:block}
+  .podest .wer{font-weight:800;font-size:13.5px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .podest .zahlen{font-size:12px;color:var(--muted);line-height:1.3}
+  .podest .wie{font-size:11.5px;margin-top:2px}
+  .podest .leer{color:#b3bfb3;font-size:12px;padding:18px 2px}
   .pablo-karte{display:flex;gap:12px;align-items:stretch;background:linear-gradient(135deg,#f6fbf4,#fff)}
   .pablo-links{width:132px;flex:0 0 132px}
   .pablo-links svg{width:100%;height:auto;display:block}
@@ -185,13 +212,19 @@
       <h2>Willkommen im Vokabel-Land</h2>
       <p>Wie sollen wir dich nennen? Nur ein Spitzname, kein echter Name.</p>
       <input type="text" id="inName" maxlength="16" placeholder="Spitzname" autocomplete="off">
+      <p style="margin-top:14px">Und eine Zahl von 1 bis 1000, die du dir merkst:</p>
+      <input type="number" id="inZahl" min="1" max="1000" placeholder="Deine Zahl" inputmode="numeric">
+      <div class="meldung" id="startMeldung"></div>
       <button id="btnStart">Los geht's</button>
-      <p class="muted">Dein Stand wird nur auf diesem Gerät gespeichert.</p>
+      <p class="muted">Mit Spitzname und Zahl kommst du auf jedem Gerät an deinen Stand.
+         Schreib dir die Zahl auf, es gibt keine andere Möglichkeit, sie wiederzubekommen.
+         Keine E-Mail, kein Passwort.</p>
     </div>
   </section>
 
   <!-- KARTE -->
   <section id="sKarte" class="screen">
+    <div class="oben">
     <div class="card pablo-karte">
       <div class="pablo-links" id="pabloBild"></div>
       <div class="pablo-rechts">
@@ -203,6 +236,20 @@
         <div class="balken"><span>😀</span><i><b id="bLaune"></b></i><em id="zLaune"></em></div>
         <button class="sek" id="btnShop">🛒 Shop öffnen</button>
       </div>
+    </div>
+
+    <div class="card" id="rangKarte">
+      <h2>Rangliste</h2>
+      <div class="podest" id="podest"></div>
+      <table id="rang"></table>
+      <p class="muted" id="rangHinweis"></p>
+      <div class="konto">
+        <span>Dein Zugang:</span> <b id="kontoName"></b>
+        <span>Zahl:</span> <b id="kontoZahl">••••</b>
+        <button class="sek" id="btnZahl" style="width:auto;margin:0;padding:6px 12px;font-size:14px">zeigen</button>
+      </div>
+      <p class="muted">Mit Spitzname und Zahl kommst du auf jedem Gerät an deinen Stand.</p>
+    </div>
     </div>
 
     <div class="card" id="shopKarte" style="display:none">
@@ -232,13 +279,7 @@
       <p class="muted" style="margin-top:10px">Gelb = offen · Grün = geschafft · Grau = noch gesperrt. Mit 80 % beim ersten Versuch richtig geht das nächste Level auf.</p>
       <p class="muted" id="modusHinweis"></p>
     </div>
-    <div class="card">
-      <h2>Rangliste</h2>
-      <table id="rang"></table>
-      <p class="muted">Vorerst nur auf diesem Gerät. Eine gemeinsame Rangliste für die Klasse kommt später.</p>
-    </div>
     <button class="sek" id="btnWelt">🗺️ Weltkarte ansehen</button>
-    <button class="sek" id="btnReset">Alles zurücksetzen</button>
   </section>
 
   <!-- WELTKARTE -->
@@ -342,6 +383,7 @@
 <script src="emojis.js"></script>
 <script src="papagei.js"></script>
 <script src="welt.js"></script>
+<script src="abzeichen.js"></script>
 <script>
 (function(){
   const LEVEL = window.VOKABEL_LEVEL || [];
@@ -354,7 +396,12 @@
     try{ return Object.assign({name:'', punkte:0, muenzen:0, level:{}}, JSON.parse(localStorage.getItem(KEY)||'{}')); }
     catch(e){ return {name:'', punkte:0, muenzen:0, level:{}}; }
   }
-  function speichere(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+  let hochladeUhr = null;
+  function speichere(){
+    try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+    clearTimeout(hochladeUhr);
+    hochladeUhr = setTimeout(hochladen, 1500);   // gebuendelt, nicht bei jedem Klick
+  }
 
   let MODUS = 'schreiben';   // 'schreiben' oder 'hoeren'
 
@@ -366,6 +413,37 @@
     let i = S.tempoStufe;
     if(typeof i !== 'number'){ i = S.tempo === 'normal' ? 8 : 3; }   // Standard, bzw. alte Einstellung uebernehmen
     return Math.max(0, Math.min(10, i));
+  }
+
+  // ---------- Anmeldung und Spielstand am Server ----------
+  // Der Dienst laeuft auf Claudios eigenem Server. Gespeichert werden nur
+  // Spitzname, eine Zahl von 1 bis 1000 und der Spielstand. Keine E-Mail, kein Klarname.
+  const SERVER = 'https://peak-flow.app/vl';
+  let SPEICHER_LAEUFT = false, SPEICHER_OFFEN = false;
+
+  async function ruf(weg, daten){
+    const antwort = await fetch(SERVER + weg, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(daten)
+    });
+    let inhalt = {};
+    try { inhalt = await antwort.json(); } catch(e){}
+    return { code: antwort.status, ...inhalt };
+  }
+
+  // Den Stand hochladen. Faellt der Server aus, bleibt alles lokal erhalten.
+  async function hochladen(){
+    if(!S.name || !S.zahl) return;
+    if(SPEICHER_LAEUFT){ SPEICHER_OFFEN = true; return; }
+    SPEICHER_LAEUFT = true;
+    try {
+      const stand = Object.assign({}, S);
+      delete stand.zahl;                       // die Zahl bleibt auf dem Geraet
+      await ruf('/speichern', { name: S.name, pin: S.zahl, stand: stand });
+    } catch(e){ /* kein Netz: nicht schlimm, lokal ist alles da */ }
+    SPEICHER_LAEUFT = false;
+    if(SPEICHER_OFFEN){ SPEICHER_OFFEN = false; setTimeout(hochladen, 400); }
   }
 
   // ---------- Hilfen ----------
@@ -572,6 +650,10 @@
       k.appendChild(n);
     });
     $('rang').innerHTML = '<tr><td>1.</td><td>'+esc(S.name||'Du')+'</td><td class="r">'+S.punkte+' ⭐</td></tr>';
+    $('kontoName').textContent = S.name || '—';
+    $('kontoZahl').textContent = '••••';
+    $('btnZahl').textContent = 'zeigen';
+    ladeRangliste();
     zeigeZurueck();
     zeigePablo();
     $('modusHinweis').textContent = MODUS==='hoeren'
@@ -712,6 +794,69 @@
     }).join('');
   }
 
+  // Wie geht es dem Papagei dieses Kindes gerade?
+  const WIE_GEHTS = {
+    gluecklich: '😀 bestens', ok: '🙂 gut', traurig: '😕 langweilig',
+    schwach: '😟 hungrig', amBoden: '😢 allein'
+  };
+  function eintragPapagei(e){
+    const roh = e.papagei || {};
+    const p = PAPAGEI.neuBerechnen({
+      futter: roh.futter, wasser: roh.wasser, laune: roh.laune,
+      zuletzt: roh.zuletzt || Date.now(), deko: roh.deko || {}
+    }, Date.now());
+    const insel = (window.VOKABEL_WELT || []).find(r => r.id === MEINE_INSEL);
+    return { bild: PAPAGEI.svg(p, p.deko || {}, insel ? insel.papagei : 3),
+             wie: WIE_GEHTS[PAPAGEI.zustandVon(p)] || '' };
+  }
+
+  // Bestenliste vom Server: Podest für die ersten drei, darunter die übrigen.
+  async function ladeRangliste(){
+    try {
+      const antwort = await fetch(SERVER + '/rangliste', { cache: 'no-store' });
+      const d = await antwort.json();
+      const liste = (d && d.liste) || [];
+
+      if(!liste.length){
+        $('podest').innerHTML = '';
+        $('rangHinweis').textContent = 'Noch niemand auf der Liste. Üb eine Runde, dann stehst du ganz oben.';
+        return;
+      }
+
+      // Podest: Platz 1 bekommt den Feuerdrachen, Platz 2 den Wasserwal, Platz 3 den Windadler
+      $('podest').innerHTML = [0,1,2].map(i=>{
+        const e = liste[i];
+        if(!e) return '<div class="platz"><div class="leer">frei</div></div>';
+        const pa = eintragPapagei(e);
+        const ich = S.name && e.name.toLowerCase() === S.name.toLowerCase();
+        return '<div class="platz p' + (i+1) + '">'
+          + '<div class="abz">' + (window.ABZEICHEN ? ABZEICHEN.svg(i+1) : '') + '</div>'
+          + '<div class="vogel">' + pa.bild + '</div>'
+          + '<div class="wer">' + esc(e.name) + (ich ? ' (du)' : '') + '</div>'
+          + '<div class="zahlen">' + e.punkte + ' ⭐ · ' + (e.muenzen||0) + ' 🪙</div>'
+          + '<div class="wie">' + pa.wie + '</div>'
+          + '</div>';
+      }).join('');
+
+      // Die Plätze ab vier als schlichte Zeilen
+      $('rang').innerHTML = liste.slice(3).map((e,i)=>{
+        const ich = S.name && e.name.toLowerCase() === S.name.toLowerCase();
+        return '<tr' + (ich ? ' style="background:#eefbee;font-weight:800"' : '') + '>'
+          + '<td>' + (i+4) + '.</td><td>' + esc(e.name) + (ich ? ' (du)' : '')
+          + '</td><td class="r">' + e.punkte + ' ⭐</td></tr>';
+      }).join('');
+
+      $('rangHinweis').textContent = liste.length > 3
+        ? 'Alle ' + liste.length + ', die mitüben. Nur Spitznamen, Punkte und der Papagei.'
+        : 'Nur Spitznamen, Punkte und wie es dem Papagei geht.';
+    } catch(e){
+      $('podest').innerHTML = '';
+      $('rangHinweis').textContent = location.protocol === 'file:'
+        ? 'Die gemeinsame Liste gibt es nur auf www.walserfly.com/vokabeln, nicht wenn die Datei direkt geöffnet wird.'
+        : 'Die gemeinsame Liste ist gerade nicht erreichbar.';
+    }
+  }
+
   function setzeModus(m){
     MODUS = m;
     $('mSchreiben').classList.toggle('an', m==='schreiben');
@@ -823,11 +968,66 @@
   }
 
   // ---------- Knöpfe ----------
-  $('btnStart').onclick = ()=>{ const n=$('inName').value.trim(); if(!n){$('inName').focus();return;} S.name=n; speichere(); zeichneKarte(); zeige('sKarte'); };
-  $('inName').addEventListener('keydown', e=>{ if(e.key==='Enter') $('btnStart').click(); });
+  function startMeldung(art, text){
+    const m = $('startMeldung');
+    m.className = 'meldung an ' + art;
+    m.textContent = text;
+  }
+  async function anmelden(){
+    const n = $('inName').value.trim();
+    const z = parseInt($('inZahl').value, 10);
+    if(n.length < 2){ startMeldung('fehler', 'Der Spitzname braucht mindestens 2 Zeichen.'); $('inName').focus(); return; }
+    if(!(z >= 1 && z <= 1000)){ startMeldung('fehler', 'Bitte eine Zahl von 1 bis 1000 eintragen.'); $('inZahl').focus(); return; }
+
+    $('btnStart').disabled = true;
+    startMeldung('warte', 'Einen Moment …');
+    let a;
+    try {
+      a = await ruf('/anmelden', { name: n, pin: z });
+    } catch(e){
+      // Kein Netz: trotzdem spielen lassen, nur eben ohne Austausch zwischen Geräten
+      S.name = n; S.zahl = z; speichere();
+      startMeldung('warte', 'Keine Verbindung. Du kannst spielen, dein Stand bleibt erst mal auf diesem Gerät.');
+      $('btnStart').disabled = false;
+      zeichneKarte(); zeige('sKarte'); return;
+    }
+    $('btnStart').disabled = false;
+
+    if(a.fehler === 'zahl_falsch'){
+      startMeldung('fehler', 'Den Spitznamen „' + n + '“ gibt es schon, aber die Zahl stimmt nicht. '
+        + 'Nimm deine eigene Zahl, oder wähl einen anderen Spitznamen.');
+      $('inZahl').focus(); $('inZahl').select(); return;
+    }
+    if(a.fehler === 'gesperrt'){
+      startMeldung('warte', 'Zu viele Versuche an diesem Gerät. Probier es in ' + (a.sekunden || 60) + ' Sekunden noch einmal.');
+      return;
+    }
+    if(a.fehler){ startMeldung('fehler', a.text || 'Das hat nicht geklappt.'); return; }
+
+    // Geklappt: Stand vom Server übernehmen, falls dort schon einer liegt
+    const vomServer = a.stand && Object.keys(a.stand).length ? a.stand : null;
+    if(vomServer){
+      S = Object.assign({ name:n, punkte:0, muenzen:0, level:{} }, vomServer);
+    }
+    S.name = a.name || n;
+    S.zahl = z;
+    try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+    zeigeTon();
+    zeichneKarte(); zeige('sKarte');
+    if(a.neu) meldung({ en: 'Welcome! Remember your number: ' + z,
+                        de: 'Willkommen! Merk dir deine Zahl: ' + z });
+  }
+  $('btnStart').onclick = anmelden;
+  $('inName').addEventListener('keydown', e=>{ if(e.key==='Enter') $('inZahl').focus(); });
+  $('inZahl').addEventListener('keydown', e=>{ if(e.key==='Enter') anmelden(); });
   $('pabloSpruch').onclick = deutschZeigen;
   $('pabloDe').onclick      = deutschZeigen;
   $('pabloBild').onclick    = deutschZeigen;
+  $('btnZahl').onclick = ()=>{
+    const offen = $('kontoZahl').textContent !== '••••';
+    $('kontoZahl').textContent = offen ? '••••' : (S.zahl != null ? String(S.zahl) : '—');
+    $('btnZahl').textContent = offen ? 'zeigen' : 'verbergen';
+  };
   $('btnWelt').onclick   = ()=>{ zeigeWelt(); zeige('sWelt'); window.scrollTo(0,0); };
   $('btnWeltZu').onclick = ()=>{ zeichneKarte(); zeige('sKarte'); };
   $('btnShop').onclick = ()=>{ zeigeShop(); $('shopKarte').style.display=''; $('shopKarte').scrollIntoView({behavior:'smooth', block:'nearest'}); };
@@ -855,7 +1055,8 @@
   $('btnAbbruch').onclick = ()=>{ zeichneKarte(); zeige('sKarte'); };
   $('btnNochmal').onclick = ()=>starteLevel(G.i);
   $('btnKarte').onclick = ()=>{ zeichneKarte(); zeige('sKarte'); };
-  $('btnReset').onclick = ()=>{ if(confirm('Wirklich alles löschen?')){ S={name:'',punkte:0,muenzen:0,level:{},pablo:null}; speichere(); zeige('sStart'); } };
+  // „Alles zurücksetzen" gibt es mit Absicht nicht mehr. Ein versehentlicher Klick
+  // haette Punkte, Sterne und den Papagei geloescht.
 
   // Haken zum Pruefen ohne echten Ton
   window.VL = {
