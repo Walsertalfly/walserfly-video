@@ -1,6 +1,6 @@
-// Vokabel-Land – Pablo, der Papagei. Maskottchen und Tamagotchi.
+// Vokabel-Land – Henry, der Papagei. Maskottchen und Tamagotchi.
 //
-// Pablo ist ein Scharlachara: roter Körper, gelb-blauer Flügel, langer Schwanz,
+// Henry ist ein Scharlachara: roter Körper, gelb-blauer Flügel, langer Schwanz,
 // weißes Gesichtsfeld und der typische große Hakenschnabel.
 // Er wird immer ganz gezeichnet, nicht nur der Kopf. Alles selbst gezeichnetes SVG.
 //
@@ -10,7 +10,7 @@
 (function(){
 
   // Der Name des Papageis. Zum Umbenennen genuegt diese eine Zeile.
-  const NAME = 'Pablo';
+  const NAME = 'Henry';
 
   const ROT = '#e8342a', ROT_D = '#c2281f', GELB = '#ffc61a', BLAU = '#1769d4', BLAU_D = '#0f4fa8';
 
@@ -138,7 +138,7 @@
       + '<path d="M110 14 q12 9 5 21 q-11 -5 -5 -21 Z" fill="' + GELB + '" opacity=".85"/>'
       + '</g>' : '';
 
-    // ---- Pablo ----
+    // ---- Henry ----
     // Prachtfedern im Schwanz, je hoeher die Stufe desto mehr
     const prachtfedern = !A.schweif ? '' :
         '<path d="M120 140 q52 40 70 118 q-10 -2 -18 -10" fill="none" stroke="' + A.zier + '" stroke-width="5" stroke-linecap="round"/>'

@@ -578,7 +578,10 @@
       ? 'Buchstabieren: Die App sagt die Buchstaben auf Englisch an, du schreibst das Wort. Die Sterne dafür werden getrennt gezählt.'
       : '';
   }
-  // ---------- Pablo, der Papagei ----------
+  // ---------- Der Papagei ----------
+  // Sein Name steht in papagei.js (PAPAGEI.NAME) und wird ueberall von dort geholt.
+  // Die Bezeichner im Code heissen weiter "pablo" - das ist auch der Speicherschluessel,
+  // und ein Umbenennen wuerde gespeicherte Papageien verlieren lassen.
   function pabloStand(){
     S.pablo = PAPAGEI.neuBerechnen(S.pablo, Date.now());
     return S.pablo;
