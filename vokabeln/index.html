@@ -21,6 +21,9 @@
   header h1 small{font-weight:400;opacity:.85;font-size:13px;margin-left:6px}
   .stats{display:flex;gap:12px;font-weight:700;font-size:15px}
   .stats span{background:rgba(255,255,255,.18);padding:4px 10px;border-radius:999px;white-space:nowrap}
+  .tonknopf{width:auto;margin:0;padding:4px 10px;font-size:16px;background:rgba(255,255,255,.18);
+            box-shadow:none;border-radius:999px;line-height:1.4}
+  .tonknopf.aus{opacity:.5}
   main{flex:1;padding:16px;max-width:560px;width:100%;margin:0 auto}
   .screen{display:none}.screen.on{display:block}
   .card{background:var(--card);border-radius:16px;padding:18px;box-shadow:var(--schatten);margin-bottom:14px}
@@ -40,6 +43,39 @@
   input.falsch{border-color:var(--rot);background:#fff1f0}
 
   /* Modus-Umschalter */
+  .pablo-karte{display:flex;gap:12px;align-items:stretch;background:linear-gradient(135deg,#f6fbf4,#fff)}
+  .pablo-links{width:132px;flex:0 0 132px}
+  .pablo-links svg{width:100%;height:auto;display:block}
+  .pablo-rechts{flex:1;min-width:0;display:flex;flex-direction:column}
+  .pablo-rechts h2{margin:0 0 2px;font-size:20px}
+  .pablo-spruch{font-size:14.5px;line-height:1.35;color:var(--text);margin:0;min-height:36px;
+                font-weight:600;cursor:pointer}
+  .pablo-de{font-size:13px;line-height:1.3;color:var(--muted);margin:3px 0 8px;min-height:30px;cursor:pointer}
+  .pablo-de.versteckt{color:#9aa79a;font-style:italic}
+  .pablo-rechts button{margin-top:auto;padding:10px;font-size:16px}
+  .balken{display:flex;align-items:center;gap:7px;margin:5px 0;font-size:14px}
+  .balken i{flex:1;height:11px;background:var(--grau);border-radius:999px;overflow:hidden}
+  .balken b{display:block;height:100%;width:0;border-radius:999px;transition:width .4s}
+  .balken em{font-style:normal;font-size:12px;color:var(--muted);width:34px;text-align:right}
+  .pablo-huepf{animation:huepf 2.4s ease-in-out infinite}
+  @keyframes huepf{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  .pablo-glocke{animation:bimmel 3s ease-in-out infinite;transform-origin:168px 20px}
+  @keyframes bimmel{0%,70%,100%{transform:rotate(0)}80%{transform:rotate(9deg)}90%{transform:rotate(-9deg)}}
+  .pablo-federn path{animation:feder 4s ease-in-out infinite}
+  .pablo-federn path:nth-child(2){animation-delay:1.1s}
+  .pablo-federn path:nth-child(3){animation-delay:2.2s}
+  @keyframes feder{0%{transform:translateY(0) rotate(0);opacity:.8}100%{transform:translateY(150px) rotate(140deg);opacity:0}}
+  .shop{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+  .shop button{margin:0;padding:8px 6px;font-size:13.5px;background:#fff;color:var(--text);
+               border:2px solid var(--grau);box-shadow:none;line-height:1.2;
+               display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+  .shop button .ware{font-size:24px;line-height:1.15}
+  .shop button .preis{font-weight:800;color:var(--gruen2);font-size:13px}
+  .shop button.kannNicht{opacity:.45}
+  .shop button.gekauft{border-color:var(--gruen);background:#eefbee}
+  @media (max-width:380px){ .pablo-links{width:104px;flex-basis:104px} }
+  .zurueck{background:linear-gradient(135deg,#eefbee,#fff)}
+  .zurueck h2{color:var(--gruen2)}
   .modus{display:flex;gap:8px;margin-bottom:14px}
   .modus button{margin-top:0;font-size:16px;padding:12px 8px;background:#fff;color:var(--muted);
                 border:2px solid var(--grau);box-shadow:none}
@@ -123,7 +159,8 @@
 <body>
 <header>
   <h1>Vokabel-Land <small id="hdName"></small></h1>
-  <div class="stats"><span id="stMuenzen">🪙 0</span><span id="stPunkte">⭐ 0</span></div>
+  <div class="stats"><span id="stMuenzen">🪙 0</span><span id="stPunkte">⭐ 0</span>
+    <button id="btnTon" class="tonknopf" title="Töne an oder aus">🔔</button></div>
 </header>
 <main>
 
@@ -140,6 +177,31 @@
 
   <!-- KARTE -->
   <section id="sKarte" class="screen">
+    <div class="card pablo-karte">
+      <div class="pablo-links" id="pabloBild"></div>
+      <div class="pablo-rechts">
+        <h2 id="pabloName"></h2>
+        <p class="pablo-spruch" id="pabloSpruch"></p>
+        <p class="pablo-de" id="pabloDe"></p>
+        <div class="balken"><span>🌾</span><i><b id="bFutter"></b></i><em id="zFutter"></em></div>
+        <div class="balken"><span>💧</span><i><b id="bWasser"></b></i><em id="zWasser"></em></div>
+        <div class="balken"><span>😀</span><i><b id="bLaune"></b></i><em id="zLaune"></em></div>
+        <button class="sek" id="btnShop">🛒 Shop öffnen</button>
+      </div>
+    </div>
+
+    <div class="card" id="shopKarte" style="display:none">
+      <h2>Shop</h2>
+      <p class="muted">Münzen verdienst du beim Üben: eine pro Wort, das du gleich richtig schreibst.</p>
+      <div class="shop" id="shopListe"></div>
+      <button class="sek" id="btnShopZu">Schließen</button>
+    </div>
+
+    <div class="card zurueck" id="zurueckKarte" style="display:none">
+      <h2 id="zurueckTitel"></h2>
+      <p class="muted" id="zurueckStand"></p>
+      <button id="btnWeiterUeben"></button>
+    </div>
     <div class="modus">
       <button id="mSchreiben" class="an">✏️ Schreiben<small>Deutsch lesen, Englisch tippen</small></button>
       <button id="mHoeren">🔊 Buchstabieren<small>zuhören und mitschreiben</small></button>
@@ -247,6 +309,7 @@
 <script src="vokabeln.js"></script>
 <script src="bilder.js"></script>
 <script src="emojis.js"></script>
+<script src="papagei.js"></script>
 <script>
 (function(){
   const LEVEL = window.VOKABEL_LEVEL || [];
@@ -293,6 +356,51 @@
       else { out+='<b>'+esc(a[i])+'</b>'; i++; }
     }
     return out;
+  }
+
+  // ---------- Toene (selbst erzeugt, keine Dateien) ----------
+  // Jeder Klang ist eine Folge von [Frequenz, Start in s, Dauer in s, Lautstaerke].
+  const KLANG = {
+    richtig:  [[880,0,.10,.22],[1319,.07,.16,.20]],
+    muenze:   [[1568,0,.05,.16],[2093,.045,.09,.13]],
+    falsch:   [[233,0,.16,.16],[175,.11,.22,.14]],
+    stern:    [[1047,0,.09,.18],[1319,.07,.09,.18],[1568,.14,.22,.18]],
+    fertig:   [[523,0,.12,.20],[659,.10,.12,.20],[784,.20,.12,.20],[1047,.30,.34,.22]],
+    schade:   [[392,0,.16,.16],[330,.14,.26,.14]],
+    tipp:     [[1200,0,.04,.07]]
+  };
+  let hallo = null;                      // AudioContext, erst beim ersten Ton
+  let tonRoh = (frq, start, dauer, laut) => {
+    if(!hallo){
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if(!AC) return; hallo = new AC();
+    }
+    if(hallo.state === 'suspended') hallo.resume();
+    const t = hallo.currentTime + start;
+    const o = hallo.createOscillator(), g = hallo.createGain();
+    o.type = 'triangle'; o.frequency.setValueAtTime(frq, t);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(laut, t + 0.012);     // weich einblenden
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dauer);   // und ausklingen, sonst knackt es
+    o.connect(g); g.connect(hallo.destination);
+    o.start(t); o.stop(t + dauer + 0.02);
+  };
+  function klang(name){
+    if(S.ton === false) return;
+    const noten = KLANG[name]; if(!noten) return;
+    try{ noten.forEach(n => tonRoh(n[0], n[1], n[2], n[3])); }catch(e){}
+  }
+  // Muenzregen am Levelende – das "Casino"
+  function muenzregen(anzahl){
+    if(S.ton === false) return;
+    for(let i=0;i<anzahl;i++){
+      const f = 1400 + Math.random()*900;
+      try{ tonRoh(f, 0.38 + i*0.085 + Math.random()*0.04, 0.09, 0.13); }catch(e){}
+    }
+  }
+  function zeigeTon(){
+    $('btnTon').textContent = S.ton === false ? '🔕' : '🔔';
+    $('btnTon').classList.toggle('aus', S.ton === false);
   }
 
   // ---------- Sprachausgabe (Englisch) ----------
@@ -418,7 +526,13 @@
       const p = POS[i] || [22+i*26, 74-i*28];
       d.style.left = p[0]+'%'; d.style.top = p[1]+'%';
       d.innerHTML = (offen ? (i+1) : '🔒') + (s ? '<div class="sterne">'+'★'.repeat(s)+'</div>' : '');
-      if(offen) d.onclick = ()=>starteLevel(i);
+      d.onclick = offen ? (()=>starteLevel(i)) : (()=>{
+        // Niemanden aussperren: wer gleich diese Seite lernen muss, darf sofort hinein.
+        const frage = 'Level ' + (i+1) + ' geht auf, wenn du Level ' + i + ' schaffst.'
+                    + String.fromCharCode(10,10) + 'Möchtest du trotzdem schon üben?';
+        if(confirm(frage))
+          starteLevel(i);
+      });
       k.appendChild(d);
       const n = document.createElement('div');
       n.className='lvl-name'; n.textContent = lv.name.replace(/^Level \d+ · /,'');
@@ -426,10 +540,115 @@
       k.appendChild(n);
     });
     $('rang').innerHTML = '<tr><td>1.</td><td>'+esc(S.name||'Du')+'</td><td class="r">'+S.punkte+' ⭐</td></tr>';
+    zeigeZurueck();
+    zeigePablo();
     $('modusHinweis').textContent = MODUS==='hoeren'
       ? 'Buchstabieren: Die App sagt die Buchstaben auf Englisch an, du schreibst das Wort. Die Sterne dafür werden getrennt gezählt.'
       : '';
   }
+  // ---------- Pablo, der Papagei ----------
+  function pabloStand(){
+    S.pablo = PAPAGEI.neuBerechnen(S.pablo, Date.now());
+    return S.pablo;
+  }
+  function farbeFuer(wert){ return wert >= 60 ? '#3f9d4a' : wert >= 30 ? '#f4c542' : '#d9534f'; }
+  function zeigePablo(){
+    if(!window.PAPAGEI) return;
+    const p = pabloStand();
+    $('pabloBild').innerHTML = PAPAGEI.svg(p, p.deko || {});
+    setzeSpruch(PAPAGEI.spruch(p, S.name));
+    [['Futter', p.futter], ['Wasser', p.wasser], ['Laune', p.laune]].forEach(([was, wert])=>{
+      $('b'+was).style.width = wert + '%';
+      $('b'+was).style.background = farbeFuer(wert);
+      $('z'+was).textContent = wert + '%';
+    });
+    $('pabloName').textContent = PAPAGEI.NAME;
+    $('btnShop').textContent = '🛒 Shop · 🪙 ' + S.muenzen;
+    speichere();
+  }
+  // Freude am Papagei, wenn richtig geübt wird
+  function pabloFreuen(punkte){
+    const p = pabloStand();
+    p.laune = Math.min(100, p.laune + punkte);
+    speichere();
+  }
+  function zeigeShop(){
+    const p = pabloStand();
+    $('shopListe').innerHTML = PAPAGEI.SHOP.map((a,i)=>{
+      const schonDa = a.deko && p.deko && p.deko[a.id];
+      const zuTeuer = S.muenzen < a.preis;
+      return '<button data-i="'+i+'" class="'+(schonDa?'gekauft':zuTeuer?'kannNicht':'')+'">'
+        + '<span class="ware">'+a.bild+'</span>' + esc(a.name)
+        + '<span class="preis">'+(schonDa ? '✓ im Käfig' : '🪙 '+a.preis)+'</span></button>';
+    }).join('');
+    $('shopListe').querySelectorAll('button').forEach(b=>{
+      b.onclick = ()=>kaufen(PAPAGEI.SHOP[parseInt(b.dataset.i,10)]);
+    });
+  }
+  function kaufen(a){
+    const p = pabloStand();
+    if(a.deko && p.deko && p.deko[a.id]){
+      meldung({ en: PAPAGEI.NAME + ' already has that.', de: PAPAGEI.NAME + ' hat das schon.' }); return; }
+    if(S.muenzen < a.preis){
+      meldung({ en: 'You need ' + (a.preis - S.muenzen) + ' more coins.',
+                de: 'Dafür fehlen dir noch ' + (a.preis - S.muenzen) + ' Münzen. Üb noch eine Runde!' });
+      klang('falsch'); return;
+    }
+    S.muenzen -= a.preis;
+    if(a.deko){ p.deko = p.deko || {}; p.deko[a.id] = true; }
+    p.futter = Math.min(100, p.futter + (a.futter||0));
+    p.wasser = Math.min(100, p.wasser + (a.wasser||0));
+    p.laune  = Math.min(100, p.laune  + (a.laune||0));
+    p.tageWeg = 0;
+    speichere(); kopf(); zeigePablo(); zeigeShop();
+    meldung(a.satz);
+    klang('muenze'); setTimeout(()=>klang('stern'), 180);
+  }
+  // Englisch steht da, Deutsch kommt erst beim Antippen - so lernt man beim Vorbeischauen mit.
+  let spruchDe = '';
+  function setzeSpruch(s2){
+    const en = typeof s2 === 'string' ? s2 : s2.en;
+    spruchDe   = typeof s2 === 'string' ? '' : s2.de;
+    $('pabloSpruch').textContent = en;
+    $('pabloDe').className = 'pablo-de versteckt';
+    $('pabloDe').textContent = spruchDe ? '👆 antippen für Deutsch' : '';
+  }
+  function deutschZeigen(){
+    if(!spruchDe) return;
+    $('pabloDe').className = 'pablo-de';
+    $('pabloDe').textContent = spruchDe;
+  }
+  function meldung(s2){
+    setzeSpruch(s2);
+    clearTimeout(meldung._t);
+    meldung._t = setTimeout(()=>{ setzeSpruch(PAPAGEI.spruch(pabloStand(), S.name)); }, 6000);
+  }
+
+  // Wo soll es weitergehen? Erstes offenes Level ohne 2 Sterne, sonst das letzte.
+  function naechstesLevel(){
+    for(let i=0;i<LEVEL.length;i++){
+      const offen = i===0 || geschafft(i-1);
+      if(offen && sterneVon(i) < 2) return i;
+    }
+    return LEVEL.length-1;
+  }
+  function zeigeZurueck(){
+    const gespielt = Object.keys(S.level||{}).length > 0;
+    if(!gespielt){ $('zurueckKarte').style.display='none'; return; }
+    const fertig = LEVEL.filter((lv,i)=>sterneVon(i)>=2).length;
+    const sterneGesamt = LEVEL.reduce((a,lv,i)=>a+sterneVon(i),0);
+    const i = naechstesLevel();
+    $('zurueckKarte').style.display='';
+    $('zurueckTitel').textContent = 'Willkommen zurück, ' + (S.name||'du') + '!';
+    $('zurueckStand').textContent =
+      'Du hast ' + S.punkte + ' Punkte, ' + S.muenzen + ' Münzen und ' + sterneGesamt + ' von ' +
+      (LEVEL.length*3) + ' Sternen. ' + fertig + ' von ' + LEVEL.length + ' Leveln geschafft' +
+      (MODUS==='hoeren' ? ' (beim Buchstabieren).' : '.');
+    $('btnWeiterUeben').textContent = (sterneVon(i) ? 'Weiter üben: ' : 'Jetzt dran: ') +
+      LEVEL[i].name.replace(/^Level \d+ · /, 'Level '+(i+1)+' – ');
+    $('btnWeiterUeben').onclick = ()=>starteLevel(i);
+  }
+
   function setzeModus(m){
     MODUS = m;
     $('mSchreiben').classList.toggle('an', m==='schreiben');
@@ -496,6 +715,8 @@
       $('rmText').textContent = erst ? 'Richtig!' : 'Jetzt richtig!';
       $('rmWort').innerHTML = esc(loesungen(w)[0]);
       $('rmPlus').className='plus'; $('rmPlus').textContent = '+'+p+' Punkte' + (m ? ' · +1 Münze' : '');
+      klang('richtig'); if(m) setTimeout(()=>klang('muenze'), 150);
+      pabloFreuen(erst ? 3 : 1);
       $('rmWarum').style.display='none'; $('rmEsel').style.display='none';
     } else {
       inp.className='falsch';
@@ -505,6 +726,7 @@
       $('rmText').innerHTML = 'Du hast „' + markiere(tipp, loesungen(w)[0]) + '“ geschrieben. Richtig ist:';
       $('rmWort').innerHTML = markiere(norm(loesungen(w)[0]), inp.value);
       $('rmPlus').className='plus nochmal'; $('rmPlus').textContent = 'Das Wort kommt gleich nochmal';
+      klang('falsch');
       $('rmWarum').style.display = w.warum ? '' : 'none'; $('rmWarum').innerHTML = '💡 '+esc(w.warum||'');
       $('rmEsel').style.display  = w.esel  ? '' : 'none'; $('rmEsel').innerHTML  = '🫏 Eselsbrücke: '+esc(w.esel||'');
     }
@@ -528,6 +750,8 @@
     $('endeSterne').textContent = '★'.repeat(sterne) + '☆'.repeat(3-sterne);
     $('endeRichtig').textContent = G.richtigErst+' von '+gesamt;
     $('endePunkte').textContent = '+'+G.punkte+' Punkte · +'+G.muenzen+' Münzen';
+    if(sterne >= 2){ klang('fertig'); muenzregen(Math.min(12, G.muenzen)); }
+    else klang('schade');
     $('endeFehler').innerHTML = G.fehler.length
       ? '<p class="muted" style="text-align:left"><b>Nochmal anschauen:</b></p><ul class="liste" style="text-align:left">'+
         G.fehler.map(w=>'<li>'+esc(w.de)+' → <b>'+esc(loesungen(w)[0])+'</b></li>').join('')+'</ul>'
@@ -538,6 +762,12 @@
   // ---------- Knöpfe ----------
   $('btnStart').onclick = ()=>{ const n=$('inName').value.trim(); if(!n){$('inName').focus();return;} S.name=n; speichere(); zeichneKarte(); zeige('sKarte'); };
   $('inName').addEventListener('keydown', e=>{ if(e.key==='Enter') $('btnStart').click(); });
+  $('pabloSpruch').onclick = deutschZeigen;
+  $('pabloDe').onclick      = deutschZeigen;
+  $('pabloBild').onclick    = deutschZeigen;
+  $('btnShop').onclick = ()=>{ zeigeShop(); $('shopKarte').style.display=''; $('shopKarte').scrollIntoView({behavior:'smooth', block:'nearest'}); };
+  $('btnShopZu').onclick = ()=>{ $('shopKarte').style.display='none'; };
+  $('btnTon').onclick = ()=>{ S.ton = S.ton === false; speichere(); zeigeTon(); if(S.ton !== false) klang('tipp'); };
   $('mSchreiben').onclick = ()=>setzeModus('schreiben');
   $('mHoeren').onclick    = ()=>setzeModus('hoeren');
   $('btnHoeren').onclick  = ()=>{ if(G) buchstabiere(loesungen(aktuell())[0]); zurueckInsFeld(); };
@@ -560,17 +790,19 @@
   $('btnAbbruch').onclick = ()=>{ zeichneKarte(); zeige('sKarte'); };
   $('btnNochmal').onclick = ()=>starteLevel(G.i);
   $('btnKarte').onclick = ()=>{ zeichneKarte(); zeige('sKarte'); };
-  $('btnReset').onclick = ()=>{ if(confirm('Wirklich alles löschen?')){ S={name:'',punkte:0,muenzen:0,level:{}}; speichere(); zeige('sStart'); } };
+  $('btnReset').onclick = ()=>{ if(confirm('Wirklich alles löschen?')){ S={name:'',punkte:0,muenzen:0,level:{},pablo:null}; speichere(); zeige('sStart'); } };
 
   // Haken zum Pruefen ohne echten Ton
   window.VL = {
     setzeSprachAusgabe: f => { sprichRoh = f; },
+    setzeTonAusgabe: f => { tonRoh = f; },
     stand: ()=>S, modus: ()=>MODUS, spiel: ()=>G, aktuellesWort: ()=>G && aktuell(),
     stimmen: ()=>stimmen.map(v=>v.name+' ['+v.lang+']')
   };
 
   // ---------- Start ----------
   if(!LEVEL.length){ document.querySelector('main').innerHTML='<div class="card">Keine Wörter gefunden (vokabeln.js fehlt).</div>'; return; }
+  zeigeTon();
   if(S.name){ zeichneKarte(); zeige('sKarte'); } else zeige('sStart');
 })();
 </script>
