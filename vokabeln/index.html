@@ -184,6 +184,17 @@
   .pablo-federn path:nth-child(2){animation-delay:1.1s}
   .pablo-federn path:nth-child(3){animation-delay:2.2s}
   @keyframes feder{0%{transform:translateY(0) rotate(0);opacity:.8}100%{transform:translateY(150px) rotate(140deg);opacity:0}}
+  .feldname{display:block;font-size:14px;color:var(--muted);margin:12px 0 4px;font-weight:600}
+  .zeile{display:flex;gap:8px;align-items:stretch}
+  .zeile input{flex:1}
+  .mikro{width:62px;flex:0 0 62px;margin:0;padding:0;font-size:24px;background:#fff;
+         color:var(--text);border:3px solid var(--grau);box-shadow:none}
+  .mikro.hoert{border-color:var(--rot);background:#fff1f0;animation:pulsmikro 1s infinite}
+  @keyframes pulsmikro{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+  #eigListe td{font-size:15px}
+  #eigListe .loesch{width:44px;text-align:right}
+  #eigListe button{width:auto;margin:0;padding:4px 10px;font-size:14px;background:#fff;
+                   color:var(--rot);border:2px solid #f0c8c5;box-shadow:none}
   .namen{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
   @media (min-width:520px){ .namen{grid-template-columns:1fr 1fr 1fr} }
   .namen button{margin:0;padding:10px 6px;font-size:15px;background:#fff;color:var(--text);
@@ -393,14 +404,43 @@
       <h2>Anfängerland</h2>
       <div class="karte" id="karte">
         <svg class="pfad" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <path d="M22 74 C 38 72, 52 64, 54 48 S 42 30, 28 19" fill="none" stroke="#fff" stroke-width="2.2" stroke-dasharray="3 2" opacity=".9"/>
+          <path d="M20 78 C 34 76, 48 70, 50 56 S 40 40, 26 32 S 46 20, 62 14" fill="none" stroke="#fff" stroke-width="2.2" stroke-dasharray="3 2" opacity=".9"/>
         </svg>
         <div class="vulkan">🌋<br>Vulkan-Land<br>kommt später</div>
       </div>
       <p class="muted" style="margin-top:10px">Gelb = offen · Grün = geschafft · Grau = noch gesperrt. Mit 80 % beim ersten Versuch richtig geht das nächste Level auf.</p>
       <p class="muted" id="modusHinweis"></p>
     </div>
+    <button class="sek" id="btnEigene">✍️ Eigene Vokabeln</button>
     <button class="sek" id="btnWelt">🗺️ Weltkarte ansehen</button>
+  </section>
+
+  <!-- EIGENE VOKABELN -->
+  <section id="sEigene" class="screen">
+    <div class="card">
+      <h2>Deine eigenen Wörter</h2>
+      <p class="muted">Tippe sie ein oder sprich sie ins Mikrofon. Ab 4 Wörtern bekommst du
+         dein eigenes Level auf der Karte.</p>
+
+      <label class="feldname">Deutsch</label>
+      <div class="zeile">
+        <input type="text" id="eigDe" maxlength="40" placeholder="z. B. Hund" autocomplete="off">
+        <button class="mikro" id="mikroDe" title="Deutsch sprechen">🎤</button>
+      </div>
+
+      <label class="feldname">Englisch</label>
+      <div class="zeile">
+        <input type="text" id="eigEn" maxlength="40" placeholder="z. B. dog" autocomplete="off"
+               autocapitalize="off" spellcheck="false">
+        <button class="mikro" id="mikroEn" title="Englisch sprechen">🎤</button>
+      </div>
+
+      <div class="meldung" id="eigMeldung"></div>
+      <button id="btnEigAdd">+ Wort hinzufügen</button>
+      <table id="eigListe"></table>
+      <p class="muted" id="eigAnzahl"></p>
+      <button class="sek" id="btnEigZu">Zurück</button>
+    </div>
   </section>
 
   <!-- WELTKARTE -->
@@ -499,15 +539,27 @@
 </main>
 <footer>Vokabel-Land · Testversion</footer>
 
-<script src="vokabeln.js?v=202610191532"></script>
-<script src="bilder.js?v=202610191532"></script>
-<script src="emojis.js?v=202610191532"></script>
-<script src="papagei.js?v=202610191532"></script>
-<script src="welt.js?v=202610191532"></script>
-<script src="abzeichen.js?v=202610191532"></script>
+<script src="vokabeln.js?v=202610191535"></script>
+<script src="bilder.js?v=202610191535"></script>
+<script src="emojis.js?v=202610191535"></script>
+<script src="papagei.js?v=202610191535"></script>
+<script src="welt.js?v=202610191535"></script>
+<script src="abzeichen.js?v=202610191535"></script>
 <script>
 (function(){
-  const LEVEL = window.VOKABEL_LEVEL || [];
+  const BUCH_LEVEL = window.VOKABEL_LEVEL || [];
+  // LEVEL enthaelt die Woerter aus dem Buch und, sobald es mindestens vier sind,
+  // auch die selbst eingetragenen als letztes Level.
+  let LEVEL = BUCH_LEVEL.slice();
+  function levelNeuBauen(){
+    LEVEL = BUCH_LEVEL.slice();
+    const eigene = Array.isArray(S.eigene) ? S.eigene : [];
+    if(eigene.length >= 4){
+      LEVEL.push({ name: 'Level ' + (BUCH_LEVEL.length + 1) + ' · Meine Wörter',
+                   eigen: true,
+                   woerter: eigene.map(w => ({ de: w.de, en: w.en })) });
+    }
+  }
   const $ = id => document.getElementById(id);
   const KEY = 'vokabelland';
 
@@ -822,8 +874,93 @@
     $(id).classList.add('on'); kopf();
   }
 
+  // ---------- Eigene Vokabeln ----------
+  // Gespeichert als Liste {de, en}. Ab vier Woertern erscheinen sie als eigenes
+  // Level auf der Karte und lassen sich spielen wie jedes andere.
+  function eigeneWoerter(){
+    if(!Array.isArray(S.eigene)) S.eigene = [];
+    return S.eigene;
+  }
+  function eigMeldung(art, text){
+    const m = $('eigMeldung');
+    m.className = 'meldung an ' + art;
+    m.textContent = text;
+    clearTimeout(eigMeldung._t);
+    eigMeldung._t = setTimeout(()=>{ m.className = 'meldung'; }, 4000);
+  }
+  function zeigeEigene(){
+    const liste = eigeneWoerter();
+    $('eigListe').innerHTML = liste.map((w,i)=>
+      '<tr><td>' + esc(w.de) + '</td><td><b>' + esc(w.en) + '</b></td>'
+      + '<td class="loesch"><button data-weg="' + i + '">✕</button></td></tr>').join('');
+    $('eigListe').querySelectorAll('button').forEach(b=>{
+      b.onclick = ()=>{
+        liste.splice(parseInt(b.dataset.weg,10), 1);
+        speichere(); levelNeuBauen(); zeigeEigene();
+      };
+    });
+    $('eigAnzahl').textContent = liste.length === 0 ? 'Noch keine eigenen Wörter.'
+      : liste.length < 4 ? liste.length + ' von mindestens 4 Wörtern. Noch ' + (4 - liste.length) + ' dazu.'
+      : liste.length + ' Wörter. Dein Level „Meine Wörter" steht auf der Karte bereit.';
+  }
+  function eigeneHinzu(){
+    const de = $('eigDe').value.trim();
+    const en = $('eigEn').value.trim();
+    if(de.length < 2 || en.length < 1){
+      eigMeldung('fehler', 'Bitte beides ausfüllen: das deutsche und das englische Wort.');
+      return;
+    }
+    const liste = eigeneWoerter();
+    if(liste.some(w => norm(w.en) === norm(en))){
+      eigMeldung('fehler', '„' + en + '" steht schon in deiner Liste.');
+      return;
+    }
+    liste.push({ de: de, en: en });
+    speichere(); levelNeuBauen();
+    $('eigDe').value = ''; $('eigEn').value = '';
+    $('eigDe').focus();
+    eigMeldung('ok', '„' + de + ' → ' + en + '" ist dazugekommen.');
+    klang('richtig');
+    zeigeEigene();
+  }
+
+  // Mikrofon. Die Spracherkennung steckt im Browser, kostet nichts und braucht
+  // nur einmal die Erlaubnis. Gibt es sie nicht, bleibt das Tippen.
+  let hoertGerade = null;
+  function diktieren(feldId, sprache, knopfId){
+    const Erkennung = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!Erkennung){
+      eigMeldung('warte', 'Dieses Gerät kann nicht zuhören. Tipp die Wörter bitte ein.');
+      return;
+    }
+    if(hoertGerade){ try{ hoertGerade.stop(); }catch(e){} hoertGerade = null; }
+    const knopf = $(knopfId);
+    const e = new Erkennung();
+    e.lang = sprache;
+    e.interimResults = false;
+    e.maxAlternatives = 1;
+    hoertGerade = e;
+    knopf.classList.add('hoert');
+    eigMeldung('warte', 'Ich höre zu … sprich jetzt das Wort.');
+    e.onresult = (ereignis)=>{
+      let text = (ereignis.results[0][0].transcript || '').trim();
+      text = text.replace(/[.,!?;:]+$/, '');
+      if(sprache.indexOf('en') === 0) text = text.toLowerCase();
+      $(feldId).value = text;
+      eigMeldung('ok', 'Verstanden: „' + text + '". Stimmt das? Sonst tipp es um.');
+      klang('tipp');
+    };
+    e.onerror = (f)=>{
+      eigMeldung('fehler', f.error === 'not-allowed'
+        ? 'Das Mikrofon ist nicht erlaubt. Erlaub es oben im Browser, oder tipp die Wörter.'
+        : 'Ich habe nichts verstanden. Probier es nochmal oder tipp es ein.');
+    };
+    e.onend = ()=>{ knopf.classList.remove('hoert'); hoertGerade = null; };
+    try{ e.start(); }catch(err){ knopf.classList.remove('hoert'); }
+  }
+
   // ---------- Karte ----------
-  const POS = [[22,74],[54,48],[28,19]];   // Mittelpunkt je Level in Prozent
+  const POS = [[20,78],[50,56],[26,32],[62,14]];   // Mittelpunkt je Level in Prozent
   function sterneVon(i){
     const st = S.level[i] || {};
     return (MODUS==='hoeren' ? st.sterneH : st.sterne) || 0;
@@ -840,7 +977,7 @@
       const offen = i===0 || geschafft(i-1);
       const d = document.createElement('div');
       d.className = 'lvl ' + (s ? 'fertig' : offen ? 'offen' : 'zu');
-      const p = POS[i] || [22+i*26, 74-i*28];
+      const p = POS[i] || [20+i*22, 78-i*22];
       d.style.left = p[0]+'%'; d.style.top = p[1]+'%';
       d.style.animationDelay = (i * 0.09) + 's';
       d.innerHTML = (offen ? (i+1) : '🔒') + (s ? '<div class="sterne">'+'★'.repeat(s)+'</div>' : '');
@@ -1415,6 +1552,7 @@
     S.name = a.name || n;
     S.zahl = z;
     try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+    levelNeuBauen();
     zeigeTon();
     zeichneKarte(); zeige('sKarte');
     if(a.neu) meldung({ en: 'Welcome! Remember your number: ' + z,
@@ -1431,6 +1569,13 @@
     $('kontoZahl').textContent = offen ? '••••' : (S.zahl != null ? String(S.zahl) : '—');
     $('btnZahl').textContent = offen ? 'zeigen' : 'verbergen';
   };
+  $('btnEigene').onclick = ()=>{ zeigeEigene(); zeige('sEigene'); window.scrollTo(0,0); };
+  $('btnEigZu').onclick  = ()=>{ levelNeuBauen(); zeichneKarte(); zeige('sKarte'); };
+  $('btnEigAdd').onclick = eigeneHinzu;
+  $('mikroDe').onclick   = ()=>diktieren('eigDe', 'de-DE', 'mikroDe');
+  $('mikroEn').onclick   = ()=>diktieren('eigEn', 'en-GB', 'mikroEn');
+  $('eigDe').addEventListener('keydown', e=>{ if(e.key==='Enter') $('eigEn').focus(); });
+  $('eigEn').addEventListener('keydown', e=>{ if(e.key==='Enter') eigeneHinzu(); });
   $('btnWelt').onclick   = ()=>{ zeigeWelt(); zeige('sWelt'); window.scrollTo(0,0); };
   $('btnWeltZu').onclick = ()=>{ zeichneKarte(); zeige('sKarte'); };
   $('btnName').onclick = ()=>{
@@ -1479,6 +1624,7 @@
   // ---------- Start ----------
   if(!LEVEL.length){ document.querySelector('main').innerHTML='<div class="card">Keine Wörter gefunden (vokabeln.js fehlt).</div>'; return; }
   zeigeTon();
+  levelNeuBauen();
   if(S.name){ zeichneKarte(); zeige('sKarte'); } else zeige('sStart');
 })();
 </script>
