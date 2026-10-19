@@ -439,7 +439,14 @@
 
   <!-- KARTE -->
   <section id="sKarte" class="screen">
+    <div class="card zurueck" id="zurueckKarte" style="display:none">
+      <h2 id="zurueckTitel"></h2>
+      <p class="muted" id="zurueckStand"></p>
+      <button id="btnWeiterUeben"></button>
+    </div>
+
     <div class="oben">
+      <div class="spalte">
     <div class="card pablo-karte">
       <div class="pablo-links" id="pabloBild"></div>
       <div class="pablo-rechts">
@@ -454,18 +461,7 @@
       </div>
     </div>
 
-    <div class="card" id="namenKarte" style="display:none">
-      <h2>Wie soll dein Papagei heißen?</h2>
-      <p class="muted" id="namenHinweis"></p>
-      <div class="namen" id="namenListe"></div>
-      <button class="sek" id="btnNameZu">Schließen</button>
-    </div>
-
-    <div class="card" id="rangKarte">
-      <h2>Rangliste</h2>
-      <div class="podest" id="podest"></div>
-      <table id="rang"></table>
-      <p class="muted" id="rangHinweis"></p>
+    <div class="card konto-karte">
       <div class="konto">
         <span>Dein Zugang:</span> <b id="kontoName"></b>
         <span>Zahl:</span> <b id="kontoZahl">••••</b>
@@ -474,6 +470,23 @@
       <p class="muted" id="sterneErklaert"></p>
       <p class="muted">Mit Spitzname und Zahl kommst du auf jedem Gerät an deinen Stand.</p>
     </div>
+
+    <div class="card" id="namenKarte" style="display:none">
+      <h2>Wie soll dein Papagei heißen?</h2>
+      <p class="muted" id="namenHinweis"></p>
+      <div class="namen" id="namenListe"></div>
+      <button class="sek" id="btnNameZu">Schließen</button>
+    </div>
+
+      </div>
+      <div class="spalte">
+    <div class="card" id="rangKarte">
+      <h2>Rangliste</h2>
+      <div class="podest" id="podest"></div>
+      <table id="rang"></table>
+      <p class="muted" id="rangHinweis"></p>
+      </div>
+      </div>
     </div>
 
     <div class="card" id="shopKarte" style="display:none">
@@ -488,11 +501,6 @@
       <button class="sek" id="btnShopZu">Schließen</button>
     </div>
 
-    <div class="card zurueck" id="zurueckKarte" style="display:none">
-      <h2 id="zurueckTitel"></h2>
-      <p class="muted" id="zurueckStand"></p>
-      <button id="btnWeiterUeben"></button>
-    </div>
     <div class="modus">
       <button id="mSchreiben" class="an">✏️ Schreiben<small>Deutsch lesen, Englisch tippen</small></button>
       <button id="mHoeren">🔊 Buchstabieren<small>zuhören und mitschreiben</small></button>
@@ -667,13 +675,13 @@
 </main>
 <footer>Vokabel-Land · Testversion</footer>
 
-<script src="vokabeln.js?v=202610191550"></script>
-<script src="bilder.js?v=202610191550"></script>
-<script src="emojis.js?v=202610191550"></script>
-<script src="papagei.js?v=202610191550"></script>
-<script src="welt.js?v=202610191550"></script>
-<script src="abzeichen.js?v=202610191550"></script>
-<script src="belohnung.js?v=202610191550"></script>
+<script src="vokabeln.js?v=202610191552"></script>
+<script src="bilder.js?v=202610191552"></script>
+<script src="emojis.js?v=202610191552"></script>
+<script src="papagei.js?v=202610191552"></script>
+<script src="welt.js?v=202610191552"></script>
+<script src="abzeichen.js?v=202610191552"></script>
+<script src="belohnung.js?v=202610191552"></script>
 <script>
 (function(){
   const BUCH_LEVEL = window.VOKABEL_LEVEL || [];
