@@ -94,7 +94,7 @@
   @keyframes huepf{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
   /* Die gekaufte Sache liegt erst unten, dann holt Henry sie sich */
   .pablo-links{position:relative}
-  .ware-liegt{position:absolute;left:14%;bottom:9%;font-size:32px;line-height:1;z-index:1;
+  .ware-liegt{position:absolute;left:13%;bottom:13%;font-size:30px;line-height:1;z-index:1;
               animation:plumps .45s cubic-bezier(.3,1.6,.5,1)}
   .ware-liegt.weg{animation:schnapp .4s forwards}
   @keyframes plumps{0%{transform:translateY(-120px) scale(.6);opacity:0}60%{opacity:1}100%{transform:translateY(0) scale(1)}}
@@ -106,14 +106,14 @@
   .pablo-links.holt .pablo-flug{animation:flugbahn 2.9s cubic-bezier(.45,.05,.55,.95)}
   @keyframes flugbahn{
       0%{transform:translate(0px,0px) rotate(0deg)}
-      8%{transform:translate(2px,-12px) rotate(-6deg)}      /* abspringen */
-     20%{transform:translate(-22px,-34px) rotate(-16deg)}   /* hoch und nach links */
-     34%{transform:translate(-50px,-8px) rotate(-14deg)}    /* Bogen nach unten */
-     44%{transform:translate(-58px,30px) rotate(-4deg)}     /* beim Futter */
-     54%{transform:translate(-58px,34px) rotate(2deg)}      /* zuschnappen */
-     62%{transform:translate(-56px,24px) rotate(-8deg)}     /* abheben */
-     76%{transform:translate(-34px,-28px) rotate(12deg)}    /* Rueckweg im Bogen */
-     90%{transform:translate(-6px,-14px) rotate(6deg)}      /* ueber der Stange */
+      8%{transform:translate(4px,-16px) rotate(-7deg)}      /* von der Stange abspringen */
+     22%{transform:translate(-24px,-32px) rotate(-15deg)}   /* hoch und nach links */
+     36%{transform:translate(-30px,34px) rotate(-6deg)}     /* im Bogen hinunter */
+     48%{transform:translate(-18px,108px) rotate(4deg)}     /* unten beim Futter */
+     58%{transform:translate(-16px,118px) rotate(9deg)}     /* zuschnappen */
+     68%{transform:translate(-22px,66px) rotate(-6deg)}     /* wieder abheben */
+     82%{transform:translate(-26px,-26px) rotate(13deg)}    /* Rueckweg im Bogen */
+     93%{transform:translate(-5px,-12px) rotate(5deg)}      /* ueber der Stange */
     100%{transform:translate(0px,0px) rotate(0deg)}
   }
 
@@ -467,12 +467,12 @@
 </main>
 <footer>Vokabel-Land · Testversion</footer>
 
-<script src="vokabeln.js?v=202610191512"></script>
-<script src="bilder.js?v=202610191512"></script>
-<script src="emojis.js?v=202610191512"></script>
-<script src="papagei.js?v=202610191512"></script>
-<script src="welt.js?v=202610191512"></script>
-<script src="abzeichen.js?v=202610191512"></script>
+<script src="vokabeln.js?v=202610191513"></script>
+<script src="bilder.js?v=202610191513"></script>
+<script src="emojis.js?v=202610191513"></script>
+<script src="papagei.js?v=202610191513"></script>
+<script src="welt.js?v=202610191513"></script>
+<script src="abzeichen.js?v=202610191513"></script>
 <script>
 (function(){
   const LEVEL = window.VOKABEL_LEVEL || [];
@@ -921,14 +921,14 @@
     setTimeout(()=>{ halter.classList.add('holt'); schrei(); }, 300);
 
     // 3. Unten angekommen: Schwingen anlegen und zuschnappen (bei 44 bis 62 % von 2,9 s)
-    setTimeout(()=>halter.classList.add('sitzt'), 300 + 2900 * 0.45);
+    setTimeout(()=>halter.classList.add('sitzt'), 300 + 2900 * 0.49);
     setTimeout(()=>{
       ware.classList.add('weg');
       klang('muenze');
       if(a.effekt === 'feuer') feuerStoss();
       if(a.effekt === 'knacken'){ klang('tipp'); setTimeout(()=>klang('tipp'), 130); }
-    }, 300 + 2900 * 0.50);
-    setTimeout(()=>halter.classList.remove('sitzt'), 300 + 2900 * 0.60);
+    }, 300 + 2900 * 0.57);
+    setTimeout(()=>halter.classList.remove('sitzt'), 300 + 2900 * 0.65);
 
     // 4. Zurueck auf der Stange: danken und Sonderschau
     setTimeout(()=>{
