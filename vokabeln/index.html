@@ -125,6 +125,42 @@
   @keyframes lodern{0%{transform:scale(.2) translateX(10px);opacity:0}
                     25%{opacity:1}
                     100%{transform:scale(1.5) translateX(-26px);opacity:0}}
+  /* ---- Bewegung im Spiel ---- */
+  /* Falsch: das Feld wackelt kurz */
+  @keyframes wackeln{0%,100%{transform:translateX(0)}15%{transform:translateX(-9px)}
+    30%{transform:translateX(8px)}45%{transform:translateX(-6px)}60%{transform:translateX(5px)}80%{transform:translateX(-2px)}}
+  input.falsch{animation:wackeln .45s}
+  /* Richtig: kurz aufpoppen */
+  @keyframes poppen{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+  input.ok{animation:poppen .35s}
+  /* Der grosse Haken fliegt herein */
+  .haken{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%);font-size:84px;z-index:60;
+         pointer-events:none;animation:hakenrein .75s forwards}
+  @keyframes hakenrein{0%{transform:translate(-50%,-50%) scale(.3) rotate(-25deg);opacity:0}
+    35%{transform:translate(-50%,-50%) scale(1.15) rotate(4deg);opacity:1}
+    70%{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}
+    100%{transform:translate(-50%,-90%) scale(.9);opacity:0}}
+  /* Punkte und Muenzen fliegen in die Kopfzeile */
+  .flieger{position:fixed;z-index:60;font-size:22px;font-weight:800;pointer-events:none;
+           color:var(--gruen2);text-shadow:0 1px 3px rgba(255,255,255,.9)}
+  /* Jede Frage blendet sanft ein */
+  @keyframes reinschieben{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}
+  .frage, .hoerbox, #rueckmeldung{animation:reinschieben .3s}
+  /* Die Zahlen oben hüpfen, wenn sie sich ändern */
+  @keyframes zaehlerhops{0%,100%{transform:scale(1)}45%{transform:scale(1.22)}}
+  .stats span.hops{animation:zaehlerhops .4s}
+  /* Levelkreise poppen beim Zeichnen der Karte auf */
+  @keyframes kreisauf{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}
+    70%{transform:translate(-50%,-50%) scale(1.1)}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+  .lvl{animation:kreisauf .42s backwards}
+  /* Konfetti am Levelende */
+  .konfetti{position:fixed;inset:0;z-index:55;pointer-events:none;overflow:hidden}
+  .konfetti i{position:absolute;top:-24px;width:10px;height:16px;border-radius:2px;
+              animation:rieseln 2.6s linear forwards}
+  @keyframes rieseln{0%{transform:translateY(-20px) rotate(0);opacity:1}
+    100%{transform:translateY(105vh) rotate(720deg);opacity:.9}}
+  /* Der Fortschrittsbalken bekommt einen Glanz */
+  .fortschritt i{position:relative;overflow:hidden}
   .pablo-funken circle{animation:funkeln 2.6s ease-in-out infinite}
   .pablo-funken circle:nth-child(2n){animation-delay:.8s}
   .pablo-funken circle:nth-child(3n){animation-delay:1.6s}
@@ -673,6 +709,60 @@
     return emoji ? '<span class="emoji">'+emoji+'</span>' : '';
   }
 
+  // ---------- Kleine Bewegungen ----------
+  // Ein grosser Haken fliegt kurz ueber den Bildschirm.
+  function hakenZeigen(){
+    const h = document.createElement('div');
+    h.className = 'haken'; h.textContent = '✅';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(), 800);
+  }
+
+  // Punkte und Muenzen fliegen von der Mitte in die Kopfzeile.
+  function fliegenLassen(text, zielId, farbe){
+    const ziel = $(zielId);
+    if(!ziel) return;
+    const z = ziel.getBoundingClientRect();
+    const f = document.createElement('div');
+    f.className = 'flieger';
+    f.textContent = text;
+    if(farbe) f.style.color = farbe;
+    f.style.left = (window.innerWidth / 2 - 20) + 'px';
+    f.style.top  = (window.innerHeight * 0.42) + 'px';
+    f.style.transition = 'transform .75s cubic-bezier(.3,.9,.4,1), opacity .75s';
+    document.body.appendChild(f);
+    requestAnimationFrame(()=>{
+      const a = f.getBoundingClientRect();
+      f.style.transform = 'translate(' + (z.left + z.width/2 - a.left - a.width/2) + 'px,'
+                        + (z.top + z.height/2 - a.top) + 'px) scale(.55)';
+      f.style.opacity = '0';
+    });
+    setTimeout(()=>{ f.remove(); hopsen(zielId); }, 760);
+  }
+  function hopsen(id){
+    const e = $(id); if(!e) return;
+    e.classList.remove('hops'); void e.offsetWidth; e.classList.add('hops');
+    setTimeout(()=>e.classList.remove('hops'), 420);
+  }
+
+  // Konfetti, wenn ein Level geschafft ist.
+  function konfetti(anzahl){
+    const farben = ['#3f9d4a','#f4c542','#3b82f6','#e8342a','#8b6cf0','#2ec4b6'];
+    const feld = document.createElement('div');
+    feld.className = 'konfetti';
+    for(let i = 0; i < anzahl; i++){
+      const t = document.createElement('i');
+      t.style.left = Math.random() * 100 + '%';
+      t.style.background = farben[i % farben.length];
+      t.style.animationDelay = (Math.random() * 0.7) + 's';
+      t.style.animationDuration = (2 + Math.random() * 1.4) + 's';
+      t.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+      feld.appendChild(t);
+    }
+    document.body.appendChild(feld);
+    setTimeout(()=>feld.remove(), 4200);
+  }
+
   // ---------- Kopfzeile ----------
   function kopf(){
     $('hdName').textContent = S.name ? '· '+S.name : '';
@@ -705,6 +795,7 @@
       d.className = 'lvl ' + (s ? 'fertig' : offen ? 'offen' : 'zu');
       const p = POS[i] || [22+i*26, 74-i*28];
       d.style.left = p[0]+'%'; d.style.top = p[1]+'%';
+      d.style.animationDelay = (i * 0.09) + 's';
       d.innerHTML = (offen ? (i+1) : '🔒') + (s ? '<div class="sterne">'+'★'.repeat(s)+'</div>' : '');
       d.onclick = offen ? (()=>starteLevel(i)) : (()=>{
         // Niemanden aussperren: wer gleich diese Seite lernen muss, darf sofort hinein.
@@ -1069,6 +1160,9 @@
       $('rmPlus').className='plus'; $('rmPlus').textContent = '+'+p+' Punkte' + (m ? ' · +1 Münze' : '');
       klang('richtig'); if(m) setTimeout(()=>klang('muenze'), 150);
       pabloFreuen(erst ? 3 : 1);
+      if(erst) hakenZeigen();
+      fliegenLassen('+' + p + ' ⭐', 'stPunkte');
+      if(m) setTimeout(()=>fliegenLassen('+1 🪙', 'stMuenzen', '#b8860b'), 170);
       $('rmWarum').style.display='none'; $('rmEsel').style.display='none';
     } else {
       inp.className='falsch';
@@ -1102,8 +1196,10 @@
     $('endeSterne').textContent = '★'.repeat(sterne) + '☆'.repeat(3-sterne);
     $('endeRichtig').textContent = G.richtigErst+' von '+gesamt;
     $('endePunkte').textContent = '+'+G.punkte+' Punkte · +'+G.muenzen+' Münzen';
-    if(sterne >= 2){ klang('fertig'); muenzregen(Math.min(12, G.muenzen)); }
-    else klang('schade');
+    if(sterne >= 2){
+      klang('fertig'); muenzregen(Math.min(12, G.muenzen));
+      setTimeout(()=>konfetti(sterne === 3 ? 70 : 45), 150);
+    } else klang('schade');
     $('endeFehler').innerHTML = G.fehler.length
       ? '<p class="muted" style="text-align:left"><b>Nochmal anschauen:</b></p><ul class="liste" style="text-align:left">'+
         G.fehler.map(w=>'<li>'+esc(w.de)+' → <b>'+esc(loesungen(w)[0])+'</b></li>').join('')+'</ul>'
