@@ -266,6 +266,15 @@
   @keyframes preisrein{0%{transform:scale(.2) rotate(-25deg);opacity:0}
                        70%{transform:scale(1.18) rotate(6deg);opacity:1}100%{transform:scale(1) rotate(0)}}
 
+  .turnieruhr{display:flex;justify-content:space-between;align-items:center;font-weight:800;
+              font-size:16px;color:var(--gruen2);background:#eefbee;border-radius:10px;
+              padding:6px 12px;margin-bottom:8px}
+  .turnieruhr b{font-variant-numeric:tabular-nums}
+  .turnierstand{background:#f7faf5;border-radius:12px;padding:10px 12px;margin:8px 0;font-size:15px}
+  .turnierstand b{color:var(--gruen2)}
+  #turnierListe td{padding:8px 6px}
+  #turnierListe .pl{width:38px;font-weight:800}
+  #turnierListe .za{text-align:right;white-space:nowrap}
   .feldname{display:block;font-size:14px;color:var(--muted);margin:12px 0 4px;font-weight:600}
   .zeile{display:flex;gap:8px;align-items:stretch}
   .zeile input{flex:1}
@@ -499,8 +508,28 @@
       <p class="muted" style="margin-top:10px">Gelb = offen · Grün = geschafft · Grau = noch gesperrt. Mit 80 % beim ersten Versuch richtig geht das nächste Level auf.</p>
       <p class="muted" id="modusHinweis"></p>
     </div>
+    <button id="btnTurnier">🏆 Vokabel-Champion</button>
     <button class="sek" id="btnEigene">✍️ Eigene Vokabeln</button>
     <button class="sek" id="btnWelt">🗺️ Weltkarte ansehen</button>
+  </section>
+
+  <!-- TURNIER -->
+  <section id="sTurnier" class="screen">
+    <div class="card">
+      <h2>🏆 Vokabel-Champion</h2>
+      <p class="muted">Zehn Wörter, so schnell und so richtig wie möglich. Jeder darf so oft
+         antreten, wie er will. Gezählt wird die beste Runde des Tages. Wer am Abend oben steht,
+         ist Champion.</p>
+      <div class="turnierstand" id="turnierMein"></div>
+      <button id="btnTurnierStart">Jetzt antreten</button>
+      <p class="muted" id="turnierGestern"></p>
+    </div>
+    <div class="card">
+      <h2 id="turnierTag">Heute</h2>
+      <table id="turnierListe"></table>
+      <p class="muted" id="turnierHinweis"></p>
+    </div>
+    <button class="sek" id="btnTurnierZu">Zurück</button>
   </section>
 
   <!-- BELOHNUNGSSTERN -->
@@ -560,6 +589,7 @@
   <section id="sSpiel" class="screen">
     <div class="card">
       <div class="fortschritt"><i id="balken"></i></div>
+      <div class="turnieruhr" id="turnierUhr" style="display:none"></div>
       <div class="muted" id="lvlTitel"></div>
 
       <!-- Modus Schreiben -->
@@ -637,13 +667,13 @@
 </main>
 <footer>Vokabel-Land · Testversion</footer>
 
-<script src="vokabeln.js?v=202610191546"></script>
-<script src="bilder.js?v=202610191546"></script>
-<script src="emojis.js?v=202610191546"></script>
-<script src="papagei.js?v=202610191546"></script>
-<script src="welt.js?v=202610191546"></script>
-<script src="abzeichen.js?v=202610191546"></script>
-<script src="belohnung.js?v=202610191546"></script>
+<script src="vokabeln.js?v=202610191550"></script>
+<script src="bilder.js?v=202610191550"></script>
+<script src="emojis.js?v=202610191550"></script>
+<script src="papagei.js?v=202610191550"></script>
+<script src="welt.js?v=202610191550"></script>
+<script src="abzeichen.js?v=202610191550"></script>
+<script src="belohnung.js?v=202610191550"></script>
 <script>
 (function(){
   const BUCH_LEVEL = window.VOKABEL_LEVEL || [];
@@ -903,6 +933,128 @@
     if(gezeichnet) return gezeichnet;
     const emoji = (window.VOKABEL_EMOJI || {})[k];
     return emoji ? '<span class="emoji">'+emoji+'</span>' : '';
+  }
+
+  // ---------- Vokabel-Champion ----------
+  // Zehn Woerter aus allen Leveln, auf Zeit. Je Tag zaehlt die beste Runde.
+  // Punkte = richtig mal 10, plus Zeitbonus. Wer schneller ist, steht vorn.
+  const TURNIER_WOERTER = 10;
+
+  function alleWoerter(){
+    const alle = [];
+    LEVEL.forEach(lv => lv.woerter.forEach(w => alle.push(w)));
+    return alle;
+  }
+
+  function zeitText(ms){
+    const sek = Math.round(ms / 100) / 10;
+    return sek.toFixed(1).replace('.', ',') + ' s';
+  }
+
+  async function zeigeTurnier(){
+    const meins = S.turnierHeute;
+    const heute = new Date().toISOString().slice(0,10);
+    $('turnierMein').innerHTML = (meins && meins.tag === heute)
+      ? 'Deine beste Runde heute: <b>' + meins.punkte + ' Punkte</b> · '
+        + meins.richtig + ' von ' + meins.gesamt + ' richtig · ' + zeitText(meins.zeit)
+        + '<br><span class="muted">Noch eine Runde? Nur bessere Ergebnisse zählen.</span>'
+      : 'Du bist heute noch nicht angetreten.';
+    $('btnTurnierStart').textContent = (meins && meins.tag === heute) ? 'Nochmal antreten' : 'Jetzt antreten';
+
+    try {
+      const antwort = await fetch(SERVER + '/turnier', { cache: 'no-store' });
+      const d = await antwort.json();
+      const liste = (d && d.liste) || [];
+      $('turnierTag').textContent = 'Heute, ' + (d.tag || '');
+      if(!liste.length){
+        $('turnierListe').innerHTML = '';
+        $('turnierHinweis').textContent = 'Heute ist noch niemand angetreten. Sei der Erste!';
+      } else {
+        const kronen = ['🥇','🥈','🥉'];
+        $('turnierListe').innerHTML = liste.map((e,i)=>{
+          const ich = S.name && e.name.toLowerCase() === S.name.toLowerCase();
+          return '<tr' + (ich ? ' style="background:#eefbee;font-weight:800"' : '') + '>'
+            + '<td class="pl">' + (kronen[i] || (i+1) + '.') + '</td>'
+            + '<td>' + esc(e.name) + (ich ? ' (du)' : '') + '</td>'
+            + '<td class="za">' + e.punkte + ' P · ' + e.richtig + '/' + e.gesamt
+            + ' · ' + zeitText(e.zeit_ms) + '</td></tr>';
+        }).join('');
+        $('turnierHinweis').textContent = liste.length + ' heute dabei. Gewertet wird die beste Runde.';
+      }
+      $('turnierGestern').textContent = d.gestern
+        ? '🏆 Champion von gestern: ' + d.gestern.name + ' mit ' + d.gestern.punkte + ' Punkten.'
+        : '';
+    } catch(e){
+      $('turnierHinweis').textContent = 'Die Turnierliste ist gerade nicht erreichbar.';
+    }
+  }
+
+  function starteTurnier(){
+    const alle = alleWoerter();
+    if(alle.length < 4){ meldung({en:'Not enough words yet.', de:'Noch zu wenige Wörter.'}); return; }
+    const reihe = mischen(alle).slice(0, Math.min(TURNIER_WOERTER, alle.length));
+    G = { i: -1, modus: 'schreiben', turnier: true, name: '🏆 Vokabel-Champion',
+          reihe: reihe, pos: 0, ersterVersuch: new Set(reihe), richtigErst: 0,
+          punkte: 0, muenzen: 0, fehler: [], wiederholung: [], start: Date.now(), gesamt: reihe.length };
+    $('frageBlock').style.display = '';
+    $('hoerBlock').style.display = 'none';
+    $('keinTon').style.display = 'none';
+    $('turnierUhr').style.display = '';
+    zeige('sSpiel');
+    uhrLaeuft = true;
+    uhrTakt();
+    naechsteFrage();
+  }
+
+  let uhrLaeuft = false;
+  function uhrTakt(){
+    if(!uhrLaeuft || !G || !G.turnier) return;
+    const sek = (Date.now() - G.start) / 1000;
+    $('turnierUhr').innerHTML = '<span>Wort ' + Math.min(G.pos + 1, G.gesamt) + ' von ' + G.gesamt + '</span>'
+      + '<b>' + sek.toFixed(1).replace('.', ',') + ' s</b>';
+    requestAnimationFrame(uhrTakt);
+  }
+
+  async function turnierEnde(){
+    uhrLaeuft = false;
+    const zeit = Date.now() - G.start;
+    const richtig = G.richtigErst, gesamt = G.gesamt;
+    // Punkte: jedes gleich richtige Wort 10, dazu ein Bonus fuer Tempo
+    const tempoBonus = Math.max(0, Math.round((gesamt * 9000 - zeit) / 1000));
+    const punkte = richtig * 10 + (richtig === gesamt ? tempoBonus : Math.round(tempoBonus / 2));
+    const heute = new Date().toISOString().slice(0,10);
+    const besser = !S.turnierHeute || S.turnierHeute.tag !== heute || punkte > S.turnierHeute.punkte;
+    if(besser) S.turnierHeute = { tag: heute, punkte: punkte, richtig: richtig, gesamt: gesamt, zeit: zeit };
+
+    // Belohnung fuers Mitmachen
+    S.muenzen += 5 + richtig;
+    S.sterneFrei = (S.sterneFrei != null ? S.sterneFrei : S.punkte) + richtig * 2;
+    S.punkte += richtig * 2;
+    speichere(); kopf();
+
+    $('turnierUhr').style.display = 'none';
+    $('endeTitel').textContent = '🏆 Deine Runde';
+    $('endeSterne').textContent = punkte + ' Punkte';
+    $('endeRichtig').textContent = richtig + ' von ' + gesamt;
+    $('endePunkte').textContent = 'in ' + zeitText(zeit) + ' · +' + (5 + richtig) + ' 🪙 · +'
+      + (richtig * 2) + ' ⭐';
+    $('endeFehler').innerHTML = G.fehler.length
+      ? '<p class="muted" style="text-align:left"><b>Diese saßen noch nicht:</b></p><ul class="liste" style="text-align:left">'
+        + G.fehler.map(w=>'<li>'+esc(w.de)+' → <b>'+esc(loesungen(w)[0])+'</b></li>').join('') + '</ul>'
+      : '<p>Alles richtig! Stark.</p>';
+    $('btnNochmal').textContent = 'Nochmal antreten';
+    $('btnKarte').textContent = 'Zur Turnierliste';
+    zeige('sEnde');
+    klang(richtig >= gesamt * 0.8 ? 'fertig' : 'schade');
+    if(richtig >= gesamt * 0.8) konfetti(50);
+
+    // Ergebnis melden, wenn angemeldet
+    if(S.name && S.zahl){
+      try {
+        await ruf('/turnier-melden', { name: S.name, pin: S.zahl, punkte: punkte,
+                                       richtig: richtig, gesamt: gesamt, zeit_ms: zeit });
+      } catch(e){}
+    }
   }
 
   // ---------- Der Belohnungsstern ----------
@@ -1632,6 +1784,9 @@
     $('hoerBlock').style.display  = hoeren ? '' : 'none';
     $('keinTon').style.display    = (hoeren && !tonMoeglich()) ? '' : 'none';
     $('rgTempo').value = tempoStufe(); zeigeTempo();
+    $('turnierUhr').style.display = 'none';
+    $('btnNochmal').textContent = 'Nochmal spielen';
+    $('btnKarte').textContent = 'Zur Karte';
     zeige('sSpiel');
     naechsteFrage();
   }
@@ -1640,13 +1795,14 @@
   function naechsteFrage(){
     stoppeTon();
     if(G.pos >= G.reihe.length){
+      if(G.turnier) return turnierEnde();      // im Turnier gibt es keinen zweiten Versuch
       if(G.wiederholung.length){ G.reihe = G.reihe.concat(mischen(G.wiederholung)); G.wiederholung = []; }
       else return ende();
     }
     const w = aktuell();
-    const gesamt = LEVEL[G.i].woerter.length;
+    const gesamt = G.turnier ? G.gesamt : LEVEL[G.i].woerter.length;
     $('balken').style.width = Math.max(0, Math.min(100, Math.round(100*(gesamt - offeneWoerter())/gesamt)))+'%';
-    $('lvlTitel').textContent = G.name + ' · noch ' + offeneWoerter() + ' Wörter';
+    $('lvlTitel').textContent = G.turnier ? G.name : (G.name + ' · noch ' + offeneWoerter() + ' Wörter');
     $('eingabe').style.display=''; $('rueckmeldung').style.display='none';
     const inp=$('inWort'); inp.value=''; inp.className=''; inp.disabled=false;
     if(G.modus === 'hoeren'){
@@ -1691,7 +1847,7 @@
     } else {
       inp.className='falsch';
       if(erst) G.fehler.push(w);
-      G.wiederholung.push(w);
+      if(!G.turnier) G.wiederholung.push(w);   // im Turnier geht es gleich weiter
       // markiere() mit vertauschten Woertern zeigt die Buchstaben, die zu VIEL getippt wurden
       $('rmText').innerHTML = 'Du hast „' + markiere(tipp, loesungen(w)[0]) + '“ geschrieben. Richtig ist:';
       $('rmWort').innerHTML = markiere(norm(loesungen(w)[0]), inp.value);
@@ -1710,6 +1866,7 @@
 
   function ende(){
     stoppeTon();
+    if(G && G.turnier) return turnierEnde();
     const gesamt = LEVEL[G.i].woerter.length;
     const sterne = G.richtigErst>=gesamt ? 3 : G.richtigErst>=Math.ceil(gesamt*0.8) ? 2 : G.richtigErst>=Math.ceil(gesamt*0.5) ? 1 : 0;
     const st = S.level[G.i] || {sterne:0,best:0,sterneH:0,bestH:0};
@@ -1803,6 +1960,9 @@
     sternAntippen();
   };
   $('sternHalter').onclick = ()=>{ if(sternZustand !== 'offen') sternAntippen(); };
+  $('btnTurnier').onclick   = ()=>{ zeigeTurnier(); zeige('sTurnier'); window.scrollTo(0,0); };
+  $('btnTurnierZu').onclick = ()=>{ zeichneKarte(); zeige('sKarte'); };
+  $('btnTurnierStart').onclick = starteTurnier;
   $('btnEigene').onclick = ()=>{ zeigeEigene(); zeige('sEigene'); window.scrollTo(0,0); };
   $('btnEigZu').onclick  = ()=>{ levelNeuBauen(); zeichneKarte(); zeige('sKarte'); };
   $('btnEigAdd').onclick = eigeneHinzu;
@@ -1842,8 +2002,11 @@
   $('inWort').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); pruefen(); } });
   $('btnWeiter').onclick = weiter;
   $('btnAbbruch').onclick = ()=>{ zeichneKarte(); zeige('sKarte'); };
-  $('btnNochmal').onclick = ()=>starteLevel(G.i);
-  $('btnKarte').onclick = ()=>{ zeichneKarte(); zeige('sKarte'); };
+  $('btnNochmal').onclick = ()=>{ if(G && G.turnier) starteTurnier(); else starteLevel(G.i); };
+  $('btnKarte').onclick = ()=>{
+    if(G && G.turnier){ zeigeTurnier(); zeige('sTurnier'); window.scrollTo(0,0); return; }
+    zeichneKarte(); zeige('sKarte');
+  };
   // „Alles zurücksetzen" gibt es mit Absicht nicht mehr. Ein versehentlicher Klick
   // haette Punkte, Sterne und den Papagei geloescht.
 
