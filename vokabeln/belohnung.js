@@ -31,19 +31,42 @@ window.BELOHNUNG = (function(){
     let zacken = '';
     for(let i = 0; i < 5; i++) zacken += zacke(i, GOLD, DUNKEL);
     return '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="stern-bild">'
-      + '<defs><radialGradient id="sternGlanz" cx="42%" cy="34%" r="70%">'
-      + '<stop offset="0%" stop-color="#fff6c9"/><stop offset="55%" stop-color="#ffd54a"/>'
-      + '<stop offset="100%" stop-color="#e8920c"/></radialGradient></defs>'
-      // Lichtkranz hinter dem Stern
+      + '<defs>'
+      + '<radialGradient id="sternGlanz" cx="40%" cy="32%" r="72%">'
+      + '<stop offset="0%" stop-color="#fffbe6"/><stop offset="50%" stop-color="#ffd54a"/>'
+      + '<stop offset="100%" stop-color="#e8920c"/></radialGradient>'
+      + '<radialGradient id="sternAura" cx="50%" cy="50%" r="50%">'
+      + '<stop offset="0%" stop-color="#fff6c9" stop-opacity=".55"/>'
+      + '<stop offset="70%" stop-color="#ffd54a" stop-opacity=".18"/>'
+      + '<stop offset="100%" stop-color="#ffd54a" stop-opacity="0"/></radialGradient>'
+      + '</defs>'
+      // Lichtkranz und Strahlen
       + '<g class="sternkranz">'
-      + '<circle cx="100" cy="100" r="92" fill="#ffe9a8" opacity=".18"/>'
-      + '<circle cx="100" cy="100" r="70" fill="#ffd54a" opacity=".14"/>'
+      + '<circle cx="100" cy="100" r="98" fill="url(#sternAura)"/>'
+      + [0,45,90,135,180,225,270,315].map(w =>
+          '<path d="M100 100 L96 2 L104 2 Z" fill="#fff6c9" opacity=".30" transform="rotate('
+          + w + ' 100 100)"/>').join('')
       + '</g>'
       + '<g class="sternkoerper">'
       + zacken
-      + '<circle cx="100" cy="100" r="40" fill="url(#sternGlanz)"/>'
-      + '<path d="M78 76 q16 -12 34 -4 q-18 2 -30 14 Z" fill="#fffdf2" opacity=".75"/>'
-      + '<circle cx="86" cy="88" r="6" fill="#ffffff" opacity=".55"/>'
+      + '<circle cx="100" cy="100" r="44" fill="url(#sternGlanz)"/>'
+      // Gesicht
+      + '<g class="sterngesicht">'
+      + '<g class="sternaugen">'
+      + '<ellipse cx="86" cy="94" rx="7" ry="9" fill="#5a3b06"/>'
+      + '<ellipse cx="114" cy="94" rx="7" ry="9" fill="#5a3b06"/>'
+      + '<circle cx="88.5" cy="90.5" r="2.6" fill="#fff"/>'
+      + '<circle cx="116.5" cy="90.5" r="2.6" fill="#fff"/>'
+      + '</g>'
+      + '<g class="sternzu"><path d="M79 95 q7 -7 14 0 M107 95 q7 -7 14 0" stroke="#5a3b06" '
+      + 'stroke-width="3.4" fill="none" stroke-linecap="round"/></g>'
+      + '<path class="sternmund" d="M86 110 q14 14 28 0 q-14 8 -28 0 Z" fill="#8a5a0a"/>'
+      + '<ellipse cx="74" cy="108" rx="7" ry="5" fill="#ff8f7a" opacity=".55"/>'
+      + '<ellipse cx="126" cy="108" rx="7" ry="5" fill="#ff8f7a" opacity=".55"/>'
+      + '</g>'
+      // Glanzlichter
+      + '<path d="M76 76 q18 -14 38 -5 q-20 2 -33 15 Z" fill="#fffdf2" opacity=".8"/>'
+      + '<circle cx="84" cy="86" r="5" fill="#ffffff" opacity=".5"/>'
       + '</g>'
       + '</svg>';
   }
