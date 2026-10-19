@@ -517,7 +517,6 @@
       <p class="muted" id="modusHinweis"></p>
     </div>
     <button id="btnTurnier">🏆 Vokabel-Champion</button>
-    <button class="sek" id="btnEigene">✍️ Eigene Vokabeln</button>
     <button class="sek" id="btnWelt">🗺️ Weltkarte ansehen</button>
   </section>
 
@@ -549,34 +548,6 @@
       <button id="btnSternAuf">Antippen!</button>
     </div>
   </div>
-
-  <!-- EIGENE VOKABELN -->
-  <section id="sEigene" class="screen">
-    <div class="card">
-      <h2>Deine eigenen Wörter</h2>
-      <p class="muted">Tippe sie ein oder sprich sie ins Mikrofon. Ab 4 Wörtern bekommst du
-         dein eigenes Level auf der Karte.</p>
-
-      <label class="feldname">Deutsch</label>
-      <div class="zeile">
-        <input type="text" id="eigDe" maxlength="40" placeholder="z. B. Hund" autocomplete="off">
-        <button class="mikro" id="mikroDe" title="Deutsch sprechen">🎤</button>
-      </div>
-
-      <label class="feldname">Englisch</label>
-      <div class="zeile">
-        <input type="text" id="eigEn" maxlength="40" placeholder="z. B. dog" autocomplete="off"
-               autocapitalize="off" spellcheck="false">
-        <button class="mikro" id="mikroEn" title="Englisch sprechen">🎤</button>
-      </div>
-
-      <div class="meldung" id="eigMeldung"></div>
-      <button id="btnEigAdd">+ Wort hinzufügen</button>
-      <table id="eigListe"></table>
-      <p class="muted" id="eigAnzahl"></p>
-      <button class="sek" id="btnEigZu">Zurück</button>
-    </div>
-  </section>
 
   <!-- WELTKARTE -->
   <section id="sWelt" class="screen">
@@ -675,13 +646,13 @@
 </main>
 <footer>Vokabel-Land · Testversion</footer>
 
-<script src="vokabeln.js?v=202610191552"></script>
-<script src="bilder.js?v=202610191552"></script>
-<script src="emojis.js?v=202610191552"></script>
-<script src="papagei.js?v=202610191552"></script>
-<script src="welt.js?v=202610191552"></script>
-<script src="abzeichen.js?v=202610191552"></script>
-<script src="belohnung.js?v=202610191552"></script>
+<script src="vokabeln.js?v=202610191554"></script>
+<script src="bilder.js?v=202610191554"></script>
+<script src="emojis.js?v=202610191554"></script>
+<script src="papagei.js?v=202610191554"></script>
+<script src="welt.js?v=202610191554"></script>
+<script src="abzeichen.js?v=202610191554"></script>
+<script src="belohnung.js?v=202610191554"></script>
 <script>
 (function(){
   const BUCH_LEVEL = window.VOKABEL_LEVEL || [];
@@ -689,13 +660,10 @@
   // auch die selbst eingetragenen als letztes Level.
   let LEVEL = BUCH_LEVEL.slice();
   function levelNeuBauen(){
+    // Die selbst eingetragenen Woerter sind auf Claudios Wunsch wieder raus.
+    // Die Eingabe-Ansicht und ihre Knoepfe sind entfernt; was Kinder bereits
+    // eingetragen hatten, bleibt in ihrem Spielstand unberuehrt liegen.
     LEVEL = BUCH_LEVEL.slice();
-    const eigene = Array.isArray(S.eigene) ? S.eigene : [];
-    if(eigene.length >= 4){
-      LEVEL.push({ name: 'Level ' + (BUCH_LEVEL.length + 1) + ' · Meine Wörter',
-                   eigen: true,
-                   woerter: eigene.map(w => ({ de: w.de, en: w.en })) });
-    }
   }
   const $ = id => document.getElementById(id);
   const KEY = 'vokabelland';
@@ -1256,91 +1224,6 @@
     if(id !== 'sSpiel') stoppeTon();
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
     $(id).classList.add('on'); kopf();
-  }
-
-  // ---------- Eigene Vokabeln ----------
-  // Gespeichert als Liste {de, en}. Ab vier Woertern erscheinen sie als eigenes
-  // Level auf der Karte und lassen sich spielen wie jedes andere.
-  function eigeneWoerter(){
-    if(!Array.isArray(S.eigene)) S.eigene = [];
-    return S.eigene;
-  }
-  function eigMeldung(art, text){
-    const m = $('eigMeldung');
-    m.className = 'meldung an ' + art;
-    m.textContent = text;
-    clearTimeout(eigMeldung._t);
-    eigMeldung._t = setTimeout(()=>{ m.className = 'meldung'; }, 4000);
-  }
-  function zeigeEigene(){
-    const liste = eigeneWoerter();
-    $('eigListe').innerHTML = liste.map((w,i)=>
-      '<tr><td>' + esc(w.de) + '</td><td><b>' + esc(w.en) + '</b></td>'
-      + '<td class="loesch"><button data-weg="' + i + '">✕</button></td></tr>').join('');
-    $('eigListe').querySelectorAll('button').forEach(b=>{
-      b.onclick = ()=>{
-        liste.splice(parseInt(b.dataset.weg,10), 1);
-        speichere(); levelNeuBauen(); zeigeEigene();
-      };
-    });
-    $('eigAnzahl').textContent = liste.length === 0 ? 'Noch keine eigenen Wörter.'
-      : liste.length < 4 ? liste.length + ' von mindestens 4 Wörtern. Noch ' + (4 - liste.length) + ' dazu.'
-      : liste.length + ' Wörter. Dein Level „Meine Wörter" steht auf der Karte bereit.';
-  }
-  function eigeneHinzu(){
-    const de = $('eigDe').value.trim();
-    const en = $('eigEn').value.trim();
-    if(de.length < 2 || en.length < 1){
-      eigMeldung('fehler', 'Bitte beides ausfüllen: das deutsche und das englische Wort.');
-      return;
-    }
-    const liste = eigeneWoerter();
-    if(liste.some(w => norm(w.en) === norm(en))){
-      eigMeldung('fehler', '„' + en + '" steht schon in deiner Liste.');
-      return;
-    }
-    liste.push({ de: de, en: en });
-    speichere(); levelNeuBauen();
-    $('eigDe').value = ''; $('eigEn').value = '';
-    $('eigDe').focus();
-    eigMeldung('ok', '„' + de + ' → ' + en + '" ist dazugekommen.');
-    klang('richtig');
-    zeigeEigene();
-  }
-
-  // Mikrofon. Die Spracherkennung steckt im Browser, kostet nichts und braucht
-  // nur einmal die Erlaubnis. Gibt es sie nicht, bleibt das Tippen.
-  let hoertGerade = null;
-  function diktieren(feldId, sprache, knopfId){
-    const Erkennung = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if(!Erkennung){
-      eigMeldung('warte', 'Dieses Gerät kann nicht zuhören. Tipp die Wörter bitte ein.');
-      return;
-    }
-    if(hoertGerade){ try{ hoertGerade.stop(); }catch(e){} hoertGerade = null; }
-    const knopf = $(knopfId);
-    const e = new Erkennung();
-    e.lang = sprache;
-    e.interimResults = false;
-    e.maxAlternatives = 1;
-    hoertGerade = e;
-    knopf.classList.add('hoert');
-    eigMeldung('warte', 'Ich höre zu … sprich jetzt das Wort.');
-    e.onresult = (ereignis)=>{
-      let text = (ereignis.results[0][0].transcript || '').trim();
-      text = text.replace(/[.,!?;:]+$/, '');
-      if(sprache.indexOf('en') === 0) text = text.toLowerCase();
-      $(feldId).value = text;
-      eigMeldung('ok', 'Verstanden: „' + text + '". Stimmt das? Sonst tipp es um.');
-      klang('tipp');
-    };
-    e.onerror = (f)=>{
-      eigMeldung('fehler', f.error === 'not-allowed'
-        ? 'Das Mikrofon ist nicht erlaubt. Erlaub es oben im Browser, oder tipp die Wörter.'
-        : 'Ich habe nichts verstanden. Probier es nochmal oder tipp es ein.');
-    };
-    e.onend = ()=>{ knopf.classList.remove('hoert'); hoertGerade = null; };
-    try{ e.start(); }catch(err){ knopf.classList.remove('hoert'); }
   }
 
   // ---------- Karte ----------
@@ -1971,13 +1854,6 @@
   $('btnTurnier').onclick   = ()=>{ zeigeTurnier(); zeige('sTurnier'); window.scrollTo(0,0); };
   $('btnTurnierZu').onclick = ()=>{ zeichneKarte(); zeige('sKarte'); };
   $('btnTurnierStart').onclick = starteTurnier;
-  $('btnEigene').onclick = ()=>{ zeigeEigene(); zeige('sEigene'); window.scrollTo(0,0); };
-  $('btnEigZu').onclick  = ()=>{ levelNeuBauen(); zeichneKarte(); zeige('sKarte'); };
-  $('btnEigAdd').onclick = eigeneHinzu;
-  $('mikroDe').onclick   = ()=>diktieren('eigDe', 'de-DE', 'mikroDe');
-  $('mikroEn').onclick   = ()=>diktieren('eigEn', 'en-GB', 'mikroEn');
-  $('eigDe').addEventListener('keydown', e=>{ if(e.key==='Enter') $('eigEn').focus(); });
-  $('eigEn').addEventListener('keydown', e=>{ if(e.key==='Enter') eigeneHinzu(); });
   $('btnWelt').onclick   = ()=>{ zeigeWelt(); zeige('sWelt'); window.scrollTo(0,0); };
   $('btnWeltZu').onclick = ()=>{ zeichneKarte(); zeige('sKarte'); };
   $('btnName').onclick = ()=>{
