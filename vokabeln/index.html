@@ -338,6 +338,7 @@
         <span>Zahl:</span> <b id="kontoZahl">••••</b>
         <button class="sek" id="btnZahl" style="width:auto;margin:0;padding:6px 12px;font-size:14px">zeigen</button>
       </div>
+      <p class="muted" id="sterneErklaert"></p>
       <p class="muted">Mit Spitzname und Zahl kommst du auf jedem Gerät an deinen Stand.</p>
     </div>
     </div>
@@ -349,8 +350,7 @@
       <h3 class="shoptitel">🪙 Zum Essen und für den Käfig</h3>
       <div class="shop" id="shopListe"></div>
       <h3 class="shoptitel">⭐ Zum Anziehen für <span id="shopName"></span></h3>
-      <p class="muted">Das bezahlst du mit Sternen. Deine gesammelten Sterne in der Rangliste
-         bleiben davon unberührt.</p>
+      <p class="muted" id="shopSterne"></p>
       <div class="shop" id="anziehListe"></div>
       <button class="sek" id="btnShopZu">Schließen</button>
     </div>
@@ -474,12 +474,12 @@
 </main>
 <footer>Vokabel-Land · Testversion</footer>
 
-<script src="vokabeln.js?v=202610191518"></script>
-<script src="bilder.js?v=202610191518"></script>
-<script src="emojis.js?v=202610191518"></script>
-<script src="papagei.js?v=202610191518"></script>
-<script src="welt.js?v=202610191518"></script>
-<script src="abzeichen.js?v=202610191518"></script>
+<script src="vokabeln.js?v=202610191527"></script>
+<script src="bilder.js?v=202610191527"></script>
+<script src="emojis.js?v=202610191527"></script>
+<script src="papagei.js?v=202610191527"></script>
+<script src="welt.js?v=202610191527"></script>
+<script src="abzeichen.js?v=202610191527"></script>
 <script>
 (function(){
   const LEVEL = window.VOKABEL_LEVEL || [];
@@ -787,7 +787,9 @@
   function kopf(){
     $('hdName').textContent = S.name ? '· '+S.name : '';
     $('stMuenzen').textContent = '🪙 '+S.muenzen;
-    $('stPunkte').textContent  = '⭐ '+(S.sterneFrei != null ? S.sterneFrei : S.punkte);
+    const frei = S.sterneFrei != null ? S.sterneFrei : S.punkte;
+    $('stPunkte').textContent = '⭐ ' + frei + ' frei';
+    $('stPunkte').title = 'Noch frei zum Ausgeben. Insgesamt gesammelt: ' + S.punkte;
   }
   function zeige(id){
     if(id !== 'sSpiel') stoppeTon();
@@ -831,6 +833,9 @@
       k.appendChild(n);
     });
     $('rang').innerHTML = '<tr><td>1.</td><td>'+esc(S.name||'Du')+'</td><td class="r">'+S.punkte+' ⭐</td></tr>';
+    const freiJetzt = S.sterneFrei != null ? S.sterneFrei : S.punkte;
+    $('sterneErklaert').textContent = 'Du hast ⭐ ' + S.punkte + ' Sterne gesammelt, davon sind '
+      + freiJetzt + ' noch frei zum Ausgeben. In der Rangliste zählen immer alle gesammelten.';
     $('kontoName').textContent = S.name || '—';
     $('kontoZahl').textContent = '••••';
     $('btnZahl').textContent = 'zeigen';
@@ -874,6 +879,10 @@
   function zeigeShop(){
     const p = pabloStand();
     $('shopName').textContent = PAPAGEI.NAME;
+    const freiS = S.sterneFrei != null ? S.sterneFrei : S.punkte;
+    $('shopSterne').textContent = 'Du kannst ⭐ ' + freiS + ' Sterne ausgeben. '
+      + 'Dein Platz in der Rangliste ändert sich dadurch nicht, dort zählen alle '
+      + S.punkte + ' gesammelten Sterne.';
 
     // Zum Anziehen, bezahlt mit Sternen
     const frei = S.sterneFrei != null ? S.sterneFrei : S.punkte;
@@ -1131,7 +1140,7 @@
           + '<div class="abz">' + (window.ABZEICHEN ? ABZEICHEN.svg(i+1) : '') + '</div>'
           + '<div class="vogel">' + pa.bild + '</div>'
           + '<div class="wer">' + esc(e.name) + (ich ? ' (du)' : '') + '</div>'
-          + '<div class="zahlen">' + e.punkte + ' ⭐ · ' + (e.muenzen||0) + ' 🪙</div>'
+          + '<div class="zahlen">' + e.punkte + ' ⭐ gesammelt</div>'
           + '<div class="wie">' + pa.wie + '</div>'
           + '</div>';
       }).join('');
