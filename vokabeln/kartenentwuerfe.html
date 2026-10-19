@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weltkarte – Entwürfe</title>
+<style>
+  :root{ --gruen:#3f9d4a; --gruen2:#2f7d39; --text:#1f2a1f; --muted:#5f6f5f; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+       background:#f3f7ef;color:var(--text)}
+  header{background:var(--gruen);color:#fff;padding:16px 20px}
+  header h1{margin:0;font-size:22px}
+  header p{margin:4px 0 0;font-size:14px;opacity:.9}
+  main{max-width:1100px;margin:0 auto;padding:18px}
+  .karte{background:#fff;border-radius:18px;box-shadow:0 4px 16px rgba(0,0,0,.1);
+         padding:16px;margin-bottom:22px}
+  .karte h2{margin:0 0 2px;font-size:20px}
+  .karte .wie{color:var(--muted);font-size:14px;margin:0 0 12px;line-height:1.4}
+  .bild{border-radius:14px;overflow:hidden;background:#000}
+  .bild svg{width:100%;height:auto;display:block}
+  .nr{display:inline-block;background:var(--gruen);color:#fff;border-radius:999px;
+      padding:2px 11px;font-weight:800;font-size:14px;margin-right:8px}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:10px 20px 30px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Weltkarte – sechs Entwürfe</h1>
+  <p>Alle zeigen dieselben zehn Inseln. Sag mir die Nummer, dann baue ich sie ein.</p>
+</header>
+<main id="raus"></main>
+<footer>Vokabel-Land · Entwürfe vom 19. Oktober</footer>
+
+<script>
+// Die zehn Inseln, wie sie auch im Spiel stehen: unten anfangen, oben ankommen.
+const INSELN = [
+  { id:'smaragd',  name:'Smaragd-Inseln',    stufe:'1. und 2. Klasse', pos:[20,90], f:'#4ec97a', d:'#2a9a52' },
+  { id:'muschel',  name:'Muschelbucht',      stufe:'3. und 4. Klasse', pos:[58,82], f:'#2ec4b6', d:'#149c92' },
+  { id:'sonnen',   name:'Sonnenbucht',       stufe:'5. Klasse',        pos:[25,71], f:'#ffc247', d:'#e08a14' },
+  { id:'nachtwald',name:'Nachtwald',         stufe:'6. Klasse',        pos:[64,62], f:'#8b6cf0', d:'#5633c0' },
+  { id:'sandmeer', name:'Sandmeer',          stufe:'7. Klasse',        pos:[23,53], f:'#e8b06a', d:'#b87c2e' },
+  { id:'korallen', name:'Korallenriff',      stufe:'8. Klasse',        pos:[66,44], f:'#ff5fa2', d:'#d62a75' },
+  { id:'eiskrone', name:'Eiskronen-Gebirge', stufe:'9. Klasse',        pos:[25,34], f:'#79d2ff', d:'#2a86c4' },
+  { id:'schatten', name:'Schattenfelder',    stufe:'10. Klasse',       pos:[66,26], f:'#6e4ad6', d:'#38206e' },
+  { id:'drakon',   name:'Drakonspitze',      stufe:'Meisterprüfung',   pos:[30,16], f:'#ff6a2a', d:'#b32a08' },
+  { id:'himmel',   name:'Himmelsschloss',    stufe:'Das Ziel',         pos:[64,8],  f:'#ffe9a8', d:'#d4a311' }
+];
+// Bis hierher ist man gekommen (zur Ansicht: die dritte Insel)
+const HIER = 2;
+
+function weg(glatt){
+  let d = '';
+  for(let i=0;i<INSELN.length-1;i++){
+    const a = INSELN[i].pos, b = INSELN[i+1].pos;
+    const mx = (a[0]+b[0])/2 + (i%2 ? -(glatt?6:12) : (glatt?6:12));
+    d += 'M'+a[0]+' '+a[1]+' Q'+mx+' '+((a[1]+b[1])/2)+' '+b[0]+' '+b[1]+' ';
+  }
+  return d;
+}
+function beschriftung(i, farbe, stufenfarbe, gr){
+  const r = INSELN[i];
+  return '<text x="'+r.pos[0]+'" y="'+(r.pos[1]+(gr||8))+'" text-anchor="middle" '
+    + 'font-size="3.1" font-weight="800" fill="'+farbe+'">'+r.name+'</text>'
+    + '<text x="'+r.pos[0]+'" y="'+(r.pos[1]+(gr||8)+3.4)+'" text-anchor="middle" '
+    + 'font-size="2.4" fill="'+stufenfarbe+'">'+r.stufe+'</text>';
+}
+function huelle(inhalt){
+  return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">'+inhalt+'</svg>';
+}
+
+// ---------------------------------------------------------------- 1 Schatzkarte
+function schatzkarte(){
+  let s = '<defs>'
+    + '<linearGradient id="perg" x1="0" y1="0" x2="1" y2="1">'
+    + '<stop offset="0%" stop-color="#f4e3bd"/><stop offset="50%" stop-color="#e8d2a4"/>'
+    + '<stop offset="100%" stop-color="#d9bd86"/></linearGradient></defs>'
+    + '<rect width="100" height="100" fill="url(#perg)"/>'
+    // Flecken und Alterung
+    + '<circle cx="14" cy="22" r="9" fill="#c2a271" opacity=".25"/>'
+    + '<circle cx="88" cy="68" r="12" fill="#c2a271" opacity=".2"/>'
+    + '<circle cx="70" cy="12" r="7" fill="#b8956a" opacity=".18"/>'
+    + '<rect x="2" y="2" width="96" height="96" fill="none" stroke="#8b6b3d" stroke-width="1.2"/>'
+    + '<rect x="4.5" y="4.5" width="91" height="91" fill="none" stroke="#8b6b3d" stroke-width=".4"/>'
+    // Wellenlinien im Meer
+    + [18,38,58,78].map(y => '<path d="M8 '+y+' q6 -2 12 0 t12 0 t12 0 t12 0 t12 0 t12 0" '
+        + 'fill="none" stroke="#a98a5c" stroke-width=".35" opacity=".5"/>').join('')
+    // gestrichelter Weg
+    + '<path d="'+weg(false)+'" fill="none" stroke="#8b3a2a" stroke-width=".8" '
+    + 'stroke-dasharray="2 2" stroke-linecap="round"/>';
+  INSELN.forEach((r,i)=>{
+    const x = r.pos[0], y = r.pos[1];
+    s += '<g>'
+      + '<path d="M'+(x-7)+' '+(y+1)+' q-1.5 -4 2 -4.6 q2.6 -3.6 6.4 -1.6 q4 -2.6 6.6 .6 '
+      + 'q3.6 .6 2.6 4 q1 3 -3 3.6 q-5.6 2 -10 .6 q-4 -.6 -4.6 -2.6 Z" '
+      + 'fill="#c8a877" stroke="#7a5a32" stroke-width=".6"/>'
+      + '<path d="M'+(x-4)+' '+(y-1)+' l2 -2 l2 2 l2 -2.4 l2 2.4" fill="none" '
+      + 'stroke="#7a5a32" stroke-width=".4"/>'
+      + (i === HIER ? '<path d="M'+(x-3)+' '+(y-6)+' l6 6 M'+(x+3)+' '+(y-6)+' l-6 6" '
+          + 'stroke="#b3281b" stroke-width="1.1" stroke-linecap="round"/>' : '')
+      + beschriftung(i, '#5a3a18', '#7a5a32')
+      + '</g>';
+  });
+  // Kompassrose und Seeungeheuer
+  s += '<g transform="translate(86,88)">'
+    + '<circle r="7" fill="none" stroke="#8b6b3d" stroke-width=".5"/>'
+    + '<path d="M0 -7 L1.6 0 L0 7 L-1.6 0 Z" fill="#8b3a2a"/>'
+    + '<path d="M-7 0 L0 -1.4 L7 0 L0 1.4 Z" fill="#7a5a32"/>'
+    + '<text y="-8.4" text-anchor="middle" font-size="2.6" font-weight="800" fill="#5a3a18">N</text></g>'
+    + '<path d="M10 64 q3 -4 6 0 q3 4 6 0 q-2 5 -6 5 q-4 0 -6 -5 Z" fill="#8b6b3d" opacity=".35"/>'
+    + '<text x="50" y="97" text-anchor="middle" font-size="3.4" font-weight="800" '
+    + 'fill="#7a5a32" opacity=".8" letter-spacing=".4">VOKABEL-LAND</text>';
+  return huelle(s);
+}
+
+// ---------------------------------------------------------------- 2 Fantasy-Reich
+function fantasy(){
+  let s = '<defs>'
+    + '<radialGradient id="himmel" cx="50%" cy="40%" r="75%">'
+    + '<stop offset="0%" stop-color="#2a4e86"/><stop offset="60%" stop-color="#16305c"/>'
+    + '<stop offset="100%" stop-color="#070e1d"/></radialGradient></defs>'
+    + '<rect width="100" height="100" fill="url(#himmel)"/>'
+    + [[10,8],[88,16],[30,5],[74,30],[6,46],[94,56],[48,22],[18,66],[82,78],[40,92],[62,70],[26,38]]
+        .map(p => '<circle cx="'+p[0]+'" cy="'+p[1]+'" r=".5" fill="#fff" opacity=".55"/>').join('')
+    // Nebelschwaden
+    + '<ellipse cx="30" cy="48" rx="34" ry="12" fill="#3a6aa8" opacity=".14"/>'
+    + '<ellipse cx="72" cy="30" rx="28" ry="10" fill="#4a7ab8" opacity=".12"/>'
+    + '<path d="'+weg(true)+'" fill="none" stroke="#ffd98a" stroke-width=".7" '
+    + 'stroke-dasharray="1.6 2" opacity=".65"/>';
+  INSELN.forEach((r,i)=>{
+    const x = r.pos[0], y = r.pos[1];
+    let form;
+    if(r.id === 'eiskrone')      form = '<path d="M'+(x-9)+' '+(y+3)+' L'+(x-3)+' '+(y-6)+' L'+x+' '+(y-1)+' L'+(x+4)+' '+(y-7)+' L'+(x+9)+' '+(y+3)+' Z" fill="'+r.f+'"/>'
+                                      + '<path d="M'+(x-3)+' '+(y-6)+' L'+(x-1)+' '+(y-3)+' L'+(x+1)+' '+(y-5)+' L'+(x+4)+' '+(y-7)+' L'+(x+2)+' '+(y-2)+' Z" fill="#ffffff" opacity=".85"/>';
+    else if(r.id === 'drakon')   form = '<path d="M'+(x-9)+' '+(y+3)+' L'+(x-1)+' '+(y-8)+' q1 -1 2 0 L'+(x+9)+' '+(y+3)+' Z" fill="'+r.d+'"/>'
+                                      + '<path d="M'+(x-3)+' '+(y-2)+' q3 -5 6 0 q-3 3 -6 0 Z" fill="#ffb648"/>'
+                                      + '<circle cx="'+x+'" cy="'+(y-7)+'" r="1.6" fill="#ffd98a" opacity=".8"/>';
+    else if(r.id === 'himmel')   form = '<path d="M'+(x-10)+' '+(y+2)+' q-2 -5 3 -5 q2 -5 7 -3 q4 -4 8 1 q5 0 3 6 Z" fill="'+r.f+'"/>'
+                                      + '<path d="M'+(x-3)+' '+(y+1)+' v-6 l3 -4 l3 4 v6 Z" fill="#fff6d8"/>'
+                                      + '<path d="M'+(x-1)+' '+(y-9)+' l1 -3 l1 3 Z" fill="#ffd98a"/>';
+    else if(r.id === 'nachtwald' || r.id === 'schatten')
+                                 form = '<path d="M'+(x-9)+' '+(y+3)+' q-2 -4 2 -6 q2 -5 7 -4 q5 -3 8 2 q4 2 1 8 Z" fill="'+r.d+'"/>'
+                                      + [-5,0,5].map(o => '<path d="M'+(x+o)+' '+(y+2)+' l-2.2 -3 h1.2 l-1.6 -2.4 h1.2 l-1 -2 l2.4 0 l-1 2 h1.2 l-1.6 2.4 h1.2 Z" fill="'+r.f+'"/>').join('');
+    else if(r.id === 'sandmeer') form = '<path d="M'+(x-10)+' '+(y+2)+' q-1 -5 4 -5 q4 -4 8 -1 q6 -2 8 3 q2 4 -3 5 Z" fill="'+r.f+'"/>'
+                                      + '<path d="M'+(x-5)+' '+(y+1)+' q3 -3 6 0 M'+(x+2)+' '+(y-1)+' q2 -2 4 0" stroke="'+r.d+'" stroke-width=".5" fill="none"/>';
+    else                         form = '<ellipse cx="'+x+'" cy="'+y+'" rx="9.5" ry="5.5" fill="'+r.d+'"/>'
+                                      + '<ellipse cx="'+x+'" cy="'+(y-1)+'" rx="9" ry="5" fill="'+r.f+'"/>'
+                                      + '<circle cx="'+(x-3)+'" cy="'+(y-2)+'" r="1.6" fill="#ffffff" opacity=".3"/>';
+    s += '<g>' + '<ellipse cx="'+x+'" cy="'+(y+1)+'" rx="13" ry="8" fill="'+r.f+'" opacity=".16"/>'
+      + form
+      + (i === HIER ? '<circle cx="'+x+'" cy="'+y+'" r="12" fill="none" stroke="#ffd98a" '
+          + 'stroke-width=".7" stroke-dasharray="1.5 1.5"/>' : '')
+      + beschriftung(i, '#ffffff', '#b9cbe4', 9) + '</g>';
+  });
+  s += '<text x="50" y="5.5" text-anchor="middle" font-size="4.4" font-weight="800" '
+    + 'fill="#ffd98a" letter-spacing=".5">VOKABEL-LAND</text>';
+  return huelle(s);
+}
+
+// ---------------------------------------------------------------- 3 Spielbrett
+function spielbrett(){
+  let s = '<defs><linearGradient id="brett" x1="0" y1="0" x2="0" y2="1">'
+    + '<stop offset="0%" stop-color="#bfe9ff"/><stop offset="55%" stop-color="#d8f3c8"/>'
+    + '<stop offset="100%" stop-color="#a8dd92"/></linearGradient></defs>'
+    + '<rect width="100" height="100" fill="url(#brett)"/>'
+    + '<circle cx="84" cy="14" r="7" fill="#ffe066"/><circle cx="84" cy="14" r="10" fill="#ffe066" opacity=".3"/>'
+    + '<ellipse cx="20" cy="18" rx="11" ry="5" fill="#fff" opacity=".8"/>'
+    + '<ellipse cx="28" cy="16" rx="7" ry="4" fill="#fff" opacity=".8"/>'
+    + '<ellipse cx="70" cy="50" rx="9" ry="4" fill="#fff" opacity=".55"/>'
+    // breiter Weg mit Rand
+    + '<path d="'+weg(true)+'" fill="none" stroke="#c9a46a" stroke-width="5.5" stroke-linecap="round"/>'
+    + '<path d="'+weg(true)+'" fill="none" stroke="#e8cf9d" stroke-width="4" stroke-linecap="round"/>'
+    + '<path d="'+weg(true)+'" fill="none" stroke="#fff" stroke-width=".6" '
+    + 'stroke-dasharray="1.4 2.6" opacity=".9"/>';
+  INSELN.forEach((r,i)=>{
+    const x = r.pos[0], y = r.pos[1];
+    s += '<g>'
+      + '<circle cx="'+x+'" cy="'+(y+1)+'" r="7.4" fill="rgba(0,0,0,.14)"/>'
+      + '<circle cx="'+x+'" cy="'+y+'" r="7.4" fill="'+r.d+'"/>'
+      + '<circle cx="'+x+'" cy="'+(y-.5)+'" r="6.2" fill="'+r.f+'"/>'
+      + '<text x="'+x+'" y="'+(y+2)+'" text-anchor="middle" font-size="5.4" font-weight="800" '
+      + 'fill="#fff">'+(i+1)+'</text>'
+      + (i === HIER ? '<circle cx="'+x+'" cy="'+y+'" r="9.4" fill="none" stroke="#fff" '
+          + 'stroke-width="1.2" stroke-dasharray="2 2"/>' : '')
+      + '<rect x="'+(x-13)+'" y="'+(y+8.4)+'" width="26" height="7.6" rx="3.8" fill="#fff" opacity=".88"/>'
+      + '<text x="'+x+'" y="'+(y+11.6)+'" text-anchor="middle" font-size="2.9" font-weight="800" '
+      + 'fill="#1f2a1f">'+r.name+'</text>'
+      + '<text x="'+x+'" y="'+(y+14.4)+'" text-anchor="middle" font-size="2.3" fill="#5f6f5f">'+r.stufe+'</text>'
+      + '</g>';
+  });
+  return huelle(s);
+}
+
+// ---------------------------------------------------------------- 4 Inselwelt von oben
+function luftbild(){
+  let s = '<defs><radialGradient id="tiefe" cx="50%" cy="50%" r="70%">'
+    + '<stop offset="0%" stop-color="#4fc3e8"/><stop offset="100%" stop-color="#0b5f87"/></radialGradient></defs>'
+    + '<rect width="100" height="100" fill="url(#tiefe)"/>'
+    + [14,34,54,74,94].map(y => '<path d="M0 '+y+' q8 -1.6 16 0 t16 0 t16 0 t16 0 t16 0 t16 0" '
+        + 'fill="none" stroke="#ffffff" stroke-width=".35" opacity=".2"/>').join('')
+    + '<path d="'+weg(true)+'" fill="none" stroke="#fff" stroke-width=".9" '
+    + 'stroke-dasharray="2.4 2.4" opacity=".75"/>';
+  INSELN.forEach((r,i)=>{
+    const x = r.pos[0], y = r.pos[1];
+    s += '<g>'
+      // flaches Wasser ringsum
+      + '<ellipse cx="'+x+'" cy="'+y+'" rx="12" ry="8" fill="#8fe3f5" opacity=".55"/>'
+      + '<ellipse cx="'+x+'" cy="'+y+'" rx="9.5" ry="6.4" fill="#ffeec2"/>'
+      + '<ellipse cx="'+x+'" cy="'+(y-.4)+'" rx="7" ry="4.6" fill="'+r.f+'"/>'
+      + '<ellipse cx="'+(x-2)+'" cy="'+(y-1)+'" rx="2.4" ry="1.6" fill="'+r.d+'" opacity=".55"/>'
+      // kleine Palme
+      + '<path d="M'+(x+3.4)+' '+(y+1.4)+' v-3" stroke="#8d6e3a" stroke-width=".7"/>'
+      + '<path d="M'+(x+3.4)+' '+(y-1.8)+' q-2.4 -1.4 -3.4 .4 M'+(x+3.4)+' '+(y-1.8)+' q2.4 -1.4 3.4 .4 '
+      + 'M'+(x+3.4)+' '+(y-1.8)+' q0 -2 1.6 -2.6" stroke="#2f8f46" stroke-width=".7" fill="none" stroke-linecap="round"/>'
+      + (i === HIER ? '<ellipse cx="'+x+'" cy="'+y+'" rx="14" ry="9.6" fill="none" stroke="#fff" '
+          + 'stroke-width=".8" stroke-dasharray="2 2"/>' : '')
+      + beschriftung(i, '#ffffff', '#d4f1fb', 10) + '</g>';
+  });
+  return huelle(s);
+}
+
+// ---------------------------------------------------------------- 5 Sternenhimmel
+function sternenhimmel(){
+  let s = '<defs><radialGradient id="all" cx="40%" cy="30%" r="80%">'
+    + '<stop offset="0%" stop-color="#2b1a56"/><stop offset="55%" stop-color="#140d2e"/>'
+    + '<stop offset="100%" stop-color="#05040f"/></radialGradient></defs>'
+    + '<rect width="100" height="100" fill="url(#all)"/>'
+    + '<ellipse cx="55" cy="45" rx="48" ry="20" transform="rotate(-24 55 45)" '
+    + 'fill="#6a4fd0" opacity=".14"/>';
+  for(let i=0;i<70;i++){
+    const x = Math.round(Math.random()*100), y = Math.round(Math.random()*100);
+    const r = (Math.random()*0.5 + 0.2).toFixed(2);
+    s += '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#fff" opacity="'+(0.3+Math.random()*0.6).toFixed(2)+'"/>';
+  }
+  s += '<path d="'+weg(true)+'" fill="none" stroke="#9fd8ff" stroke-width=".5" '
+    + 'stroke-dasharray="1 2" opacity=".6"/>';
+  INSELN.forEach((r,i)=>{
+    const x = r.pos[0], y = r.pos[1];
+    const zacken = [];
+    for(let k=0;k<10;k++){
+      const w = (Math.PI/5)*k - Math.PI/2;
+      const rad = k%2===0 ? 6.2 : 2.6;
+      zacken.push((x+Math.cos(w)*rad).toFixed(1)+' '+(y+Math.sin(w)*rad).toFixed(1));
+    }
+    s += '<g>'
+      + '<circle cx="'+x+'" cy="'+y+'" r="11" fill="'+r.f+'" opacity=".16"/>'
+      + '<polygon points="'+zacken.join(' ')+'" fill="'+r.f+'"/>'
+      + '<circle cx="'+x+'" cy="'+y+'" r="2.4" fill="#fff" opacity=".85"/>'
+      + (i === HIER ? '<circle cx="'+x+'" cy="'+y+'" r="9.6" fill="none" stroke="#fff" '
+          + 'stroke-width=".6" stroke-dasharray="1.4 1.4"/>' : '')
+      + beschriftung(i, '#ffffff', '#b8a8e8', 9.6) + '</g>';
+  });
+  return huelle(s);
+}
+
+// ---------------------------------------------------------------- 6 Bergaufstieg
+function bergaufstieg(){
+  let s = '<defs><linearGradient id="luft" x1="0" y1="0" x2="0" y2="1">'
+    + '<stop offset="0%" stop-color="#ffd9a8"/><stop offset="35%" stop-color="#9fd0ef"/>'
+    + '<stop offset="100%" stop-color="#4e8fbd"/></linearGradient></defs>'
+    + '<rect width="100" height="100" fill="url(#luft)"/>'
+    + '<circle cx="78" cy="12" r="6" fill="#fff3c4" opacity=".9"/>'
+    // gestaffelte Bergketten, hinten blass
+    + '<path d="M0 46 L16 24 L28 38 L44 16 L60 36 L76 20 L92 40 L100 30 V100 H0 Z" fill="#6f9fc4" opacity=".55"/>'
+    + '<path d="M0 60 L14 42 L30 56 L46 36 L64 54 L80 40 L100 58 V100 H0 Z" fill="#53809f" opacity=".7"/>'
+    + '<path d="M0 78 L18 60 L34 74 L52 58 L70 74 L88 62 L100 76 V100 H0 Z" fill="#3b6480"/>'
+    // Nebelbaender
+    + '<ellipse cx="34" cy="50" rx="30" ry="4" fill="#fff" opacity=".35"/>'
+    + '<ellipse cx="70" cy="66" rx="26" ry="3.4" fill="#fff" opacity=".3"/>'
+    + '<path d="'+weg(true)+'" fill="none" stroke="#fff" stroke-width="1" '
+    + 'stroke-dasharray="2 2" opacity=".85"/>';
+  INSELN.forEach((r,i)=>{
+    const x = r.pos[0], y = r.pos[1];
+    s += '<g>'
+      + '<circle cx="'+x+'" cy="'+(y+.8)+'" r="6.6" fill="rgba(0,0,0,.2)"/>'
+      + '<circle cx="'+x+'" cy="'+y+'" r="6.6" fill="#fff"/>'
+      + '<circle cx="'+x+'" cy="'+y+'" r="5.4" fill="'+r.f+'"/>'
+      + '<path d="M'+(x-3)+' '+(y+1.6)+' L'+(x-.6)+' '+(y-2.4)+' L'+(x+.8)+' '+(y-.4)+' L'+(x+2)+' '+(y-3)+' L'+(x+3.4)+' '+(y+1.6)+' Z" fill="#fff" opacity=".9"/>'
+      + (i === HIER ? '<circle cx="'+x+'" cy="'+y+'" r="8.8" fill="none" stroke="#fff" '
+          + 'stroke-width="1" stroke-dasharray="1.8 1.8"/>' : '')
+      + '<rect x="'+(x-13)+'" y="'+(y+7.6)+'" width="26" height="7.4" rx="3.7" fill="#0f2f45" opacity=".72"/>'
+      + '<text x="'+x+'" y="'+(y+10.8)+'" text-anchor="middle" font-size="2.9" font-weight="800" fill="#fff">'+r.name+'</text>'
+      + '<text x="'+x+'" y="'+(y+13.6)+'" text-anchor="middle" font-size="2.3" fill="#c7e4f5">'+r.stufe+'</text>'
+      + '</g>';
+  });
+  return huelle(s);
+}
+
+const ENTWUERFE = [
+  { t:'Schatzkarte',       w:'Altes Pergament mit brauner Tinte, gestrichelter Weg, Kompassrose und einem roten Kreuz da, wo du gerade stehst. Wirkt wie aus einem Abenteuerbuch.', f:schatzkarte },
+  { t:'Fantasy-Reich',     w:'Dunkler Sternenhimmel, jede Insel hat ihre eigene Gestalt: Vulkan, Eisgipfel, Wald, Wüste, Wolkenschloss. Am nächsten an deiner Vorlage.', f:fantasy },
+  { t:'Spielbrett',        w:'Hell und freundlich wie ein Brettspiel. Breiter Weg, nummerierte Felder, Namensschilder darunter. Am leichtesten zu lesen, auch für die Kleinen.', f:spielbrett },
+  { t:'Inselwelt von oben',w:'Türkises Meer von oben, Sandbänke, kleine Palmen. Ruhig und sommerlich.', f:luftbild },
+  { t:'Sternenhimmel',     w:'Jede Insel ist ein Stern am Nachthimmel, verbunden wie ein Sternbild. Passt zu den Sternen, die man im Spiel sammelt.', f:sternenhimmel },
+  { t:'Bergaufstieg',      w:'Gestaffelte Bergketten mit Nebel, von unten nach oben. Man sieht sofort: Es geht immer höher hinauf.', f:bergaufstieg }
+];
+
+document.getElementById('raus').innerHTML = ENTWUERFE.map((e,i)=>
+  '<div class="karte"><h2><span class="nr">'+(i+1)+'</span>'+e.t+'</h2>'
+  + '<p class="wie">'+e.w+'</p><div class="bild">'+e.f()+'</div></div>').join('');
+</script>
+</body>
+</html>
