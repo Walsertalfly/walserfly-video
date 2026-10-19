@@ -47,66 +47,93 @@ window.VOKABEL_WELT = [
 ];
 
 // ---------------------------------------------------------------- Weltkarte zeichnen
+// Stil „Fantasy-Reich": dunkler Sternenhimmel, jede Insel in ihrer eigenen Gestalt.
 (function(){
   const W = window.VOKABEL_WELT;
 
-  const FORMEN = {
-    inseln: 'M-34 6 q-6 -14 8 -18 q10 -14 26 -6 q16 -10 26 2 q14 2 10 16 q4 12 -12 14 q-22 8 -40 2 q-16 -2 -18 -10 Z',
-    wald:   'M-30 10 q-10 -12 2 -20 q4 -16 22 -12 q14 -12 28 0 q16 4 10 18 q6 12 -10 16 q-26 8 -52 -2 Z',
-    wueste: 'M-36 8 q-4 -16 14 -16 q12 -10 24 -2 q18 -6 24 6 q8 12 -8 16 q-28 10 -54 -4 Z',
-    berg:   'M-34 12 L-12 -20 L0 -6 L14 -24 L36 12 Z',
-    vulkan: 'M-30 12 L-7 -22 q7 -7 14 0 L30 12 Z',
-    wolke:  'M-32 4 q-8 -12 6 -16 q6 -12 20 -6 q12 -10 22 2 q14 0 10 14 q-6 10 -26 10 q-22 4 -32 -4 Z'
-  };
-
-  function insel(x, y, gr, farbe, farbe2, form){
-    const f = FORMEN[form] || FORMEN.inseln;
-    return '<g transform="translate(' + x + ',' + y + ') scale(' + gr + ')">'
-      + '<path d="' + f + '" fill="' + farbe2 + '" transform="translate(0,3)" opacity=".6"/>'
-      + '<path d="' + f + '" fill="' + farbe + '"/>'
-      + '</g>';
+  // Die Gestalt jeder Insel. x,y ist ihr Mittelpunkt, f die helle und d die dunkle Farbe.
+  function gestalt(r, x, y, f, d){
+    switch(r.form){
+      case 'berg':   // vereiste Gipfel
+        return '<path d="M' + (x-9) + ' ' + (y+3) + ' L' + (x-3) + ' ' + (y-6)
+             + ' L' + x + ' ' + (y-1) + ' L' + (x+4) + ' ' + (y-7) + ' L' + (x+9) + ' ' + (y+3) + ' Z" fill="' + d + '"/>'
+             + '<path d="M' + (x-3) + ' ' + (y-6) + ' L' + (x-1) + ' ' + (y-3) + ' L' + (x+1) + ' ' + (y-5)
+             + ' L' + (x+4) + ' ' + (y-7) + ' L' + (x+2) + ' ' + (y-2) + ' Z" fill="#ffffff" opacity=".85"/>'
+             + '<path d="M' + (x-9) + ' ' + (y+3) + ' L' + (x-3) + ' ' + (y-6) + ' L' + x + ' ' + (y-1) + ' Z" fill="' + f + '" opacity=".6"/>';
+      case 'vulkan': // glühender Krater
+        return '<path d="M' + (x-9) + ' ' + (y+3) + ' L' + (x-1) + ' ' + (y-8)
+             + ' q1 -1 2 0 L' + (x+9) + ' ' + (y+3) + ' Z" fill="' + d + '"/>'
+             + '<path d="M' + (x-3) + ' ' + (y-2) + ' q3 -5 6 0 q-3 3 -6 0 Z" fill="' + f + '"/>'
+             + '<circle cx="' + x + '" cy="' + (y-7) + '" r="1.6" fill="#ffd98a" opacity=".75"/>'
+             + '<circle cx="' + (x+2.6) + '" cy="' + (y-9.6) + '" r="1" fill="#ffd98a" opacity=".5"/>';
+      case 'wald':   // dunkle Baumwipfel
+        return '<path d="M' + (x-9) + ' ' + (y+3) + ' q-2 -4 2 -6 q2 -5 7 -4 q5 -3 8 2 q4 2 1 8 Z" fill="' + d + '"/>'
+             + [-5,0,5].map(o =>
+                 '<path d="M' + (x+o) + ' ' + (y+2) + ' l-2.2 -3 h1.2 l-1.6 -2.4 h1.2 l-1 -2 l2.4 0 l-1 2 h1.2 l-1.6 2.4 h1.2 Z" fill="' + f + '"/>'
+               ).join('');
+      case 'wueste': // Dünen
+        return '<path d="M' + (x-10) + ' ' + (y+2) + ' q-1 -5 4 -5 q4 -4 8 -1 q6 -2 8 3 q2 4 -3 5 Z" fill="' + f + '"/>'
+             + '<path d="M' + (x-5) + ' ' + (y+1) + ' q3 -3 6 0 M' + (x+2) + ' ' + (y-1) + ' q2 -2 4 0" stroke="' + d + '" stroke-width=".5" fill="none"/>';
+      case 'wolke':  // Wolkenschloss
+        return '<path d="M' + (x-10) + ' ' + (y+2) + ' q-2 -5 3 -5 q2 -5 7 -3 q4 -4 8 1 q5 0 3 6 Z" fill="' + f + '"/>'
+             + '<path d="M' + (x-3) + ' ' + (y+1) + ' v-6 l3 -4 l3 4 v6 Z" fill="#fff6d8"/>'
+             + '<path d="M' + (x-1) + ' ' + (y-9) + ' l1 -3 l1 3 Z" fill="' + d + '"/>';
+      default:       // schwebende Insel
+        return '<ellipse cx="' + x + '" cy="' + y + '" rx="9.5" ry="5.5" fill="' + d + '"/>'
+             + '<ellipse cx="' + x + '" cy="' + (y-1) + '" rx="9" ry="5" fill="' + f + '"/>'
+             + '<circle cx="' + (x-3) + '" cy="' + (y-2) + '" r="1.6" fill="#ffffff" opacity=".3"/>';
+    }
   }
 
   // offen: { inselId: true }. hier: auf welcher Insel man gerade steht.
   function svg(offen, hier){
     offen = offen || {};
 
+    // Weg von Insel zu Insel, leicht geschwungen
     let weg = '';
     for(let i = 0; i < W.length - 1; i++){
       const a = W[i].pos, b = W[i+1].pos;
-      const mx = (a[0] + b[0]) / 2 + (i % 2 ? -9 : 9);
+      const mx = (a[0] + b[0]) / 2 + (i % 2 ? -6 : 6);
       weg += 'M' + a[0] + ' ' + a[1] + ' Q' + mx + ' ' + ((a[1] + b[1]) / 2) + ' ' + b[0] + ' ' + b[1] + ' ';
     }
 
-    const regionen = W.map((r) => {
+    const sterne = [[10,8],[88,16],[30,5],[74,30],[6,46],[94,56],[48,22],[18,66],[82,78],[40,92],
+                    [62,70],[26,38],[52,50],[70,88],[14,24],[96,36],[36,76],[58,12],[8,84],[86,48]]
+      .map(p => '<circle cx="' + p[0] + '" cy="' + p[1] + '" r=".5" fill="#fff" opacity=".55"/>').join('');
+
+    const regionen = W.map((r, i) => {
       const frei = !!offen[r.id];
       const hierIst = r.id === hier;
       const x = r.pos[0], y = r.pos[1];
-      const farbe  = frei ? r.farbe  : '#55657a';
-      const farbe2 = frei ? r.farbe2 : '#3b4757';
+      const f = frei ? r.farbe  : '#55657a';
+      const d = frei ? r.farbe2 : '#3b4757';
       return '<g class="region' + (frei ? ' frei' : ' zu') + (hierIst ? ' hier' : '') + '" data-id="' + r.id + '">'
-        + insel(x, y, 0.30, farbe, farbe2, r.form)
-        + (hierIst ? '<circle cx="' + x + '" cy="' + (y - 1) + '" r="9" fill="none" stroke="#fff" '
-            + 'stroke-width="1" stroke-dasharray="1.6 1.6" opacity=".95"/>' : '')
-        + (frei ? '' : '<text x="' + x + '" y="' + (y + 1.5) + '" text-anchor="middle" font-size="5">🔒</text>')
-        + '<text class="rname" x="' + x + '" y="' + (y + 9) + '" text-anchor="middle">' + r.name + '</text>'
-        + '<text class="rstufe" x="' + x + '" y="' + (y + 12.6) + '" text-anchor="middle">' + r.stufe + '</text>'
+        + '<ellipse cx="' + x + '" cy="' + (y+1) + '" rx="13" ry="8" fill="' + f + '" opacity="' + (frei ? '.16' : '.07') + '"/>'
+        + gestalt(r, x, y, f, d)
+        + (hierIst ? '<circle cx="' + x + '" cy="' + y + '" r="12" fill="none" stroke="#ffd98a" '
+            + 'stroke-width=".7" stroke-dasharray="1.5 1.5"/>' : '')
+        + (frei ? '' : '<text x="' + x + '" y="' + (y+1.4) + '" text-anchor="middle" font-size="5">🔒</text>')
+        + '<text class="rname" x="' + x + '" y="' + (y+9) + '" text-anchor="middle">' + r.name + '</text>'
+        + '<text class="rstufe" x="' + x + '" y="' + (y+12.4) + '" text-anchor="middle">' + r.stufe + '</text>'
         + '</g>';
     }).join('');
 
-    const sterne = [[12,6],[86,12],[8,40],[92,52],[16,66],[82,76],[50,30],[38,20],[70,88],[30,96],[94,32],[6,22]]
-      .map(s => '<circle cx="' + s[0] + '" cy="' + s[1] + '" r=".55" fill="#fff" opacity=".45"/>').join('');
-
     return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="weltkarte">'
-      + '<defs><radialGradient id="meer" cx="50%" cy="55%" r="72%">'
-      + '<stop offset="0%" stop-color="#1d3a63"/><stop offset="100%" stop-color="#0a1626"/>'
-      + '</radialGradient></defs>'
-      + '<rect width="100" height="100" fill="url(#meer)"/>'
+      + '<defs><radialGradient id="weltHimmel" cx="50%" cy="40%" r="75%">'
+      + '<stop offset="0%" stop-color="#2a4e86"/><stop offset="60%" stop-color="#16305c"/>'
+      + '<stop offset="100%" stop-color="#070e1d"/></radialGradient></defs>'
+      + '<rect width="100" height="100" fill="url(#weltHimmel)"/>'
       + sterne
-      + '<path d="' + weg + '" fill="none" stroke="#ffffff" stroke-width=".7" stroke-dasharray="1.8 2.2" opacity=".4"/>'
+      // Nebelschwaden zwischen den Inseln
+      + '<ellipse cx="30" cy="48" rx="34" ry="12" fill="#3a6aa8" opacity=".14"/>'
+      + '<ellipse cx="72" cy="30" rx="28" ry="10" fill="#4a7ab8" opacity=".12"/>'
+      + '<path d="' + weg + '" fill="none" stroke="#ffd98a" stroke-width=".7" '
+      + 'stroke-dasharray="1.6 2" opacity=".6"/>'
       + regionen
+      + '<text x="50" y="5.5" text-anchor="middle" font-size="4.4" font-weight="800" '
+      + 'fill="#ffd98a" letter-spacing=".5">VOKABEL-LAND</text>'
       + '</svg>';
   }
 
-  window.WELTKARTE = { svg: svg, FORMEN: FORMEN };
+  window.WELTKARTE = { svg: svg };
 })();
