@@ -184,6 +184,15 @@
   .pablo-federn path:nth-child(2){animation-delay:1.1s}
   .pablo-federn path:nth-child(3){animation-delay:2.2s}
   @keyframes feder{0%{transform:translateY(0) rotate(0);opacity:.8}100%{transform:translateY(150px) rotate(140deg);opacity:0}}
+  .namen{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+  @media (min-width:520px){ .namen{grid-template-columns:1fr 1fr 1fr} }
+  .namen button{margin:0;padding:10px 6px;font-size:15px;background:#fff;color:var(--text);
+                border:2px solid var(--grau);box-shadow:none;line-height:1.25;
+                display:flex;flex-direction:column;align-items:center;gap:2px}
+  .namen button .preis{font-size:12.5px;font-weight:800;color:var(--gruen2)}
+  .namen button.kannNicht{opacity:.45}
+  .namen button.jetzt{border-color:var(--gruen);background:#eefbee}
+  .namen button.jetzt .preis{color:var(--gruen2)}
   .shoptitel{font-size:16px;margin:16px 0 4px}
   .shop{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
   .shop button{margin:0;padding:8px 6px;font-size:13.5px;background:#fff;color:var(--text);
@@ -325,7 +334,15 @@
         <div class="balken"><span>💧</span><i><b id="bWasser"></b></i><em id="zWasser"></em></div>
         <div class="balken"><span>😀</span><i><b id="bLaune"></b></i><em id="zLaune"></em></div>
         <button class="sek" id="btnShop">🛒 Shop öffnen</button>
+        <button class="sek" id="btnName">✏️ Name ändern</button>
       </div>
+    </div>
+
+    <div class="card" id="namenKarte" style="display:none">
+      <h2>Wie soll dein Papagei heißen?</h2>
+      <p class="muted" id="namenHinweis"></p>
+      <div class="namen" id="namenListe"></div>
+      <button class="sek" id="btnNameZu">Schließen</button>
     </div>
 
     <div class="card" id="rangKarte">
@@ -474,12 +491,12 @@
 </main>
 <footer>Vokabel-Land · Testversion</footer>
 
-<script src="vokabeln.js?v=202610191527"></script>
-<script src="bilder.js?v=202610191527"></script>
-<script src="emojis.js?v=202610191527"></script>
-<script src="papagei.js?v=202610191527"></script>
-<script src="welt.js?v=202610191527"></script>
-<script src="abzeichen.js?v=202610191527"></script>
+<script src="vokabeln.js?v=202610191530"></script>
+<script src="bilder.js?v=202610191530"></script>
+<script src="emojis.js?v=202610191530"></script>
+<script src="papagei.js?v=202610191530"></script>
+<script src="welt.js?v=202610191530"></script>
+<script src="abzeichen.js?v=202610191530"></script>
 <script>
 (function(){
   const LEVEL = window.VOKABEL_LEVEL || [];
@@ -854,6 +871,69 @@
     S.pablo = PAPAGEI.neuBerechnen(S.pablo, Date.now());
     return S.pablo;
   }
+  // Wie der Papagei gerade heisst. Ohne Wahl der Standardname aus papagei.js.
+  function papageiName(){
+    return (S.papageiName && String(S.papageiName)) || PAPAGEI.NAME;
+  }
+  function freieSterne(){ return S.sterneFrei != null ? S.sterneFrei : S.punkte; }
+
+  function zeigeNamen(){
+    const gekauft = S.namenGekauft || {};
+    const jetzt = papageiName();
+    $('namenHinweis').textContent = 'Zehn Namen gehören dir schon. Die besonderen kannst du dir '
+      + 'mit Münzen oder Sternen kaufen, dann bleiben sie dir. Du hast 🪙 ' + S.muenzen
+      + ' und ⭐ ' + freieSterne() + '.';
+    $('namenListe').innerHTML = (PAPAGEI.NAMEN || []).map((n,i)=>{
+      const meins = !n.preis || gekauft[n.name];
+      const istJetzt = n.name === jetzt;
+      const waehrungszeichen = n.waehrung === 'sterne' ? '⭐' : '🪙';
+      const genug = n.waehrung === 'sterne' ? freieSterne() >= n.preis : S.muenzen >= n.preis;
+      const klasse = istJetzt ? 'jetzt' : (meins ? '' : (genug ? '' : 'kannNicht'));
+      const unten = istJetzt ? '✓ heißt so'
+                  : meins    ? 'auswählen'
+                             : waehrungszeichen + ' ' + n.preis;
+      return '<button data-n="'+i+'" class="'+klasse+'">' + esc(n.name)
+        + '<span class="preis">' + unten + '</span></button>';
+    }).join('');
+    $('namenListe').querySelectorAll('button').forEach(b=>{
+      b.onclick = ()=>nameWaehlen(PAPAGEI.NAMEN[parseInt(b.dataset.n,10)]);
+    });
+  }
+
+  function nameWaehlen(n){
+    const gekauft = S.namenGekauft || {};
+    const meins = !n.preis || gekauft[n.name];
+
+    if(!meins){
+      // erst kaufen
+      if(n.waehrung === 'sterne'){
+        if(freieSterne() < n.preis){
+          meldung({ en: 'You need ' + (n.preis - freieSterne()) + ' more stars.',
+                    de: 'Dafür fehlen dir noch ' + (n.preis - freieSterne()) + ' Sterne.' });
+          klang('falsch'); return;
+        }
+        S.sterneFrei = freieSterne() - n.preis;
+      } else {
+        if(S.muenzen < n.preis){
+          meldung({ en: 'You need ' + (n.preis - S.muenzen) + ' more coins.',
+                    de: 'Dafür fehlen dir noch ' + (n.preis - S.muenzen) + ' Münzen.' });
+          klang('falsch'); return;
+        }
+        S.muenzen -= n.preis;
+      }
+      S.namenGekauft = gekauft; S.namenGekauft[n.name] = true;
+      klang('muenze'); setTimeout(()=>klang('stern'), 160);
+    } else {
+      klang('tipp');
+    }
+
+    S.papageiName = n.name;
+    speichere(); kopf(); zeigePablo(); zeigeNamen(); zeigeShop();
+    meldung({ en: "Call me " + n.name + "!", de: 'Nenn mich ' + n.name + '!' });
+    if(S.ton !== false){ try{ sprich('Call me ' + n.name, 1.0, null); }catch(e){} }
+    hakenZeigen();
+  }
+
   function farbeFuer(wert){ return wert >= 60 ? '#3f9d4a' : wert >= 30 ? '#f4c542' : '#d9534f'; }
   function zeigePablo(){
     if(!window.PAPAGEI) return;
@@ -866,7 +946,7 @@
       $('b'+was).style.background = farbeFuer(wert);
       $('z'+was).textContent = wert + '%';
     });
-    $('pabloName').textContent = PAPAGEI.NAME;
+    $('pabloName').textContent = papageiName();
     $('btnShop').textContent = '🛒 Shop · 🪙 ' + S.muenzen;
     speichere();
   }
@@ -878,7 +958,7 @@
   }
   function zeigeShop(){
     const p = pabloStand();
-    $('shopName').textContent = PAPAGEI.NAME;
+    $('shopName').textContent = papageiName();
     const freiS = S.sterneFrei != null ? S.sterneFrei : S.punkte;
     $('shopSterne').textContent = 'Du kannst ⭐ ' + freiS + ' Sterne ausgeben. '
       + 'Dein Platz in der Rangliste ändert sich dadurch nicht, dort zählen alle '
@@ -982,7 +1062,7 @@
   function kaufenMitSternen(a){
     const p = pabloStand();
     if(p.deko && p.deko[a.id]){
-      meldung({ en: PAPAGEI.NAME + ' is already wearing that.', de: PAPAGEI.NAME + ' trägt das schon.' }); return; }
+      meldung({ en: papageiName() + ' is already wearing that.', de: papageiName() + ' trägt das schon.' }); return; }
     const frei = S.sterneFrei != null ? S.sterneFrei : S.punkte;
     if(frei < a.sterne){
       meldung({ en: 'You need ' + (a.sterne - frei) + ' more stars.',
@@ -1005,7 +1085,7 @@
   function kaufen(a){
     const p = pabloStand();
     if(a.deko && p.deko && p.deko[a.id]){
-      meldung({ en: PAPAGEI.NAME + ' already has that.', de: PAPAGEI.NAME + ' hat das schon.' }); return; }
+      meldung({ en: papageiName() + ' already has that.', de: papageiName() + ' hat das schon.' }); return; }
     if(S.muenzen < a.preis){
       meldung({ en: 'You need ' + (a.preis - S.muenzen) + ' more coins.',
                 de: 'Dafür fehlen dir noch ' + (a.preis - S.muenzen) + ' Münzen. Üb noch eine Runde!' });
@@ -1345,6 +1425,13 @@
   };
   $('btnWelt').onclick   = ()=>{ zeigeWelt(); zeige('sWelt'); window.scrollTo(0,0); };
   $('btnWeltZu').onclick = ()=>{ zeichneKarte(); zeige('sKarte'); };
+  $('btnName').onclick = ()=>{
+    zeigeNamen();
+    const auf = $('namenKarte').style.display === 'none';
+    $('namenKarte').style.display = auf ? '' : 'none';
+    if(auf) $('namenKarte').scrollIntoView({behavior:'smooth', block:'nearest'});
+  };
+  $('btnNameZu').onclick = ()=>{ $('namenKarte').style.display = 'none'; };
   $('btnShop').onclick = ()=>{ zeigeShop(); $('shopKarte').style.display=''; $('shopKarte').scrollIntoView({behavior:'smooth', block:'nearest'}); };
   $('btnShopZu').onclick = ()=>{ $('shopKarte').style.display='none'; };
   $('btnTon').onclick = ()=>{ S.ton = S.ton === false; speichere(); zeigeTon(); if(S.ton !== false) klang('tipp'); };

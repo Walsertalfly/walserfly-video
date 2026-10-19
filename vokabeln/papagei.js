@@ -224,6 +224,32 @@
   }
 
   // ---------------------------------------------------------------- Shop
+  // ------------------------------------------------------------ Namen
+  // Zehn Namen stehen von Anfang an bereit. Die besonderen kosten Sterne oder Muenzen,
+  // einmal gekauft gehoeren sie dauerhaft dazu.
+  const NAMEN = [
+    { name:'Henry',  preis:0 },
+    { name:'Rio',    preis:0 },
+    { name:'Coco',   preis:0 },
+    { name:'Pip',    preis:0 },
+    { name:'Sunny',  preis:0 },
+    { name:'Buddy',  preis:0 },
+    { name:'Chip',   preis:0 },
+    { name:'Scout',  preis:0 },
+    { name:'Mango',  preis:0 },
+    { name:'Ziggy',  preis:0 },
+
+    { name:'Turbo',         preis:60,  waehrung:'muenzen' },
+    { name:'Rocket',        preis:90,  waehrung:'muenzen' },
+    { name:'Blaze',         preis:140, waehrung:'muenzen' },
+    { name:'Shadow',        preis:150, waehrung:'sterne' },
+    { name:'Captain Beak',  preis:250, waehrung:'sterne' },
+    { name:'Thunder',       preis:320, waehrung:'sterne' },
+    { name:'Sir Featherton',preis:450, waehrung:'sterne' },
+    { name:'King Kiwi',     preis:600, waehrung:'sterne' },
+    { name:'Maximus',       preis:800, waehrung:'sterne' }
+  ];
+
   // ------------------------------------------------------------ Zum Anziehen
   // Wird mit Sternen bezahlt. Henry traegt immer alles, was gekauft wurde.
   // Gezeichnet ueber dem Kopf beziehungsweise am Hals, darum eigene Funktion.
@@ -364,6 +390,6 @@
     return { en:'Hello ' + du + '! Nice to see you.', de:'Hallo ' + du + '! Schön, dich zu sehen.' };
   }
 
-  window.PAPAGEI = { NAME: NAME, ARTEN: ARTEN, artVon: artVon, svg: svg, SHOP: SHOP, ANZIEHEN: ANZIEHEN, neuBerechnen: neuBerechnen,
+  window.PAPAGEI = { NAME: NAME, NAMEN: NAMEN, ARTEN: ARTEN, artVon: artVon, svg: svg, SHOP: SHOP, ANZIEHEN: ANZIEHEN, neuBerechnen: neuBerechnen,
                      zustandVon: zustandVon, spruch: spruch, PRO_STUNDE: PRO_STUNDE };
 })();
