@@ -153,7 +153,21 @@
       + '<path d="M70 100 q-44 -8 -48 28 q22 6 34 -6 Z" fill="' + A.haupt + '"/>'
       + '<path d="M68 110 q-32 -2 -34 20 q16 2 24 -6 Z" fill="' + A.zier + '"/>';
 
-    const pablo = ausgebreitet
+    // Flugschwingen: liegen normal unsichtbar hinter dem Koerper und klappen
+    // nur waehrend des Flugs auf. Zwei Stueck, damit es nach Schlagen aussieht.
+    const flugschwingen =
+        '<g class="pablo-schwinge pablo-schwinge-links">'
+      + '<path d="M78 96 q-54 -30 -70 10 q26 20 50 10 q14 -6 20 -20 Z" fill="' + A.dunkel + '"/>'
+      + '<path d="M78 102 q-44 -22 -56 10 q22 14 40 4 Z" fill="' + A.haupt + '"/>'
+      + '<path d="M76 110 q-32 -12 -40 10 q18 8 30 0 Z" fill="' + A.zier + '"/>'
+      + '</g>'
+      + '<g class="pablo-schwinge pablo-schwinge-rechts">'
+      + '<path d="M106 96 q54 -30 70 10 q-26 20 -50 10 q-14 -6 -20 -20 Z" fill="' + A.dunkel + '"/>'
+      + '<path d="M106 102 q44 -22 56 10 q-22 14 -40 4 Z" fill="' + A.haupt + '"/>'
+      + '<path d="M108 110 q32 -12 40 10 q-18 8 -30 0 Z" fill="' + A.zier + '"/>'
+      + '</g>';
+
+    const pablo = flugschwingen + ausgebreitet
       // langer Schwanz
       + '<path d="M104 118 q46 34 62 108 q-17 -5 -28 -19 q-4 15 -11 21 q-34 -48 -42 -100 Z" fill="' + A.dunkel + '"/>'
       + '<path d="M112 128 q40 36 50 96 q-13 -7 -20 -20 q-20 -34 -36 -70 Z" fill="' + A.haupt + '"/>'
@@ -177,10 +191,13 @@
           : '<path d="M76 166 v22 M96 166 v22" stroke="#9a9a9a" stroke-width="7.5" fill="none" stroke-linecap="round"/>'
           + '<path d="M66 190 q10 6 20 0 M86 190 q10 6 20 0" stroke="#8a8a8a" stroke-width="7" fill="none" stroke-linecap="round"/>');
 
-    const gruppe = liegt
+    // Die aeussere Gruppe "pablo-flug" wird beim Kauf bewegt. Sie enthaelt NUR den Vogel,
+    // nicht Stange und Naepfe - sonst wandert der ganze Kaefig mit.
+    const innen = liegt
       ? '<g transform="translate(14,92) rotate(78 100 120) scale(' + (0.86 * A.gross) + ')">' + pablo + '</g>'
       : '<g class="' + huepf + '" transform="rotate(' + neigung + ' 92 150) translate(' + (100 - 100*A.gross) + ','
         + (150 - 150*A.gross) + ') scale(' + A.gross + ')">' + pablo + '</g>';
+    const gruppe = '<g class="pablo-flug">' + innen + '</g>';
 
     // Leuchtpunkte und Lichtkranz der hohen Stufen
     const funken = (!A.funken || liegt) ? '' : '<g class="pablo-funken">'
