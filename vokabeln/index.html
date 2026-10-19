@@ -312,7 +312,13 @@
     .stats span{padding:3px 8px}
     .tonknopf{padding:3px 8px;font-size:14px}
   }
-  @media (max-width:420px){.frage .de{font-size:30px}}
+  @media (max-width:430px){
+    header h1{font-size:15px}
+    .stats{gap:4px;font-size:12px}
+    .stats span{padding:3px 7px}
+    .tonknopf{padding:3px 7px;font-size:13px}
+    .frage .de{font-size:30px}
+  }
 </style>
 </head>
 <body>
@@ -539,12 +545,12 @@
 </main>
 <footer>Vokabel-Land · Testversion</footer>
 
-<script src="vokabeln.js?v=202610191535"></script>
-<script src="bilder.js?v=202610191535"></script>
-<script src="emojis.js?v=202610191535"></script>
-<script src="papagei.js?v=202610191535"></script>
-<script src="welt.js?v=202610191535"></script>
-<script src="abzeichen.js?v=202610191535"></script>
+<script src="vokabeln.js?v=202610191536"></script>
+<script src="bilder.js?v=202610191536"></script>
+<script src="emojis.js?v=202610191536"></script>
+<script src="papagei.js?v=202610191536"></script>
+<script src="welt.js?v=202610191536"></script>
+<script src="abzeichen.js?v=202610191536"></script>
 <script>
 (function(){
   const BUCH_LEVEL = window.VOKABEL_LEVEL || [];
@@ -865,7 +871,7 @@
     $('hdName').textContent = S.name ? '· '+S.name : '';
     $('stMuenzen').textContent = '🪙 '+S.muenzen;
     const frei = S.sterneFrei != null ? S.sterneFrei : S.punkte;
-    $('stPunkte').textContent = '⭐ ' + frei + ' frei';
+    $('stPunkte').textContent = '⭐ ' + frei + (window.innerWidth >= 430 ? ' frei' : '');
     $('stPunkte').title = 'Noch frei zum Ausgeben. Insgesamt gesammelt: ' + S.punkte;
   }
   function zeige(id){
