@@ -96,6 +96,8 @@
     const z = zustandVon(p);
     deko = deko || {};
     const A = artVon(stufe || (p && p.stufe) || 3);
+    // Was Henry traegt, steckt im selben deko-Objekt wie das Kaefig-Zubehoer
+    const sachen = kleidung(deko);
     const liegt = z === 'amBoden';
     const neigung = z === 'traurig' ? 7 : z === 'schwach' ? 11 : z === 'gluecklich' ? -3 : 0;
     const huepf = z === 'gluecklich' ? 'pablo-huepf' : '';
@@ -185,6 +187,7 @@
       + '<path d="M62 74 q-6 -18 8 -28 q16 -12 32 0 q12 10 6 30 Z" fill="' + A.haupt + '"/>'
       + schild
       + kopfTeil(z, A)
+      + sachen.oben + sachen.unten
       // Beine und Krallen
       + (liegt
           ? '<path d="M72 176 q-6 16 2 24 M88 178 q-2 16 6 22" stroke="#8a8a8a" stroke-width="6" fill="none" stroke-linecap="round"/>'
@@ -221,6 +224,57 @@
   }
 
   // ---------------------------------------------------------------- Shop
+  // ------------------------------------------------------------ Zum Anziehen
+  // Wird mit Sternen bezahlt. Henry traegt immer alles, was gekauft wurde.
+  // Gezeichnet ueber dem Kopf beziehungsweise am Hals, darum eigene Funktion.
+  function kleidung(an){
+    an = an || {};
+    let oben = '', unten = '';
+
+    if(an.piratenhut)
+      oben += '<g><path d="M44 18 q30 -16 60 2 q-6 -22 -30 -24 q-24 -2 -30 22 Z" fill="#2b2b2b"/>'
+            + '<path d="M38 20 q36 -12 72 2 q-4 8 -36 8 q-32 0 -36 -10 Z" fill="#1a1a1a"/>'
+            + '<circle cx="74" cy="6" r="5" fill="#fdfdfd"/>'
+            + '<path d="M70 10 l3 4 M78 10 l-3 4" stroke="#2b2b2b" stroke-width="1.6" stroke-linecap="round"/>'
+            + '</g>';
+    if(an.zylinder)
+      oben += '<g><path d="M44 22 h60 q4 4 -4 6 q-26 5 -52 0 q-8 -2 -4 -6 Z" fill="#232323"/>'
+            + '<path d="M54 22 v-24 q20 -5 40 0 v24 Z" fill="#2e2e2e"/>'
+            + '<path d="M54 6 q20 5 40 0 v6 q-20 5 -40 0 Z" fill="#c2281f"/></g>';
+    if(an.blume)
+      oben += '<g transform="translate(96,20)">'
+            + [0,72,144,216,288].map(w => '<ellipse cx="0" cy="-9" rx="5" ry="8" fill="#ff5fa2" transform="rotate('+w+')"/>').join('')
+            + '<circle cx="0" cy="0" r="4.5" fill="#ffd166"/></g>';
+    if(an.schleife)
+      oben += '<g transform="translate(98,24)">'
+            + '<path d="M0 0 l-13 -8 v16 Z" fill="#e8342a"/><path d="M0 0 l13 -8 v16 Z" fill="#ff6a5e"/>'
+            + '<circle cx="0" cy="0" r="4" fill="#c2281f"/></g>';
+    if(an.brille)
+      oben += '<g><ellipse cx="78" cy="55" rx="15" ry="11" fill="#1f2933" opacity=".92"/>'
+            + '<path d="M63 52 q-8 -3 -12 0" stroke="#1f2933" stroke-width="3" fill="none" stroke-linecap="round"/>'
+            + '<path d="M70 48 q6 -3 12 0" stroke="#ffffff" stroke-width="2.6" fill="none" opacity=".5" stroke-linecap="round"/></g>';
+    if(an.halstuch)
+      unten += '<g><path d="M56 78 q22 16 46 2 q-2 12 -22 15 q-20 -2 -24 -17 Z" fill="#e8342a"/>'
+             + '<path d="M70 92 l-6 16 l12 -4 l10 6 l-4 -18 Z" fill="#c2281f"/></g>';
+
+    return { oben: oben, unten: unten };
+  }
+
+  const ANZIEHEN = [
+    { id:'brille',     name:'Sonnenbrille',  bild:'🕶️', sterne:120,
+      satz:{ en:'Now I look cool!', de:'Jetzt sehe ich cool aus!' }, ruf:'So cool!' },
+    { id:'halstuch',   name:'Halstuch',      bild:'🧣', sterne:180,
+      satz:{ en:'Red suits me, right?', de:'Rot steht mir, oder?' }, ruf:'Lovely!' },
+    { id:'blume',      name:'Blume',         bild:'🌺', sterne:220,
+      satz:{ en:'A flower for my head!', de:'Eine Blume für meinen Kopf!' }, ruf:'Beautiful!' },
+    { id:'schleife',   name:'Schleife',      bild:'🎀', sterne:260,
+      satz:{ en:'Look at my bow!', de:'Schau dir meine Schleife an!' }, ruf:'Fancy!' },
+    { id:'piratenhut', name:'Piratenhut',    bild:'🏴‍☠️', sterne:400,
+      satz:{ en:'Ahoy! Pirate parrot!', de:'Ahoi! Piratenpapagei!' }, ruf:'Ahoy!' },
+    { id:'zylinder',   name:'Zylinder',      bild:'🎩', sterne:600,
+      satz:{ en:'Good evening, sir.', de:'Guten Abend, der Herr.' }, ruf:'Good evening!' }
+  ];
+
   // ------------------------------------------------------------ Der Shop
   // futter/wasser/laune = was es Henry bringt. deko = bleibt dauerhaft im Kaefig.
   // effekt = kleine Sondervorstellung beim Essen (siehe index.html).
@@ -310,6 +364,6 @@
     return { en:'Hello ' + du + '! Nice to see you.', de:'Hallo ' + du + '! Schön, dich zu sehen.' };
   }
 
-  window.PAPAGEI = { NAME: NAME, ARTEN: ARTEN, artVon: artVon, svg: svg, SHOP: SHOP, neuBerechnen: neuBerechnen,
+  window.PAPAGEI = { NAME: NAME, ARTEN: ARTEN, artVon: artVon, svg: svg, SHOP: SHOP, ANZIEHEN: ANZIEHEN, neuBerechnen: neuBerechnen,
                      zustandVon: zustandVon, spruch: spruch, PRO_STUNDE: PRO_STUNDE };
 })();

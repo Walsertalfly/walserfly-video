@@ -184,6 +184,7 @@
   .pablo-federn path:nth-child(2){animation-delay:1.1s}
   .pablo-federn path:nth-child(3){animation-delay:2.2s}
   @keyframes feder{0%{transform:translateY(0) rotate(0);opacity:.8}100%{transform:translateY(150px) rotate(140deg);opacity:0}}
+  .shoptitel{font-size:16px;margin:16px 0 4px}
   .shop{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
   .shop button{margin:0;padding:8px 6px;font-size:13.5px;background:#fff;color:var(--text);
                border:2px solid var(--grau);box-shadow:none;line-height:1.2;
@@ -343,8 +344,14 @@
 
     <div class="card" id="shopKarte" style="display:none">
       <h2>Shop</h2>
-      <p class="muted">Münzen verdienst du beim Üben: eine pro Wort, das du gleich richtig schreibst.</p>
+      <p class="muted">Beim Üben verdienst du beides: 🪙 3 Münzen und ⭐ 5 Sterne pro Wort,
+         das du gleich richtig schreibst.</p>
+      <h3 class="shoptitel">🪙 Zum Essen und für den Käfig</h3>
       <div class="shop" id="shopListe"></div>
+      <h3 class="shoptitel">⭐ Zum Anziehen für <span id="shopName"></span></h3>
+      <p class="muted">Das bezahlst du mit Sternen. Deine gesammelten Sterne in der Rangliste
+         bleiben davon unberührt.</p>
+      <div class="shop" id="anziehListe"></div>
       <button class="sek" id="btnShopZu">Schließen</button>
     </div>
 
@@ -467,12 +474,12 @@
 </main>
 <footer>Vokabel-Land · Testversion</footer>
 
-<script src="vokabeln.js?v=202610191513"></script>
-<script src="bilder.js?v=202610191513"></script>
-<script src="emojis.js?v=202610191513"></script>
-<script src="papagei.js?v=202610191513"></script>
-<script src="welt.js?v=202610191513"></script>
-<script src="abzeichen.js?v=202610191513"></script>
+<script src="vokabeln.js?v=202610191516"></script>
+<script src="bilder.js?v=202610191516"></script>
+<script src="emojis.js?v=202610191516"></script>
+<script src="papagei.js?v=202610191516"></script>
+<script src="welt.js?v=202610191516"></script>
+<script src="abzeichen.js?v=202610191516"></script>
 <script>
 (function(){
   const LEVEL = window.VOKABEL_LEVEL || [];
@@ -780,7 +787,7 @@
   function kopf(){
     $('hdName').textContent = S.name ? '· '+S.name : '';
     $('stMuenzen').textContent = '🪙 '+S.muenzen;
-    $('stPunkte').textContent  = '⭐ '+S.punkte;
+    $('stPunkte').textContent  = '⭐ '+(S.sterneFrei != null ? S.sterneFrei : S.punkte);
   }
   function zeige(id){
     if(id !== 'sSpiel') stoppeTon();
@@ -866,6 +873,21 @@
   }
   function zeigeShop(){
     const p = pabloStand();
+    $('shopName').textContent = PAPAGEI.NAME;
+
+    // Zum Anziehen, bezahlt mit Sternen
+    const frei = S.sterneFrei != null ? S.sterneFrei : S.punkte;
+    $('anziehListe').innerHTML = (PAPAGEI.ANZIEHEN || []).map((a,i)=>{
+      const schonDa = p.deko && p.deko[a.id];
+      const zuTeuer = frei < a.sterne;
+      return '<button data-stern="'+i+'" class="'+(schonDa?'gekauft':zuTeuer?'kannNicht':'')+'">'
+        + '<span class="ware">'+a.bild+'</span>' + esc(a.name)
+        + '<span class="preis">'+(schonDa ? '✓ trägt er' : '⭐ '+a.sterne)+'</span></button>';
+    }).join('');
+    $('anziehListe').querySelectorAll('button').forEach(b=>{
+      b.onclick = ()=>kaufenMitSternen(PAPAGEI.ANZIEHEN[parseInt(b.dataset.stern,10)]);
+    });
+
     $('shopListe').innerHTML = PAPAGEI.SHOP.map((a,i)=>{
       const schonDa = a.deko && p.deko && p.deko[a.id];
       const zuTeuer = S.muenzen < a.preis;
@@ -944,6 +966,31 @@
       auftrittLaeuft = false;
       fertig && fertig();
     }, 3260);
+  }
+
+  // Kauf mit Sternen. Die gesammelten Punkte (Rangliste) bleiben unberuehrt,
+  // nur die noch freien Sterne werden weniger.
+  function kaufenMitSternen(a){
+    const p = pabloStand();
+    if(p.deko && p.deko[a.id]){
+      meldung({ en: PAPAGEI.NAME + ' is already wearing that.', de: PAPAGEI.NAME + ' trägt das schon.' }); return; }
+    const frei = S.sterneFrei != null ? S.sterneFrei : S.punkte;
+    if(frei < a.sterne){
+      meldung({ en: 'You need ' + (a.sterne - frei) + ' more stars.',
+                de: 'Dafür fehlen dir noch ' + (a.sterne - frei) + ' Sterne.' });
+      klang('falsch'); return;
+    }
+    if(auftrittLaeuft) return;
+    S.sterneFrei = frei - a.sterne;
+    speichere(); kopf(); zeigeShop();
+    meldung(a.satz);
+    auftritt(a, ()=>{
+      const p2 = pabloStand();
+      p2.deko = p2.deko || {}; p2.deko[a.id] = true;
+      p2.laune = Math.min(100, p2.laune + 25);
+      p2.tageWeg = 0;
+      speichere(); zeigePablo(); zeigeShop();
+    });
   }
 
   function kaufen(a){
@@ -1168,17 +1215,20 @@
     $('rmBild').innerHTML = bildZu(loesungen(w)[0]);
     if(ok){
       inp.className='ok';
-      const p = erst ? 5 : 2, m = erst ? 1 : 0;
+      const p = erst ? 5 : 2, m = erst ? 3 : 1;
       G.punkte+=p; G.muenzen+=m; if(erst) G.richtigErst++;
-      S.punkte+=p; S.muenzen+=m; speichere(); kopf();
+      S.punkte+=p; S.muenzen+=m;
+      // punkte = alles je Gesammelte (dafuer die Rangliste), sterneFrei = noch ausgebbar
+      S.sterneFrei = (S.sterneFrei || 0) + p;
+      speichere(); kopf();
       $('rmText').textContent = erst ? 'Richtig!' : 'Jetzt richtig!';
       $('rmWort').innerHTML = esc(loesungen(w)[0]);
-      $('rmPlus').className='plus'; $('rmPlus').textContent = '+'+p+' Punkte' + (m ? ' · +1 Münze' : '');
+      $('rmPlus').className='plus'; $('rmPlus').textContent = '+'+p+' ⭐ · +'+m+' 🪙';
       klang('richtig'); if(m) setTimeout(()=>klang('muenze'), 150);
       pabloFreuen(erst ? 3 : 1);
       if(erst) hakenZeigen();
       fliegenLassen('+' + p + ' ⭐', 'stPunkte');
-      if(m) setTimeout(()=>fliegenLassen('+1 🪙', 'stMuenzen', '#b8860b'), 170);
+      if(m) setTimeout(()=>fliegenLassen('+'+m+' 🪙', 'stMuenzen', '#b8860b'), 170);
       $('rmWarum').style.display='none'; $('rmEsel').style.display='none';
     } else {
       inp.className='falsch';
@@ -1211,7 +1261,7 @@
     $('endeTitel').textContent = (sterne>=2 ? 'Level geschafft!' : 'Fast! Nochmal üben.') + (G.modus==='hoeren' ? ' 🔊' : '');
     $('endeSterne').textContent = '★'.repeat(sterne) + '☆'.repeat(3-sterne);
     $('endeRichtig').textContent = G.richtigErst+' von '+gesamt;
-    $('endePunkte').textContent = '+'+G.punkte+' Punkte · +'+G.muenzen+' Münzen';
+    $('endePunkte').textContent = '+'+G.punkte+' ⭐ Sterne · +'+G.muenzen+' 🪙 Münzen';
     if(sterne >= 2){
       klang('fertig'); muenzregen(Math.min(12, G.muenzen));
       setTimeout(()=>konfetti(sterne === 3 ? 70 : 45), 150);
