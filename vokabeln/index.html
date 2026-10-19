@@ -293,7 +293,15 @@
   td.r{text-align:right;font-weight:700}
   .liste li{margin:4px 0}
   footer{text-align:center;font-size:12px;color:var(--muted);padding:12px}
-  @media (max-width:420px){header h1 small{display:none}.frage .de{font-size:30px}}
+  @media (max-width:560px){
+    header{padding:10px 12px;gap:8px}
+    header h1{font-size:17px;white-space:nowrap}
+    header h1 small{display:none}
+    .stats{gap:6px;font-size:13px}
+    .stats span{padding:3px 8px}
+    .tonknopf{padding:3px 8px;font-size:14px}
+  }
+  @media (max-width:420px){.frage .de{font-size:30px}}
 </style>
 </head>
 <body>
@@ -491,12 +499,12 @@
 </main>
 <footer>Vokabel-Land · Testversion</footer>
 
-<script src="vokabeln.js?v=202610191530"></script>
-<script src="bilder.js?v=202610191530"></script>
-<script src="emojis.js?v=202610191530"></script>
-<script src="papagei.js?v=202610191530"></script>
-<script src="welt.js?v=202610191530"></script>
-<script src="abzeichen.js?v=202610191530"></script>
+<script src="vokabeln.js?v=202610191532"></script>
+<script src="bilder.js?v=202610191532"></script>
+<script src="emojis.js?v=202610191532"></script>
+<script src="papagei.js?v=202610191532"></script>
+<script src="welt.js?v=202610191532"></script>
+<script src="abzeichen.js?v=202610191532"></script>
 <script>
 (function(){
   const LEVEL = window.VOKABEL_LEVEL || [];
